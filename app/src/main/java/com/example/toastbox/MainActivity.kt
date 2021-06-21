@@ -13,7 +13,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun toastNormal(view: View) {
-        ToastBox.show("ToastBox")
+        when(view.id){
+            R.id.button -> {
+                ToastBox.show("ToastBox")
+            }
+            R.id.button2 -> {
+                Toast.makeText(this,"shab",Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
 }

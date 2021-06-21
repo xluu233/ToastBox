@@ -8,6 +8,7 @@ import android.view.WindowManager
 import android.widget.TextView
 import com.example.xlulibrary.Location
 import com.example.xlulibrary.R
+import com.example.xlulibrary.findMessageView
 import com.example.xlulibrary.getLocaGravity
 import com.example.xlulibrary.itf.Toast
 import java.util.*
@@ -113,6 +114,10 @@ class BaseToast(activity: Activity) : Toast {
         return mVerticalMargin
     }
 
+    override fun setStyle(style: Int) {
+        windowToast.setStyle(style)
+    }
+
 
 }
 
@@ -125,7 +130,7 @@ class AnimToast(activity: Activity, toast: Toast){
     private var toast:Toast
 
     init {
-        mIsShow = false//记录当前Toast的内容是否已经在显示
+        mIsShow = false
         mWdm = activity.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         mTimer = Timer()
         this.toast = toast
@@ -137,7 +142,6 @@ class AnimToast(activity: Activity, toast: Toast){
         mParams!!.height = WindowManager.LayoutParams.WRAP_CONTENT
         mParams!!.width = WindowManager.LayoutParams.WRAP_CONTENT
         mParams!!.format = PixelFormat.TRANSLUCENT
-        mParams!!.windowAnimations = R.style.MiuiToast//设置进入退出动画效果
         mParams!!.flags = (WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                 or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
@@ -146,8 +150,12 @@ class AnimToast(activity: Activity, toast: Toast){
         mParams!!.x = toast.getXOffset()
         mParams!!.horizontalMargin = toast.getHorizontalMargin()
         mParams!!.verticalMargin = toast.getVerticalMargin()
+        setStyle(R.style.MiuiToast)
     }
 
+    fun setStyle(style: Int) {
+        mParams!!.windowAnimations = style
+    }
 
     fun show() {
         if (!mIsShow) {//如果Toast没有显示，则开始加载显示
@@ -163,9 +171,8 @@ class AnimToast(activity: Activity, toast: Toast){
     }
 
     fun cancle(){
-        mTimer.cancel()
         mWdm.removeView(toast.getView())
+        mTimer.cancel()
     }
-
 
 }

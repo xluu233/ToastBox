@@ -15,26 +15,24 @@ import com.example.xlulibrary.style.NormalStyle
  */
 object ToastBox{
 
-    var mToastStyle : ToastStyle<*> = NormalStyle()
+    var mToastStyle : ToastStyle = NormalStyle()
     var mToastStrategy : ToastStrategy = ToastStrategyImpl()
 
-    fun init(application: Application,toastStyle: ToastStyle<*>?=null){
+    fun init(application: Application,toastStyle: ToastStyle?=null){
         mToastStrategy.init(application)
         if (toastStyle!=null){
             mToastStyle = toastStyle
         }
+        mToastStrategy.setStyle(mToastStyle)
     }
 
-    fun setDefaultStyle(toastStyle: ToastStyle<*>){
+    fun setDefaultStyle(toastStyle: ToastStyle){
         mToastStyle = toastStyle
+        mToastStrategy.setStyle(mToastStyle)
     }
 
     fun setStrategy(strategy: ToastStrategy){
         mToastStrategy = strategy
-    }
-
-    fun setDefaultToastView(layout: Int){
-
     }
 
     fun show(text: String?){
@@ -43,5 +41,7 @@ object ToastBox{
         }
         mToastStrategy.show(text)
     }
+
+
 
 }

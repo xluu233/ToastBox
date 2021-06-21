@@ -16,11 +16,11 @@ interface ToastStrategy {
 
     fun createToast():Toast
 
-    fun show(test:String)
+    fun show(text:String)
 
     fun cancle()
 
-    fun setStyle(style:ToastStyle<*>)
+    fun setStyle(style:ToastStyle)
 
 
 }

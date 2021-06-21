@@ -30,7 +30,7 @@ fun getLocaGravity(location: Location): Int {
 /**
  * 智能获取用于显示消息的 TextView
  */
-fun findMessageView(view: View): TextView? {
+fun findMessageView(view: View): TextView {
     if (view is TextView) {
         if (view.getId() == View.NO_ID) {
             view.setId(R.id.message)

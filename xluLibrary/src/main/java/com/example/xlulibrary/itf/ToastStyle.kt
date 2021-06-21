@@ -1,5 +1,6 @@
 package com.example.xlulibrary.itf
 
+import android.app.Activity
 import android.content.Context
 import android.view.View
 import com.example.xlulibrary.Location
@@ -10,9 +11,9 @@ import com.example.xlulibrary.Location
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/6/18 16:07
  */
-interface ToastStyle<V : View> {
+interface ToastStyle {
 
-    fun createView(context: Context): V
+    fun createView(activity: Activity):View
 
     var xOffset:Int
 
@@ -21,5 +22,6 @@ interface ToastStyle<V : View> {
     var location:Location
 
     var duration:Int
+
 
 }

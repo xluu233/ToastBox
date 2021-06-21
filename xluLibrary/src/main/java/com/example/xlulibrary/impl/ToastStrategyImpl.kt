@@ -23,7 +23,7 @@ class ToastStrategyImpl : ToastStrategy {
 
     private var activityStack:ActivityStack ?= null
 
-    private var toastStyle:ToastStyle<*> = NormalStyle()
+    private var toastStyle:ToastStyle = NormalStyle()
 
 
     override fun init(app: Application){
@@ -31,19 +31,22 @@ class ToastStrategyImpl : ToastStrategy {
         activityStack = ActivityStack.register(app)
     }
 
-    override fun setStyle(style: ToastStyle<*>) {
+    override fun setStyle(style: ToastStyle) {
         toastStyle = style
     }
 
     override fun createToast(): Toast {
-        val toast = BaseToast(activityStack?.foregroundActivity!!)
-        toast.setView(toastStyle.createView(activityStack?.foregroundActivity!!.baseContext))
+        val activity = activityStack?.foregroundActivity!!
+        val toast = BaseToast(activity)
+        toast.setView(toastStyle.createView(activity))
         toast.setGravity(toastStyle.location, toastStyle.xOffset, toastStyle.yOffset)
         toast.setDuration(toastStyle.duration)
         return toast
     }
 
+
     override fun show(text: String) {
+        //toast?.cancel()
         toast = createToast()
         toast?.setText(text)
         toast?.show()
