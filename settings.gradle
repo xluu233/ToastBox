@@ -1,0 +1,3 @@
+include ':xluLibrary'
+include ':app'
+rootProject.name = "ToastBox"
