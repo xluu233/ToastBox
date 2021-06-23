@@ -39,7 +39,7 @@ class ToastStrategyImpl : ToastStrategy {
         val activity = activityStack?.foregroundActivity!!
         val toast = BaseToast(activity)
         toast.setView(toastStyle.createView(activity))
-        toast.setGravity(toastStyle.location, toastStyle.xOffset, toastStyle.yOffset)
+        toast.setGravity(toastStyle.location)
         toast.setDuration(toastStyle.duration)
         return toast
     }

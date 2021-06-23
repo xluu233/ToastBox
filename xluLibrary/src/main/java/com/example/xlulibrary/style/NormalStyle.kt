@@ -15,15 +15,12 @@ import com.example.xlulibrary.itf.ToastStyle
  */
 class NormalStyle : ToastStyle {
 
-    override var xOffset: Int = 0
-    override var yOffset: Int = 0
     override var location:Location = Location.BOTTOM
-    override var duration: Int = 2500
+    override var duration = 2500L
 
 
     override fun createView(activity: Activity) : View{
         val toastView = activity.layoutInflater.inflate(R.layout.toast_default, null)
-
         return toastView
     }
 

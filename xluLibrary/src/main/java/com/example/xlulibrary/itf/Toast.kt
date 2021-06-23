@@ -1,8 +1,6 @@
 package com.example.xlulibrary.itf
 
-import android.R
 import android.view.View
-import android.widget.TextView
 import com.example.xlulibrary.Location
 
 /**
@@ -36,37 +34,27 @@ interface Toast {
     /**
      * 获取布局
      */
-    fun getView(): View?
+    fun getView():View?
 
     /**
      * 设置显示时长
      */
-    fun setDuration(duration: Int)
+    fun setDuration(duration: Long)
 
     /**
      * 获取显示时长
      */
-    fun getDuration(): Int
+    fun getDuration(): Long
 
     /**
      * 设置重心偏移
      */
-    fun setGravity(location: Location, xOffset: Int, yOffset: Int)
+    fun setGravity(location: Location)
 
     /**
      * 获取显示重心
      */
     fun getGravity(): Int
-
-    /**
-     * 获取水平偏移
-     */
-    fun getXOffset(): Int
-
-    /**
-     * 获取垂直偏移
-     */
-    fun getYOffset(): Int
 
     /**
      * 设置屏幕间距

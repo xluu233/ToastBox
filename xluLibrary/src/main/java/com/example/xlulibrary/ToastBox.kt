@@ -2,6 +2,7 @@ package com.example.xlulibrary
 
 import android.app.Application
 import android.content.Context
+import android.view.Gravity
 import com.example.xlulibrary.impl.ToastStrategyImpl
 import com.example.xlulibrary.itf.ToastStrategy
 import com.example.xlulibrary.itf.ToastStyle
@@ -42,6 +43,10 @@ object ToastBox{
         mToastStrategy.show(text)
     }
 
+    fun setLocation(location: Location):ToastBox{
+        mToastStyle.location = location
+        return this
+    }
 
 
 }

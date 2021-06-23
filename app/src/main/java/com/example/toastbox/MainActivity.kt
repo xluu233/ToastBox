@@ -3,7 +3,7 @@ package com.example.toastbox
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import com.example.xlulibrary.Location
 import com.example.xlulibrary.ToastBox
 
 class MainActivity : AppCompatActivity() {
@@ -15,10 +15,10 @@ class MainActivity : AppCompatActivity() {
     fun toastNormal(view: View) {
         when(view.id){
             R.id.button -> {
-                ToastBox.show("ToastBox")
+                ToastBox.show("This is ToastBox")
             }
             R.id.button2 -> {
-                Toast.makeText(this,"shab",Toast.LENGTH_LONG).show()
+                ToastBox.setLocation(Location.CENTER).show("Center ToastBox")
             }
         }
     }

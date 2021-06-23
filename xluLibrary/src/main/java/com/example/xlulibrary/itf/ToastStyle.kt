@@ -15,13 +15,9 @@ interface ToastStyle {
 
     fun createView(activity: Activity):View
 
-    var xOffset:Int
-
-    var yOffset:Int
-
     var location:Location
 
-    var duration:Int
+    var duration:Long
 
 
 }

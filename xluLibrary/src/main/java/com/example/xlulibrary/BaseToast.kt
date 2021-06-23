@@ -22,29 +22,22 @@ import java.util.*
 class BaseToast(activity: Activity) : Toast {
 
     /** Toast 显示重心  */
-    private var mGravity = 0
+    var mGravity = 0
 
     /** Toast 显示时长  */
-    private var mDuration = 0
-
-    /** 水平偏移  */
-    private var mXOffset = 0
-
-    /** 垂直偏移  */
-    private var mYOffset = 0
+    var mDuration = 0L
 
     /** 水平间距  */
-    private var mHorizontalMargin = 0f
+    var mHorizontalMargin = 0f
 
     /** 垂直间距  */
-    private var mVerticalMargin = 0f
+    var mVerticalMargin = 0f
 
     /** Toast 布局  */
-    private var mView: View? = null
+    var mView: View? = null
 
     /** Toast 消息 View  */
     private var mMessageView: TextView? = null
-
 
     private val windowToast by lazy {
         AnimToast(activity, this)
@@ -75,30 +68,20 @@ class BaseToast(activity: Activity) : Toast {
         return mView
     }
 
-    override fun setDuration(duration: Int) {
+    override fun setDuration(duration: Long) {
         mDuration = duration
     }
 
-    override fun getDuration(): Int {
+    override fun getDuration(): Long {
         return mDuration
     }
 
-    override fun setGravity(location: Location, xOffset: Int, yOffset: Int) {
+    override fun setGravity(location: Location) {
         mGravity = getLocaGravity(location)
-        mXOffset = xOffset
-        mYOffset = yOffset
     }
 
     override fun getGravity(): Int {
         return mGravity
-    }
-
-    override fun getXOffset(): Int {
-        return mXOffset
-    }
-
-    override fun getYOffset(): Int {
-        return mYOffset
     }
 
     override fun setMargin(horizontalMargin: Float, verticalMargin: Float) {
@@ -146,8 +129,6 @@ class AnimToast(activity: Activity, toast: Toast){
                 or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         mParams!!.gravity = toast.getGravity()
-        mParams!!.y = toast.getYOffset()
-        mParams!!.x = toast.getXOffset()
         mParams!!.horizontalMargin = toast.getHorizontalMargin()
         mParams!!.verticalMargin = toast.getVerticalMargin()
         setStyle(R.style.MiuiToast)
