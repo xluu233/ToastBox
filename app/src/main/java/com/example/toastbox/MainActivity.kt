@@ -20,6 +20,18 @@ class MainActivity : AppCompatActivity() {
             R.id.button2 -> {
                 ToastBox.setLocation(Location.CENTER).show("Center ToastBox")
             }
+            R.id.button3 -> {
+                ToastBox.setLocation(Location.CENTER).setAlpha(0.5f).show("Center ToastBox")
+            }
+            R.id.button4 -> {
+
+            }
+            R.id.button5 -> {
+
+            }
+            R.id.button6 -> {
+
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.xlulibrary.style
 
 import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import com.example.xlulibrary.Location
@@ -16,11 +17,15 @@ import com.example.xlulibrary.itf.ToastStyle
 class NormalStyle : ToastStyle {
 
     override var location:Location = Location.BOTTOM
+
     override var duration = 2500L
+
+    override var alpha: Float = 1.0f
 
 
     override fun createView(activity: Activity) : View{
         val toastView = activity.layoutInflater.inflate(R.layout.toast_default, null)
+        toastView.alpha = alpha
         return toastView
     }
 

@@ -1,13 +1,15 @@
 package com.example.xlulibrary.impl
 
+import android.app.Activity
 import android.app.Application
-import android.content.Context
 import android.view.View
 import com.example.xlulibrary.ActivityStack
+import com.example.xlulibrary.R
 import com.example.xlulibrary.itf.Toast
 import com.example.xlulibrary.itf.ToastStrategy
 import com.example.xlulibrary.itf.ToastStyle
 import com.example.xlulibrary.style.NormalStyle
+import java.lang.ref.WeakReference
 
 /**
  * @ClassName ToastStrategyImpl
@@ -17,43 +19,37 @@ import com.example.xlulibrary.style.NormalStyle
  */
 class ToastStrategyImpl : ToastStrategy {
 
-    private var application:Application ?= null
 
-    private var toast:Toast ?= null
+    private var toast:WeakReference<Toast> ?= null
 
-    private var activityStack:ActivityStack ?= null
-
-    private var toastStyle:ToastStyle = NormalStyle()
+    private var defaultStyle:ToastStyle = NormalStyle()
 
 
-    override fun init(app: Application){
-        application = app
-        activityStack = ActivityStack.register(app)
-    }
 
     override fun setStyle(style: ToastStyle) {
-        toastStyle = style
+        defaultStyle = style
     }
 
-    override fun createToast(): Toast {
-        val activity = activityStack?.foregroundActivity!!
+    override fun createToast(activity: Activity): Toast {
         val toast = BaseToast(activity)
-        toast.setView(toastStyle.createView(activity))
-        toast.setGravity(toastStyle.location)
-        toast.setDuration(toastStyle.duration)
+        toast.setView(defaultStyle.createView(activity))
+        toast.setGravity(defaultStyle.location)
+        toast.setDuration(defaultStyle.duration)
         return toast
     }
 
+    fun setView(view: View){
 
-    override fun show(text: String) {
-        //toast?.cancel()
-        toast = createToast()
-        toast?.setText(text)
-        toast?.show()
+    }
+
+    override fun show(activity: Activity,text: String) {
+        toast = WeakReference(createToast(activity))
+        toast?.get()?.setText(text)
+        toast?.get()?.show()
     }
 
     override fun cancle() {
-        toast?.cancel()
+        toast?.get()?.cancel()
     }
 
 

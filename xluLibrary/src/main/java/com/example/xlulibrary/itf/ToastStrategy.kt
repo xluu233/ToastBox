@@ -1,5 +1,6 @@
 package com.example.xlulibrary.itf
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.view.View
@@ -12,11 +13,11 @@ import android.view.View
  */
 interface ToastStrategy {
 
-    fun init(app:Application)
+    //fun init(app:Application)
 
-    fun createToast():Toast
+    fun createToast(activity: Activity):Toast
 
-    fun show(text:String)
+    fun show(activity: Activity,text:String)
 
     fun cancle()
 

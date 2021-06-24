@@ -39,6 +39,9 @@ class BaseToast(activity: Activity) : Toast {
     /** Toast 消息 View  */
     private var mMessageView: TextView? = null
 
+    /*透明度 0-1f*/
+    private var mAlpha:Float = 1.0f
+
     private val windowToast by lazy {
         AnimToast(activity, this)
     }

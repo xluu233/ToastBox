@@ -4,6 +4,8 @@ import android.R
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
+import java.lang.ref.WeakReference
+import kotlin.reflect.KProperty
 
 /**
  * @ClassName Utils
@@ -44,4 +46,16 @@ fun findMessageView(view: View): TextView {
         return view.findViewById<View>(R.id.message) as TextView
     }
     throw IllegalArgumentException("You must include a TextView with an ID value of android.R.id.message")
+}
+
+
+fun <T> weak(initializer: () -> T) = Weak(initializer.invoke())
+class Weak<T>(r: T) {
+    private var reference: WeakReference<T?> = WeakReference(r)
+
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): T? = reference.get()
+
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) {
+        this.reference = WeakReference(value)
+    }
 }

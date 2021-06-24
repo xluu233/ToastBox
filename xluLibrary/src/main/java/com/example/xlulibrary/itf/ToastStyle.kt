@@ -19,5 +19,6 @@ interface ToastStyle {
 
     var duration:Long
 
+    var alpha:Float
 
 }

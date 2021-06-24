@@ -77,4 +77,14 @@ interface Toast {
     fun setStyle(style:Int)
 
 
+//    /**
+//     * 设置透明度
+//     */
+//    fun setAlpha(i:Float)
+//
+//    /**
+//     * 获取透明值
+//     */
+//    fun getAlpha():Float
+
 }

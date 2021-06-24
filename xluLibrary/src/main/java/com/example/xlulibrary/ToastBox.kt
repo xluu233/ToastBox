@@ -1,12 +1,17 @@
 package com.example.xlulibrary
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import androidx.annotation.FloatRange
 import com.example.xlulibrary.impl.ToastStrategyImpl
 import com.example.xlulibrary.itf.ToastStrategy
 import com.example.xlulibrary.itf.ToastStyle
 import com.example.xlulibrary.style.NormalStyle
+import java.lang.ref.WeakReference
 
 /**
  * @ClassName ToastBox
@@ -14,33 +19,35 @@ import com.example.xlulibrary.style.NormalStyle
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/6/17 16:40
  */
-object ToastBox{
+class ToastBox(context: Context){
+
 
     var mToastStyle : ToastStyle = NormalStyle()
     var mToastStrategy : ToastStrategy = ToastStrategyImpl()
 
-    fun init(application: Application,toastStyle: ToastStyle?=null){
-        mToastStrategy.init(application)
-        if (toastStyle!=null){
-            mToastStyle = toastStyle
+    private var app:Application ?= null
+
+    private lateinit var activityStack : WeakReference<ActivityStack>
+    //private lateinit var currentActivity:WeakReference<Activity>
+
+
+    fun init(application: Application, toastStyle: ToastStyle? = null){
+        app = application
+        activityStack = WeakReference<ActivityStack>(ActivityStack.register(application))
+        //currentActivity = WeakReference(activityStack.get()?.foregroundActivity)
+
+        toastStyle?.let {
+            mToastStyle = it
         }
         mToastStrategy.setStyle(mToastStyle)
     }
 
-    fun setDefaultStyle(toastStyle: ToastStyle){
-        mToastStyle = toastStyle
-        mToastStrategy.setStyle(mToastStyle)
-    }
-
-    fun setStrategy(strategy: ToastStrategy){
-        mToastStrategy = strategy
-    }
 
     fun show(text: String?){
-        if (text == null || text.isEmpty()) {
+        if (text.isNullOrEmpty()) {
             return
         }
-        mToastStrategy.show(text)
+        mToastStrategy.show(activityStack.get()?.foregroundActivity!!,text)
     }
 
     fun setLocation(location: Location):ToastBox{
@@ -48,5 +55,19 @@ object ToastBox{
         return this
     }
 
+    fun setAlpha(@FloatRange(from = 0.0, to = 1.0) alpha: Float):ToastBox{
+        mToastStyle.alpha = alpha
+        return this
+    }
+
+    fun setView(view: View):ToastBox{
+
+        return this
+    }
+
+    fun setView(id:Int):ToastBox{
+        val view = LayoutInflater.from(activityStack.get()?.foregroundActivity!!).inflate(id,null)
+        return this
+    }
 
 }
