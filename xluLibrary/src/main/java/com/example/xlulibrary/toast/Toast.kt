@@ -1,7 +1,9 @@
-package com.example.xlulibrary.itf
+package com.example.xlulibrary.toast
 
+import android.graphics.Paint
 import android.view.View
-import com.example.xlulibrary.Location
+import com.example.xlulibrary.data.Location
+import com.example.xlulibrary.itf.ToastClickItf
 
 /**
  * @ClassName Toast
@@ -56,35 +58,18 @@ interface Toast {
      */
     fun getGravity(): Int
 
-    /**
-     * 设置屏幕间距
-     */
-    fun setMargin(horizontalMargin: Float, verticalMargin: Float)
+    var x:Int
+    var y:Int
 
     /**
-     * 设置水平间距
+     * 设置动画样式
      */
-    fun getHorizontalMargin(): Float
+    fun setAnim(anim:Int)
 
-    /**
-     * 设置垂直间距
-     */
-    fun getVerticalMargin(): Float
+    fun getAnim():Int
 
-    /**
-     * 设置style样式
-     */
-    fun setStyle(style:Int)
+    fun setListener(clickItf: ToastClickItf?)
 
-
-//    /**
-//     * 设置透明度
-//     */
-//    fun setAlpha(i:Float)
-//
-//    /**
-//     * 获取透明值
-//     */
-//    fun getAlpha():Float
+    fun getListener():ToastClickItf?
 
 }

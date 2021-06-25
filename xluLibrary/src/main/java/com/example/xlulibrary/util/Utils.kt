@@ -1,9 +1,10 @@
-package com.example.xlulibrary
+package com.example.xlulibrary.util
 
 import android.R
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
+import com.example.xlulibrary.data.Location
 import java.lang.ref.WeakReference
 import kotlin.reflect.KProperty
 

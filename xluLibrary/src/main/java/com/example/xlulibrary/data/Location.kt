@@ -1,4 +1,4 @@
-package com.example.xlulibrary
+package com.example.xlulibrary.data
 
 /**
  * @ClassName Location

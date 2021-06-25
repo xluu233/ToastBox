@@ -1,16 +1,15 @@
-package com.example.xlulibrary.impl
+package com.example.xlulibrary.toast
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.PixelFormat
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
-import com.example.xlulibrary.Location
+import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.R
-import com.example.xlulibrary.findMessageView
-import com.example.xlulibrary.getLocaGravity
-import com.example.xlulibrary.itf.Toast
+import com.example.xlulibrary.itf.ToastClickItf
+import com.example.xlulibrary.util.findMessageView
+import com.example.xlulibrary.util.getLocaGravity
 import java.util.*
 
 /**
@@ -19,7 +18,10 @@ import java.util.*
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/6/18 17:10
  */
-class BaseToast(activity: Activity) : Toast {
+class BaseToast(context: Context) : Toast {
+
+    override var x: Int = 0
+    override var y: Int = 0
 
     /** Toast 显示重心  */
     var mGravity = 0
@@ -27,23 +29,20 @@ class BaseToast(activity: Activity) : Toast {
     /** Toast 显示时长  */
     var mDuration = 0L
 
-    /** 水平间距  */
-    var mHorizontalMargin = 0f
-
-    /** 垂直间距  */
-    var mVerticalMargin = 0f
-
     /** Toast 布局  */
     var mView: View? = null
+
+    /*动画*/
+    var anim:Int ?= R.style.MiuiToast
 
     /** Toast 消息 View  */
     private var mMessageView: TextView? = null
 
-    /*透明度 0-1f*/
-    private var mAlpha:Float = 1.0f
+    /*事件监听*/
+    private var clickListener:ToastClickItf ?= null
 
     private val windowToast by lazy {
-        AnimToast(activity, this)
+        AnimToast(context, this)
     }
 
     override fun show() {
@@ -52,6 +51,7 @@ class BaseToast(activity: Activity) : Toast {
 
     override fun cancel() {
         windowToast.cancle()
+        clickListener?.setOnToastDismissed()
     }
 
     override fun setText(text: String) {
@@ -65,6 +65,9 @@ class BaseToast(activity: Activity) : Toast {
             return
         }
         mMessageView = findMessageView(view)
+        mMessageView?.setOnClickListener {
+            clickListener?.setOnTextClicked()
+        }
     }
 
     override fun getView(): View? {
@@ -87,37 +90,37 @@ class BaseToast(activity: Activity) : Toast {
         return mGravity
     }
 
-    override fun setMargin(horizontalMargin: Float, verticalMargin: Float) {
-        mHorizontalMargin = horizontalMargin
-        mVerticalMargin = verticalMargin
+
+    override fun setAnim(anim: Int) {
+        this.anim = anim
     }
 
-    override fun getHorizontalMargin(): Float {
-        return mHorizontalMargin
+    override fun getAnim(): Int {
+        return anim!!
     }
 
-    override fun getVerticalMargin(): Float {
-        return mVerticalMargin
+    override fun setListener(clickItf: ToastClickItf?) {
+        this.clickListener = clickItf
     }
 
-    override fun setStyle(style: Int) {
-        windowToast.setStyle(style)
+    override fun getListener(): ToastClickItf? {
+        return clickListener
     }
 
 
 }
 
-class AnimToast(activity: Activity, toast: Toast){
+class AnimToast(context: Context, toast: Toast){
 
     private val mWdm: WindowManager
     private var mIsShow: Boolean = false
     private val mTimer: Timer
     private var mParams: WindowManager.LayoutParams? = null
-    private var toast:Toast
+    private var toast: Toast
 
     init {
         mIsShow = false
-        mWdm = activity.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        mWdm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         mTimer = Timer()
         this.toast = toast
         setParams()
@@ -125,21 +128,19 @@ class AnimToast(activity: Activity, toast: Toast){
 
     private fun setParams() {
         mParams = WindowManager.LayoutParams()
-        mParams!!.height = WindowManager.LayoutParams.WRAP_CONTENT
-        mParams!!.width = WindowManager.LayoutParams.WRAP_CONTENT
-        mParams!!.format = PixelFormat.TRANSLUCENT
-        mParams!!.flags = (WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-        mParams!!.gravity = toast.getGravity()
-        mParams!!.horizontalMargin = toast.getHorizontalMargin()
-        mParams!!.verticalMargin = toast.getVerticalMargin()
-        setStyle(R.style.MiuiToast)
+        mParams?.apply {
+            height = WindowManager.LayoutParams.WRAP_CONTENT
+            width = WindowManager.LayoutParams.WRAP_CONTENT
+            format = PixelFormat.TRANSLUCENT
+            flags = (WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            gravity = toast.getGravity()
+            windowAnimations = toast.getAnim()
+            this.x = toast.x
+            this.y = toast.y
+        }
     }
 
-    fun setStyle(style: Int) {
-        mParams!!.windowAnimations = style
-    }
+
 
     fun show() {
         if (!mIsShow) {//如果Toast没有显示，则开始加载显示
@@ -148,9 +149,10 @@ class AnimToast(activity: Activity, toast: Toast){
             mTimer.schedule(object : TimerTask() {
                 override fun run() {
                     mWdm.removeView(toast.getView())
+                    toast.getListener()?.setOnToastDismissed()
                     mIsShow = false
                 }
-            }, toast.getDuration().toLong())
+            }, toast.getDuration())
         }
     }
 

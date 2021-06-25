@@ -1,9 +1,8 @@
-package com.example.xlulibrary.itf
+package com.example.xlulibrary.style
 
-import android.app.Activity
 import android.content.Context
 import android.view.View
-import com.example.xlulibrary.Location
+import com.example.xlulibrary.data.Location
 
 /**
  * @ClassName ToastStyle
@@ -13,12 +12,17 @@ import com.example.xlulibrary.Location
  */
 interface ToastStyle {
 
-    fun createView(activity: Activity):View
+    fun createView(context: Context):View
 
-    var location:Location
+    fun setView(view: View)
+
+    var location: Location
 
     var duration:Long
 
     var alpha:Float
+
+    var x:Int
+    var y:Int
 
 }

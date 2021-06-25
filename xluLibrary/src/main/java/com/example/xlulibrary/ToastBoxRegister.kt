@@ -4,21 +4,22 @@ import android.app.Activity
 import android.app.Application
 import android.app.Application.ActivityLifecycleCallbacks
 import android.os.Bundle
+import java.lang.ref.WeakReference
 
 
-class ActivityStack : ActivityLifecycleCallbacks {
+object ToastBoxRegister : ActivityLifecycleCallbacks {
 
 
-    var foregroundActivity: Activity? = null
+    private var foregroundActivity: WeakReference<Activity>? = null
 
-    companion object {
-        fun register(application: Application): ActivityStack {
-            val lifecycle = ActivityStack()
-            application.registerActivityLifecycleCallbacks(lifecycle)
-            return lifecycle
-        }
+
+    fun init(application: Application){
+        application.registerActivityLifecycleCallbacks(this)
     }
 
+    fun getCurrentActivity():Activity{
+        return foregroundActivity?.get()!!
+    }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
 
@@ -26,7 +27,7 @@ class ActivityStack : ActivityLifecycleCallbacks {
 
 
     override fun onActivityResumed(activity: Activity) {
-        foregroundActivity = activity
+        foregroundActivity = WeakReference(activity)
     }
 
     override fun onActivityPaused(activity: Activity) {

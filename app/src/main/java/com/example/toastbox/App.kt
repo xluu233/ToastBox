@@ -1,7 +1,7 @@
 package com.example.toastbox
 
 import android.app.Application
-import com.example.xlulibrary.ToastBox
+import com.example.xlulibrary.ToastBoxRegister
 
 /**
  * @ClassName App
@@ -13,7 +13,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        ToastBox.init(this)
+        ToastBoxRegister.init(this)
     }
 
 
