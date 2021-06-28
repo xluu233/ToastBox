@@ -21,7 +21,9 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
         return foregroundActivity?.get()!!
     }
 
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+        foregroundActivity = WeakReference(activity)
+    }
 
     override fun onActivityStarted(activity: Activity) {}
 

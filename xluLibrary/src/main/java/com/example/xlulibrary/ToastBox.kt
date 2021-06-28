@@ -18,7 +18,11 @@ import com.example.xlulibrary.style.NormalStyle
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/6/17 16:40
  */
-class ToastBox(private val context: Context){
+class ToastBox(){
+
+    private val context:Context
+        get() = ToastBoxRegister.getCurrentActivity()
+
 
     var mToastStyle : ToastStyle = NormalStyle()
     var mToastStrategy : ToastStrategy = ToastStrategyImpl(context)

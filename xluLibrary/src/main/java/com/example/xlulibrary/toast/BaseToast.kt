@@ -4,15 +4,19 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
+import android.os.Looper
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.R
+import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.util.findMessageView
 import com.example.xlulibrary.util.getLocaGravity
+import java.lang.ref.WeakReference
 import java.util.*
+import java.util.logging.Handler
 
 /**
  * @ClassName ToastImpl
@@ -44,7 +48,7 @@ class BaseToast(private val context: Context) : Toast {
     private var clickListener:ToastClickItf ?= null
 
     private val windowToast by lazy {
-        AnimToast(context, this)
+        AnimToast(context,this)
     }
 
     override fun show() {
@@ -133,7 +137,7 @@ class BaseToast(private val context: Context) : Toast {
 
 }
 
-class AnimToast(private val context: Context, toast: Toast){
+class AnimToast(context: Context,toast: Toast){
 
     private val mWdm: WindowManager
     private var mIsShow: Boolean = false
@@ -165,22 +169,22 @@ class AnimToast(private val context: Context, toast: Toast){
 
 
 
-    fun show() = (context as Activity).runOnUiThread{
+    fun show() {
         if (!mIsShow) {//如果Toast没有显示，则开始加载显示
             mIsShow = true
             mWdm.addView(toast.getView(), mParams)//将其加载到windowManager上
             mTimer.schedule(object : TimerTask() {
                 override fun run() {
-                    mWdm.removeView(toast.getView())
-                    toast.getListener()?.setOnToastDismissed()
-                    mIsShow = false
+                    cancle()
                 }
             }, toast.getDuration())
         }
     }
 
-    fun cancle() = (context as Activity).runOnUiThread{
+    fun cancle() {
         mWdm.removeView(toast.getView())
+        toast.getListener()?.setOnToastDismissed()
+        mIsShow = false
         mTimer.cancel()
     }
 
