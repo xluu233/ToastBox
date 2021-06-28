@@ -5,8 +5,11 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="transparent">#00000000</color>
-    <color name="white">#FFFFFF</color>
-    <color name="moren">#00574B</color>
 
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="white_hint">#FFFAFA</color>
+    <color name="black_hint">#455A64</color>
 
 </resources>

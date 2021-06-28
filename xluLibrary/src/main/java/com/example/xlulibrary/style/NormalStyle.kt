@@ -8,7 +8,7 @@ import com.example.xlulibrary.R
 
 /**
  * @ClassName NormalStyle
- * @Description TODO
+ * @Description 自定义toast样式
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/6/18 16:12
  */
@@ -39,6 +39,12 @@ class NormalStyle : ToastStyle {
             field = value
         }
 
+    override var backDrawable: Int = R.drawable.normal_shape_black
+
+    override var textStyle: Int = R.style.NormalStyle_textAppreance_black
+
+    override var anim: Int = R.style.MiuiToast
+
     var xyChanged = false
     var mView:View?=null
 
@@ -47,7 +53,6 @@ class NormalStyle : ToastStyle {
             return mView!!
         }
         val toastView = LayoutInflater.from(context).inflate(R.layout.toast_default, null)
-        toastView.alpha = alpha
         return toastView
     }
 

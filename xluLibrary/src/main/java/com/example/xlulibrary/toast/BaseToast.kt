@@ -1,7 +1,9 @@
 package com.example.xlulibrary.toast
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.PixelFormat
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
@@ -18,7 +20,7 @@ import java.util.*
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/6/18 17:10
  */
-class BaseToast(context: Context) : Toast {
+class BaseToast(private val context: Context) : Toast {
 
     override var x: Int = 0
     override var y: Int = 0
@@ -33,7 +35,7 @@ class BaseToast(context: Context) : Toast {
     var mView: View? = null
 
     /*动画*/
-    var anim:Int ?= R.style.MiuiToast
+    var anim:Int ?= null
 
     /** Toast 消息 View  */
     private var mMessageView: TextView? = null
@@ -107,10 +109,31 @@ class BaseToast(context: Context) : Toast {
         return clickListener
     }
 
+    override fun setBackDrawable(drawable: Int) {
+        mView?.background = context.getDrawable(drawable)
+    }
+
+    override fun setBackDrawable(drawable: Drawable) {
+        mView?.background = drawable
+    }
+
+    override fun getBackDrawable(): Drawable? {
+        return mView?.background
+    }
+
+    override fun setTextStyle(style: Int) {
+        mMessageView?.setTextAppearance(style)
+    }
+
+    override fun setAlpha(i: Float) {
+        mView?.alpha = i
+    }
+
+
 
 }
 
-class AnimToast(context: Context, toast: Toast){
+class AnimToast(private val context: Context, toast: Toast){
 
     private val mWdm: WindowManager
     private var mIsShow: Boolean = false
@@ -142,7 +165,7 @@ class AnimToast(context: Context, toast: Toast){
 
 
 
-    fun show() {
+    fun show() = (context as Activity).runOnUiThread{
         if (!mIsShow) {//如果Toast没有显示，则开始加载显示
             mIsShow = true
             mWdm.addView(toast.getView(), mParams)//将其加载到windowManager上
@@ -156,7 +179,7 @@ class AnimToast(context: Context, toast: Toast){
         }
     }
 
-    fun cancle(){
+    fun cancle() = (context as Activity).runOnUiThread{
         mWdm.removeView(toast.getView())
         mTimer.cancel()
     }

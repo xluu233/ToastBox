@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.FloatRange
 import com.example.xlulibrary.data.Location
+import com.example.xlulibrary.data.TextStyle
 import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.strategy.ToastStrategyImpl
 import com.example.xlulibrary.strategy.ToastStrategy
@@ -20,7 +21,7 @@ import com.example.xlulibrary.style.NormalStyle
 class ToastBox(private val context: Context){
 
     var mToastStyle : ToastStyle = NormalStyle()
-    var mToastStrategy : ToastStrategy = ToastStrategyImpl()
+    var mToastStrategy : ToastStrategy = ToastStrategyImpl(context)
 
     fun show(text: String?,duration:Long?=null):ToastBox  = apply{
         if (text.isNullOrEmpty()) {
@@ -30,7 +31,7 @@ class ToastBox(private val context: Context){
             mToastStyle.duration = it
         }
         mToastStrategy.setStyle(mToastStyle)
-        mToastStrategy.show(context,text.toString())
+        mToastStrategy.show(text.toString())
     }
 
     fun show(res: Int?,duration:Long?=null){
@@ -79,4 +80,27 @@ class ToastBox(private val context: Context){
         mToastStrategy.cancle()
     }
 
+
+    /**
+     * TODO 设置通用显示样式
+     * 默认提供白色和灰色两种样式，其他样式可通过自定义ToastStyle实现
+     * @param textStyle
+     * @return
+     */
+    fun setTextStyle(textStyle: TextStyle):ToastBox = apply{
+        when(textStyle){
+            TextStyle.Black -> {
+                mToastStyle.apply {
+                    backDrawable = R.drawable.normal_shape_black
+                    this.textStyle = R.style.NormalStyle_textAppreance_black
+                }
+            }
+            TextStyle.White -> {
+                mToastStyle.apply {
+                    backDrawable = R.drawable.normal_shape_white
+                    this.textStyle = R.style.NormalStyle_textAppreance_white
+                }
+            }
+        }
+    }
 }

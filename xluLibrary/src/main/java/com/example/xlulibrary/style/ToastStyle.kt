@@ -1,6 +1,7 @@
 package com.example.xlulibrary.style
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.View
 import com.example.xlulibrary.data.Location
 
@@ -12,17 +13,45 @@ import com.example.xlulibrary.data.Location
  */
 interface ToastStyle {
 
+    /**
+     * 创建视图
+     */
     fun createView(context: Context):View
-
     fun setView(view: View)
 
+    /**
+     * 位置
+     */
     var location: Location
 
+    /**
+     * 显示时间
+     */
     var duration:Long
 
+    /**
+     * 整体透明度
+     */
     var alpha:Float
 
+    /**
+     * x，y坐标
+     */
     var x:Int
     var y:Int
 
+    /**
+     * 背景样式
+     */
+    var backDrawable : Int
+
+    /**
+     * 字体样式
+     */
+    var textStyle : Int
+
+    /**
+     * 弹出动画
+     */
+    var anim:Int
 }

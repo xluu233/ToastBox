@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.View
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.ToastBox
+import com.example.xlulibrary.data.TextStyle
 import com.example.xlulibrary.itf.ToastClickItf
+import kotlin.concurrent.thread
 
 const val TAG = "ToastBox"
 
@@ -54,6 +56,21 @@ class MainActivity : AppCompatActivity() {
                         Log.d(TAG,"toast dismissed")
                     }
                 }).show("哈啊啊啊啊啊哼哼",3000L)
+            }
+            R.id.button8 -> {
+                ToastBox(this).setTextStyle(TextStyle.White).setXY(0,300).show("白色Toast")
+                ToastBox(this).setTextStyle(TextStyle.Black).show("灰色Toast")
+            }
+            R.id.button9 -> {
+                thread {
+                    ToastBox(this).show("${Thread.currentThread().name}")
+                }
+            }
+            R.id.button10 -> {
+
+            }
+            R.id.button11 -> {
+
             }
         }
     }

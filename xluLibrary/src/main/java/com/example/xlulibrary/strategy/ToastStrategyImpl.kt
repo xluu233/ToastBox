@@ -1,7 +1,10 @@
 package com.example.xlulibrary.strategy
 
+import android.app.Activity
 import android.content.Context
-import com.example.xlulibrary.data.Location
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.toast.BaseToast
 import com.example.xlulibrary.toast.Toast
@@ -14,7 +17,7 @@ import com.example.xlulibrary.style.NormalStyle
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/6/18 16:40
  */
-class ToastStrategyImpl() : ToastStrategy {
+class ToastStrategyImpl(private val context: Context) : ToastStrategy{
 
     private lateinit var toast: Toast
     private var style: ToastStyle = NormalStyle()
@@ -29,24 +32,27 @@ class ToastStrategyImpl() : ToastStrategy {
         clickListener = clickItf
     }
 
-    override fun createToast(context: Context): Toast {
+    override fun createToast(): Toast {
         val toast = BaseToast(context)
         toast.setView(style.createView(context))
         toast.setGravity(style.location)
         toast.setDuration(style.duration)
+        toast.setAnim(style.anim)
+        toast.setTextStyle(style.textStyle)
+        toast.setBackDrawable(style.backDrawable)
         toast.x = style.x
         toast.y = style.y
+        toast.setAlpha(style.alpha)
         toast.setListener(clickListener)
         return toast
     }
 
 
-    override fun show(context: Context,text: String) {
-        toast = createToast(context)
+    override fun show(text: String) {
+        toast = createToast()
         toast.setText(text)
         toast.show()
     }
-
 
     override fun cancle() {
         toast.cancel()

@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Button"
+            android:text="切换默认样式"
             android:onClick="toastNormal"/>
 
         <Button
@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Button"
+            android:text="子线程调用"
             android:onClick="toastNormal"/>
 
         <Button
