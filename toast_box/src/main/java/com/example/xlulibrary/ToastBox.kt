@@ -31,8 +31,6 @@ class ToastBox(private val context:Context){
     private var _mToastStrategy : ToastStrategy ?= ToastStrategyImpl(context)
     private val mToastStrategy get() = _mToastStrategy!!
 
-
-
     fun show(text: String?,duration:Long?=null):ToastBox  = apply{
         if (text.isNullOrEmpty()) {
             return@apply

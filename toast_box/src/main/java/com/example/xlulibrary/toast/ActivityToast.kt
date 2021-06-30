@@ -71,9 +71,12 @@ class ActivityToast(private val context: Context) : Toast {
             return
         }
         mMessageView = findMessageView(mView!!)
-        mMessageView?.setOnClickListener {
+/*        mMessageView?.setOnClickListener {
             clickListener?.setOnTextClicked()
         }
+        mView?.setOnClickListener {
+            clickListener?.setOnToastClicked()
+        }*/
     }
 
     override fun getView(): View? {

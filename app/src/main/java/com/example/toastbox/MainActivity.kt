@@ -49,10 +49,6 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.button7 -> {
                 ToastBox(this).setListener(object : ToastClickItf{
-                    override fun setOnTextClicked() {
-                        Log.d(TAG,"text clicked")
-                    }
-
                     override fun setOnToastDismissed() {
                         Log.d(TAG,"toast dismissed")
                     }

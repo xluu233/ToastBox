@@ -8,7 +8,9 @@ package com.example.xlulibrary.itf
  */
 interface ToastClickItf {
 
-    fun setOnTextClicked()
+/*    fun setOnToastClicked()
+
+    fun setOnTextClicked()*/
 
     fun setOnToastDismissed()
 
