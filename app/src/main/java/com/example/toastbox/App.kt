@@ -3,6 +3,8 @@ package com.example.toastbox
 import android.app.Application
 import android.widget.Toast
 import com.example.xlulibrary.ToastBoxRegister
+import com.example.xlulibrary.data.TextStyle
+import com.example.xlulibrary.data.ToastType
 
 /**
  * @ClassName App
@@ -14,8 +16,13 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        //ToastBoxRegister.init(this)
-        //Toast.makeText(this,"12131231",Toast.LENGTH_LONG).show()
+        ToastBoxRegister.init(this).apply {
+            //toast类型：系统toast，windowsManger实现自定义toast
+            toastType = ToastType.WindowsToast
+
+            //text样式：白色和灰色
+            textStyle = TextStyle.White
+        }
     }
 
 

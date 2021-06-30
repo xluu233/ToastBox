@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.TextView
+import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.util.ViewUtils
@@ -49,7 +50,11 @@ class ActivityToast(private val context: Context) : Toast {
 
 
     private val toast by lazy {
-        WindowsMangerToast(context as Activity,this)
+        if (context is Activity){
+            WindowsMangerToast(context as Activity,this)
+        }else{
+            WindowsMangerToast(ToastBoxRegister.getActivity(),this)
+        }
     }
 
     override fun show() {
@@ -71,12 +76,12 @@ class ActivityToast(private val context: Context) : Toast {
             return
         }
         mMessageView = findMessageView(mView!!)
-/*        mMessageView?.setOnClickListener {
-            clickListener?.setOnTextClicked()
+        mMessageView?.setOnClickListener {
+            //clickListener?.setOnTextClicked()
         }
         mView?.setOnClickListener {
-            clickListener?.setOnToastClicked()
-        }*/
+            //clickListener?.setOnToastClicked()
+        }
     }
 
     override fun getView(): View? {
@@ -138,9 +143,7 @@ class ActivityToast(private val context: Context) : Toast {
     }
 
     override fun clear() {
-        //ViewUtils.gcViews(_mView?.get())
-        //ViewUtils.gcViews(mMessageView)
-        //_mView?.clear()
+        ViewUtils.gcViews(mView)
         mMessageView = null
         mView = null
     }

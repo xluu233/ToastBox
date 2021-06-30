@@ -3,6 +3,8 @@ package com.example.xlulibrary.strategy
 import android.app.Activity
 import android.content.Context
 import android.view.View
+import com.example.xlulibrary.ToastBoxRegister
+import com.example.xlulibrary.data.ToastType
 import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.toast.ActivityToast
 import com.example.xlulibrary.toast.Toast
@@ -36,10 +38,16 @@ class ToastStrategyImpl(private val context: Context) : ToastStrategy{
     }
 
     override fun createToast(): Toast {
-        val toast = if (context is Activity){
-            ActivityToast(context)
-        }else{
-            ActivityToast(context)
+        val toast = when(ToastBoxRegister.toastType){
+            ToastType.SystemToast -> {
+                ActivityToast(context)
+            }
+            ToastType.WindowsToast,ToastType.WindowsToastImage -> {
+                ActivityToast(context)
+            }
+            else -> {
+                ActivityToast(context)
+            }
         }
         if (view==null){
             toast.setView(style.createView(context))

@@ -1,11 +1,13 @@
 package com.example.xlulibrary
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.FloatRange
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.data.TextStyle
+import com.example.xlulibrary.data.ToastType
 import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.strategy.ToastStrategyImpl
 import com.example.xlulibrary.strategy.ToastStrategy
@@ -21,7 +23,6 @@ import kotlin.concurrent.timerTask
  * @Date 2021/6/17 16:40
  */
 class ToastBox(private val context:Context){
-
 
     private var timer:Timer ?= Timer()
 
@@ -40,9 +41,13 @@ class ToastBox(private val context:Context){
         }
         mToastStrategy.setStyle(mToastStyle)
         mToastStrategy.show(text.toString())
+
+        //延迟销毁toast
         timer?.schedule(timerTask {
-            dismiss()
-        },mToastStyle.duration)
+            _mToastStyle = null
+            _mToastStrategy = null
+            timer = null
+        },mToastStyle.duration+1000)
     }
 
     fun show(res: Int?,duration:Long?=null):ToastBox  = apply{
@@ -51,6 +56,10 @@ class ToastBox(private val context:Context){
             return@apply
         }
         show(text.toString(),duration)
+    }
+
+    fun setToastType(type: ToastType):ToastBox = apply{
+        ToastBoxRegister.toastType = type
     }
 
     fun setLocation(location: Location):ToastBox  = apply{
@@ -89,13 +98,6 @@ class ToastBox(private val context:Context){
 
     fun dismiss(){
         mToastStrategy.cancle()
-        _mToastStyle = null
-        _mToastStrategy = null
-        timer = null
-/*        timer.schedule(timerTask {
-            _mToastStyle = null
-            _mToastStrategy = null
-        },200)*/
     }
 
 
@@ -106,6 +108,7 @@ class ToastBox(private val context:Context){
      * @return
      */
     fun setTextStyle(textStyle: TextStyle):ToastBox = apply{
+        ToastBoxRegister.textStyle = textStyle
         when(textStyle){
             TextStyle.Black -> {
                 mToastStyle.apply {

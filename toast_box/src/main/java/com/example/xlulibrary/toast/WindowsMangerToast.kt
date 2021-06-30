@@ -20,7 +20,7 @@ import java.util.*
 class WindowsMangerToast(private val activity: Activity,private val toast: Toast){
 
     private var mIsShow: Boolean = false
-    //private val mTimer: Timer = Timer()
+    private val mTimer: Timer = Timer()
     private var mParams: WindowManager.LayoutParams? = null
     private val windowLifecycle = WindowLifecycle(activity)
     private val handler = Handler(Looper.getMainLooper())
@@ -48,11 +48,11 @@ class WindowsMangerToast(private val activity: Activity,private val toast: Toast
 
     private val showRunnable : Runnable = Runnable {
         mWdm.get()?.addView(toast.getView(), mParams)//将其加载到windowManager上
-/*        mTimer.schedule(object : TimerTask() {
+        mTimer.schedule(object : TimerTask() {
             override fun run() {
                 cancle()
             }
-        }, toast.getDuration())*/
+        }, toast.getDuration())
         mIsShow = true
     }
 
@@ -61,7 +61,7 @@ class WindowsMangerToast(private val activity: Activity,private val toast: Toast
         mWdm.get()?.removeView(toast.getView())
         toast.getListener()?.setOnToastDismissed()
         mIsShow = false
-        //mTimer.cancel()
+        mTimer.cancel()
         mParams = null
         windowLifecycle.unregister()
     }
