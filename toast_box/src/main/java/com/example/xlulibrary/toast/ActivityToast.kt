@@ -1,22 +1,17 @@
 package com.example.xlulibrary.toast
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
-import android.os.Looper
 import android.view.View
-import android.view.WindowManager
 import android.widget.TextView
 import com.example.xlulibrary.data.Location
-import com.example.xlulibrary.R
-import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.itf.ToastClickItf
+import com.example.xlulibrary.util.ViewUtils
 import com.example.xlulibrary.util.findMessageView
 import com.example.xlulibrary.util.getLocaGravity
 import java.lang.ref.WeakReference
-import java.util.*
-import java.util.logging.Handler
 
 /**
  * @ClassName ToastImpl
@@ -24,7 +19,7 @@ import java.util.logging.Handler
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/6/18 17:10
  */
-class BaseToast(private val context: Context) : Toast {
+class ActivityToast(private val context: Context) : Toast {
 
     override var x: Int = 0
     override var y: Int = 0
@@ -36,41 +31,46 @@ class BaseToast(private val context: Context) : Toast {
     var mDuration = 0L
 
     /** Toast 布局  */
-    var mView: View? = null
+//    var _mView: WeakReference<View> ?= null
+//    val mView : View? get() = _mView?.get()
 
     /*动画*/
     var anim:Int ?= null
 
     /** Toast 消息 View  */
-    private var mMessageView: TextView? = null
+//    private var _mMessageView: WeakReference<TextView> ?= null
+//    private val mMessageView get() = _mMessageView?.get()
+
+    private var mView:View ?= null
+    private var mMessageView : TextView ?= null
 
     /*事件监听*/
     private var clickListener:ToastClickItf ?= null
 
-    private val windowToast by lazy {
-        AnimToast(context,this)
+
+    private val toast by lazy {
+        WindowsMangerToast(context as Activity,this)
     }
 
     override fun show() {
-        windowToast.show()
+        toast.show()
     }
 
     override fun cancel() {
-        windowToast.cancle()
-        clickListener?.setOnToastDismissed()
+        toast.cancle()
     }
 
     override fun setText(text: String) {
         mMessageView?.text = text
     }
 
-    override fun setView(view: View) {
+    override fun setView(view: View?) {
         mView = view
         if (mView==null){
             mMessageView = null
             return
         }
-        mMessageView = findMessageView(view)
+        mMessageView = findMessageView(mView!!)
         mMessageView?.setOnClickListener {
             clickListener?.setOnTextClicked()
         }
@@ -113,6 +113,7 @@ class BaseToast(private val context: Context) : Toast {
         return clickListener
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun setBackDrawable(drawable: Int) {
         mView?.background = context.getDrawable(drawable)
     }
@@ -133,59 +134,13 @@ class BaseToast(private val context: Context) : Toast {
         mView?.alpha = i
     }
 
-
-
-}
-
-class AnimToast(context: Context,toast: Toast){
-
-    private val mWdm: WindowManager
-    private var mIsShow: Boolean = false
-    private val mTimer: Timer
-    private var mParams: WindowManager.LayoutParams? = null
-    private var toast: Toast
-
-    init {
-        mIsShow = false
-        mWdm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        mTimer = Timer()
-        this.toast = toast
-        setParams()
+    override fun clear() {
+        //ViewUtils.gcViews(_mView?.get())
+        //ViewUtils.gcViews(mMessageView)
+        //_mView?.clear()
+        mMessageView = null
+        mView = null
     }
 
-    private fun setParams() {
-        mParams = WindowManager.LayoutParams()
-        mParams?.apply {
-            height = WindowManager.LayoutParams.WRAP_CONTENT
-            width = WindowManager.LayoutParams.WRAP_CONTENT
-            format = PixelFormat.TRANSLUCENT
-            flags = (WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-            gravity = toast.getGravity()
-            windowAnimations = toast.getAnim()
-            this.x = toast.x
-            this.y = toast.y
-        }
-    }
-
-
-
-    fun show() {
-        if (!mIsShow) {//如果Toast没有显示，则开始加载显示
-            mIsShow = true
-            mWdm.addView(toast.getView(), mParams)//将其加载到windowManager上
-            mTimer.schedule(object : TimerTask() {
-                override fun run() {
-                    cancle()
-                }
-            }, toast.getDuration())
-        }
-    }
-
-    fun cancle() {
-        mWdm.removeView(toast.getView())
-        toast.getListener()?.setOnToastDismissed()
-        mIsShow = false
-        mTimer.cancel()
-    }
 
 }

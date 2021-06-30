@@ -1,6 +1,7 @@
 package com.example.xlulibrary.strategy
 
 import android.content.Context
+import android.view.View
 import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.toast.Toast
 import com.example.xlulibrary.style.ToastStyle
@@ -25,4 +26,5 @@ interface ToastStrategy {
 
     fun setListener(clickItf: ToastClickItf)
 
+    var view:View?
 }

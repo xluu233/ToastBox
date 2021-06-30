@@ -1,6 +1,7 @@
 package com.example.toastbox
 
 import android.app.Application
+import android.widget.Toast
 import com.example.xlulibrary.ToastBoxRegister
 
 /**
@@ -13,7 +14,8 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        ToastBoxRegister.init(this)
+        //ToastBoxRegister.init(this)
+        //Toast.makeText(this,"12131231",Toast.LENGTH_LONG).show()
     }
 
 

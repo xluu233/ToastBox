@@ -46,19 +46,9 @@ class NormalStyle : ToastStyle {
     override var anim: Int = R.style.MiuiToast
 
     var xyChanged = false
-    var mView:View?=null
 
     override fun createView(context: Context) : View{
-        mView?.let {
-            return mView!!
-        }
-        val toastView = LayoutInflater.from(context).inflate(R.layout.toast_default, null)
-        return toastView
+        return LayoutInflater.from(context).inflate(R.layout.toast_default, null)
     }
-
-    override fun setView(view: View) {
-        mView = view
-    }
-
 
 }

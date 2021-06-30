@@ -9,6 +9,11 @@ class TestActivity2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test2)
-        ToastBox().show("Activity---2222")
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        ToastBox(this).show("Activity---2222",10000L)
     }
 }

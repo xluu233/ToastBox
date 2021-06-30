@@ -35,7 +35,7 @@ interface Toast {
     /**
      * TODO 设置布局
      */
-    fun setView(view: View)
+    fun setView(view: View?)
 
     /**
      * TODO 获取布局
@@ -92,5 +92,6 @@ interface Toast {
     fun setAlpha(i:Float)
     //fun getAlpha():Float
 
+    fun clear()
 
 }

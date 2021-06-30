@@ -11,6 +11,8 @@ import com.example.xlulibrary.strategy.ToastStrategyImpl
 import com.example.xlulibrary.strategy.ToastStrategy
 import com.example.xlulibrary.style.ToastStyle
 import com.example.xlulibrary.style.NormalStyle
+import java.util.*
+import kotlin.concurrent.timerTask
 
 /**
  * @ClassName ToastBox
@@ -18,14 +20,18 @@ import com.example.xlulibrary.style.NormalStyle
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/6/17 16:40
  */
-class ToastBox(){
-
-    private val context:Context
-        get() = ToastBoxRegister.getCurrentActivity()
+class ToastBox(private val context:Context){
 
 
-    var mToastStyle : ToastStyle = NormalStyle()
-    var mToastStrategy : ToastStrategy = ToastStrategyImpl(context)
+    private var timer:Timer ?= Timer()
+
+    private var _mToastStyle : ToastStyle ?= NormalStyle()
+    private val mToastStyle get() = _mToastStyle!!
+
+    private var _mToastStrategy : ToastStrategy ?= ToastStrategyImpl(context)
+    private val mToastStrategy get() = _mToastStrategy!!
+
+
 
     fun show(text: String?,duration:Long?=null):ToastBox  = apply{
         if (text.isNullOrEmpty()) {
@@ -36,12 +42,15 @@ class ToastBox(){
         }
         mToastStrategy.setStyle(mToastStyle)
         mToastStrategy.show(text.toString())
+        timer?.schedule(timerTask {
+            dismiss()
+        },mToastStyle.duration)
     }
 
-    fun show(res: Int?,duration:Long?=null){
+    fun show(res: Int?,duration:Long?=null):ToastBox  = apply{
         val text = res?.let { context.resources.getText(it) }
         if (text.isNullOrEmpty()) {
-            return
+            return@apply
         }
         show(text.toString(),duration)
     }
@@ -55,16 +64,16 @@ class ToastBox(){
     }
 
     fun setView(view: View):ToastBox = apply{
-        mToastStyle.setView(view)
+        mToastStrategy.view = view
     }
 
     fun setView(id:Int):ToastBox = apply{
         val view = LayoutInflater.from(context).inflate(id,null)
-        mToastStyle.setView(view)
+        mToastStrategy.view = view
     }
 
     fun setStyle(style: ToastStyle):ToastBox = apply{
-        mToastStyle = style
+        _mToastStyle = style
     }
 
     fun setXY(x:Int?=null,y:Int?=null):ToastBox = apply{
@@ -82,6 +91,13 @@ class ToastBox(){
 
     fun dismiss(){
         mToastStrategy.cancle()
+        _mToastStyle = null
+        _mToastStrategy = null
+        timer = null
+/*        timer.schedule(timerTask {
+            _mToastStyle = null
+            _mToastStrategy = null
+        },200)*/
     }
 
 
