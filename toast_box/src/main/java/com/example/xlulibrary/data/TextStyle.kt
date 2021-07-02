@@ -8,5 +8,6 @@ package com.example.xlulibrary.data
  */
 enum class TextStyle {
     Black,
-    White
+    White,
+    GRAY
 }

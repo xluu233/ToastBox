@@ -6,10 +6,21 @@
 
     <color name="transparent">#00000000</color>
 
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
 
-    <color name="white_hint">#FFFAFA</color>
-    <color name="black_hint">#455A64</color>
+    <color name="black">#000000</color>
+    <color name="black_1">#363636</color>
+    <color name="black_2">#1C1C1C</color>
+    <color name="black_3">#696969</color>
+
+
+    <color name="white">#FFFFFF</color>
+    <color name="white_1">#F8F8FF</color>
+    <color name="white_2">#F5F5F5</color>
+    <color name="white_3">#FFFFF0</color>
+
+    <color name="gray">#B5B5B5</color>
+    <color name="gray_1">#E8E8E8</color>
+    <color name="gray_2">#9C9C9C</color>
+
 
 </resources>

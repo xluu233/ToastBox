@@ -3,17 +3,19 @@ package com.example.toastbox
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.ToastBox
 import com.example.xlulibrary.data.TextStyle
 import com.example.xlulibrary.itf.ToastClickItf
+import com.example.xlulibrary.util.xLog
 import kotlin.concurrent.thread
 
-const val TAG = "ToastBox"
+
 
 class MainActivity : AppCompatActivity() {
+    private val TAG = "MainActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -37,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.button4 -> {
                 //自定义布局，传入View或者layout
-                ToastBox(this).setView(R.layout.custom_toast_common_1).show("This is Custom View")
+                ToastBox(this).setView(R.layout.custom_toast_common_1).show("This is Custom View",5000L)
             }
             R.id.button5 -> {
                 //设置toast时间
@@ -50,13 +52,14 @@ class MainActivity : AppCompatActivity() {
             R.id.button7 -> {
                 ToastBox(this).setListener(object : ToastClickItf{
                     override fun setOnToastDismissed() {
-                        Log.d(TAG,"toast dismissed")
+                        xLog.d(TAG,"toast dismissed")
                     }
                 }).show("哈啊啊啊啊啊哼哼",3000L)
             }
             R.id.button8 -> {
+                ToastBox(this).setTextStyle(TextStyle.GRAY).show("灰色Toast")
                 ToastBox(this).setTextStyle(TextStyle.White).setXY(0,300).show("白色Toast")
-                ToastBox(this).setTextStyle(TextStyle.Black).show("灰色Toast")
+                ToastBox(this).setTextStyle(TextStyle.Black).setXY(0,600).show("黑色Toast")
             }
             R.id.button9 -> {
                 thread {

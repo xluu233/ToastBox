@@ -1,10 +1,13 @@
 package com.example.xlulibrary.util
 
+
 import android.R
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
+import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.data.Location
+import com.example.xlulibrary.data.TextStyle
 import java.lang.ref.WeakReference
 import kotlin.reflect.KProperty
 
@@ -59,4 +62,40 @@ class Weak<T>(r: T) {
     operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) {
         this.reference = WeakReference(value)
     }
+}
+
+fun getDefaultBackDrawable():Int{
+    var drawablw:Int = com.example.xlulibrary.R.drawable.normal_shape_gray
+    ToastBoxRegister.textStyle?.let {
+        drawablw = when(it){
+            TextStyle.Black -> {
+                com.example.xlulibrary.R.drawable.normal_shape_black
+            }
+            TextStyle.White -> {
+                com.example.xlulibrary.R.drawable.normal_shape_white
+            }
+            TextStyle.GRAY -> {
+                com.example.xlulibrary.R.drawable.normal_shape_gray
+            }
+        }
+    }
+    return drawablw
+}
+
+fun getDefaultTextAppreance():Int{
+    var drawablw:Int = com.example.xlulibrary.R.style.NormalStyle_textAppreance_gray
+    ToastBoxRegister.textStyle?.let {
+        drawablw = when(it){
+            TextStyle.Black -> {
+                com.example.xlulibrary.R.style.NormalStyle_textAppreance_black
+            }
+            TextStyle.White -> {
+                com.example.xlulibrary.R.style.NormalStyle_textAppreance_white
+            }
+            TextStyle.GRAY -> {
+                com.example.xlulibrary.R.style.NormalStyle_textAppreance_gray
+            }
+        }
+    }
+    return drawablw
 }

@@ -2,9 +2,12 @@ package com.example.xlulibrary
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.FloatRange
+import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.data.TextStyle
 import com.example.xlulibrary.data.ToastType
@@ -13,6 +16,7 @@ import com.example.xlulibrary.strategy.ToastStrategyImpl
 import com.example.xlulibrary.strategy.ToastStrategy
 import com.example.xlulibrary.style.ToastStyle
 import com.example.xlulibrary.style.NormalStyle
+import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -24,13 +28,11 @@ import kotlin.concurrent.timerTask
  */
 class ToastBox(private val context:Context){
 
-    private var timer:Timer ?= Timer()
-
     private var _mToastStyle : ToastStyle ?= NormalStyle()
     private val mToastStyle get() = _mToastStyle!!
 
-    private var _mToastStrategy : ToastStrategy ?= ToastStrategyImpl(context)
-    private val mToastStrategy get() = _mToastStrategy!!
+    private var _mToastStrategy : WeakReference<ToastStrategy> ?= WeakReference(ToastStrategyImpl())
+    private val ToastStrategyImpl:ToastStrategy? get() = _mToastStrategy?.get()
 
     fun show(text: String?,duration:Long?=null):ToastBox  = apply{
         if (text.isNullOrEmpty()) {
@@ -39,18 +41,12 @@ class ToastBox(private val context:Context){
         duration?.let {
             mToastStyle.duration = it
         }
-        mToastStrategy.setStyle(mToastStyle)
-        mToastStrategy.show(text.toString())
-
-        //延迟销毁toast
-        timer?.schedule(timerTask {
-            _mToastStyle = null
-            _mToastStrategy = null
-            timer = null
-        },mToastStyle.duration+1000)
+        ToastBoxRegister.register(this@ToastBox)
+        ToastStrategyImpl?.setStyle(mToastStyle)
+        ToastStrategyImpl?.show(context,text.toString())
     }
 
-    fun show(res: Int?,duration:Long?=null):ToastBox  = apply{
+    fun show(@StringRes res: Int?,duration:Long?=null):ToastBox  = apply{
         val text = res?.let { context.resources.getText(it) }
         if (text.isNullOrEmpty()) {
             return@apply
@@ -71,12 +67,12 @@ class ToastBox(private val context:Context){
     }
 
     fun setView(view: View):ToastBox = apply{
-        mToastStrategy.view = view
+        ToastStrategyImpl?.setView(view)
     }
 
-    fun setView(id:Int):ToastBox = apply{
+    fun setView(@LayoutRes id:Int):ToastBox = apply{
         val view = LayoutInflater.from(context).inflate(id,null)
-        mToastStrategy.view = view
+        ToastStrategyImpl?.setView(view)
     }
 
     fun setStyle(style: ToastStyle):ToastBox = apply{
@@ -93,22 +89,21 @@ class ToastBox(private val context:Context){
     }
 
     fun setListener(listener:ToastClickItf):ToastBox = apply{
-        mToastStrategy.setListener(listener)
+        ToastStrategyImpl?.setListener(listener)
     }
 
     fun dismiss(){
-        mToastStrategy.cancle()
+        ToastStrategyImpl?.cancle()
     }
 
 
     /**
      * TODO 设置通用显示样式
-     * 默认提供白色和灰色两种样式，其他样式可通过自定义ToastStyle实现
+     * 默认提供白色、黑色、灰色样式，其他样式可通过自定义ToastStyle实现
      * @param textStyle
      * @return
      */
     fun setTextStyle(textStyle: TextStyle):ToastBox = apply{
-        ToastBoxRegister.textStyle = textStyle
         when(textStyle){
             TextStyle.Black -> {
                 mToastStyle.apply {
@@ -122,6 +117,15 @@ class ToastBox(private val context:Context){
                     this.textStyle = R.style.NormalStyle_textAppreance_white
                 }
             }
+            TextStyle.GRAY -> {
+                mToastStyle.apply {
+                    backDrawable = R.drawable.normal_shape_gray
+                    this.textStyle = R.style.NormalStyle_textAppreance_gray
+                }
+            }
         }
     }
+
+
+
 }

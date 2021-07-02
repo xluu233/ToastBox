@@ -5,6 +5,7 @@ import android.view.View
 import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.toast.Toast
 import com.example.xlulibrary.style.ToastStyle
+import java.lang.ref.WeakReference
 
 /**
  * @ClassName ToastD
@@ -14,11 +15,9 @@ import com.example.xlulibrary.style.ToastStyle
  */
 interface ToastStrategy {
 
-    //fun init(app:Application)
+    fun createToast(context: Context): Toast
 
-    fun createToast(): Toast
-
-    fun show(text:String)
+    fun show(context: Context,text:String)
 
     fun cancle()
 
@@ -26,5 +25,6 @@ interface ToastStrategy {
 
     fun setListener(clickItf: ToastClickItf)
 
-    var view:View?
+    fun setView(view: View)
+
 }

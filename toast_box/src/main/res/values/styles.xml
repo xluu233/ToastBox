@@ -9,17 +9,18 @@
     </style>
 
 
-    <style name="XToast">
+    <style name="ToastAnim_1">
         <item name="android:windowEnterAnimation">@anim/enter</item>
         <item name="android:windowExitAnimation">@anim/out</item>
     </style>
 
-    <style name="MiuiToast">
+    <style name="ToastAnim_2">
         <item name="android:windowEnterAnimation">@anim/anim_in</item>
         <item name="android:windowExitAnimation">@anim/anim_out</item>
     </style>
 
-    <style name="NormalStyle_textAppreance_black">
+
+    <style name="NormalStyle_textAppreance_gray">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
         <item name="android:maxLines">5</item>
@@ -27,12 +28,23 @@
         <!--行间距-->
         <item name="android:lineSpacingMultiplier">1.25</item>
         <!--横向间距-->
-        <item name="android:letterSpacing">0.1</item>
+        <item name="android:letterSpacing">0.05</item>
     </style>
 
 
+    <style name="NormalStyle_textAppreance_black">
+        <item name="android:textColor">@color/white_2</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:maxLines">5</item>
+        <item name="android:ellipsize">end</item>
+        <!--行间距-->
+        <item name="android:lineSpacingMultiplier">1.25</item>
+        <!--横向间距-->
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
     <style name="NormalStyle_textAppreance_white">
-        <item name="android:textColor">@color/black_hint</item>
+        <item name="android:textColor">@color/black_3</item>
         <item name="android:textSize">16sp</item>
         <item name="android:maxLines">5</item>
         <item name="android:ellipsize">end</item>
@@ -40,7 +52,7 @@
         <!--行间距-->
         <item name="android:lineSpacingMultiplier">1.25</item>
         <!--横向间距-->
-        <item name="android:letterSpacing">0.1</item>
+        <item name="android:letterSpacing">0.05</item>
     </style>
 
 </resources>

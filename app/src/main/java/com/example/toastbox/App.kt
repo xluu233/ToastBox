@@ -19,9 +19,8 @@ class App : Application() {
         ToastBoxRegister.init(this).apply {
             //toast类型：系统toast，windowsManger实现自定义toast
             toastType = ToastType.WindowsToast
-
             //text样式：白色和灰色
-            textStyle = TextStyle.White
+            textStyle = TextStyle.GRAY
         }
     }
 

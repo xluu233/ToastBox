@@ -1,6 +1,5 @@
 package com.example.xlulibrary.strategy
 
-import android.app.Activity
 import android.content.Context
 import android.view.View
 import com.example.xlulibrary.ToastBoxRegister
@@ -18,26 +17,37 @@ import java.lang.ref.WeakReference
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/6/18 16:40
  */
-class ToastStrategyImpl(private val context: Context) : ToastStrategy{
+class ToastStrategyImpl : ToastStrategy{
+
+
+    private var _view: WeakReference<View> ?= null
+    private val view get() = _view?.get()
 
     private var _toast: WeakReference<Toast> ?= null
     private val toast get() = _toast?.get()
-    private var _style : ToastStyle ?= NormalStyle()
-    private val style : ToastStyle get() = _style!!
 
-    override var view: View? = null
-
+    private var style : ToastStyle = NormalStyle()
     private var clickListener:ToastClickItf ?= null
 
+
     override fun setStyle(style: ToastStyle) {
-        this._style = style
+        this.style = style
     }
 
     override fun setListener(clickItf: ToastClickItf) {
         clickListener = clickItf
     }
 
-    override fun createToast(): Toast {
+    private var useCustomView:Boolean = false
+
+    @Synchronized
+    override fun setView(view: View) {
+        useCustomView = true
+        _view = WeakReference(view)
+    }
+
+    @Synchronized
+    override fun createToast(context: Context): Toast {
         val toast = when(ToastBoxRegister.toastType){
             ToastType.SystemToast -> {
                 ActivityToast(context)
@@ -49,13 +59,14 @@ class ToastStrategyImpl(private val context: Context) : ToastStrategy{
                 ActivityToast(context)
             }
         }
-        if (view==null){
+        if (useCustomView && view!=null){
+            //自定义View
+            toast.setView(view)
+            useCustomView = false
+        }else{
             toast.setView(style.createView(context))
             toast.setTextStyle(style.textStyle)
             toast.setBackDrawable(style.backDrawable)
-        }else{
-            //自定义View
-            toast.setView(view!!)
         }
         toast.setGravity(style.location)
         toast.setDuration(style.duration)
@@ -68,16 +79,16 @@ class ToastStrategyImpl(private val context: Context) : ToastStrategy{
     }
 
 
-    override fun show(text: String) {
-        _toast = WeakReference(createToast())
+    override fun show(context:Context,text: String) {
+        _toast = WeakReference(createToast(context))
         toast?.setText(text)
         toast?.show()
     }
 
     override fun cancle() {
         toast?.cancel()
+        _view = null
         _toast = null
-        _style = null
     }
 
 

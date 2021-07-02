@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import com.example.xlulibrary.toast.Toast
+import com.example.xlulibrary.util.xLog
 import java.lang.ref.WeakReference
 
 /**
@@ -14,9 +15,9 @@ import java.lang.ref.WeakReference
  * time   : 2018/11/06
  * desc   : WindowManager 生命周期管控
  */
-const val TAG = "WindowLifecycle"
 class WindowLifecycle(private var activity: Activity) : ActivityLifecycleCallbacks {
 
+    private val TAG = "WindowLifecycle"
 
     /** 自定义 Toast 实现类  */
     private var mToastImpl: WeakReference<Toast> ?= null
@@ -35,7 +36,7 @@ class WindowLifecycle(private var activity: Activity) : ActivityLifecycleCallbac
         if (this.activity == activity) {
             // 不能放在 onStop 或者 onDestroyed 方法中，因为此时新的 Activity 已经创建完成，必须在这个新的 Activity 未创建之前关闭这个 WindowManager
             // 调用取消显示会直接导致新的 Activity 的 onCreate 调用显示吐司可能显示不出来的问题，又或者有时候会立马显示然后立马消失的那种效果
-            Log.d(TAG,"${activity.localClassName}--onActivityPaused")
+            xLog.d(TAG,"${activity.localClassName}--onActivityPaused")
             mToastImpl?.get()?.cancel()
         }
     }
@@ -44,7 +45,7 @@ class WindowLifecycle(private var activity: Activity) : ActivityLifecycleCallbac
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
     override fun onActivityDestroyed(activity: Activity) {
         if (this.activity == activity) {
-            Log.d(TAG,"${activity.localClassName}--onActivityDestroyed")
+            xLog.d(TAG,"${activity.localClassName}--onActivityDestroyed")
             mToastImpl?.get()?.cancel()
             unregister()
         }

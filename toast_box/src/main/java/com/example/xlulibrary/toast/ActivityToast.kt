@@ -31,16 +31,8 @@ class ActivityToast(private val context: Context) : Toast {
     /** Toast 显示时长  */
     var mDuration = 0L
 
-    /** Toast 布局  */
-//    var _mView: WeakReference<View> ?= null
-//    val mView : View? get() = _mView?.get()
-
     /*动画*/
     var anim:Int ?= null
-
-    /** Toast 消息 View  */
-//    private var _mMessageView: WeakReference<TextView> ?= null
-//    private val mMessageView get() = _mMessageView?.get()
 
     private var mView:View ?= null
     private var mMessageView : TextView ?= null
@@ -76,12 +68,6 @@ class ActivityToast(private val context: Context) : Toast {
             return
         }
         mMessageView = findMessageView(mView!!)
-        mMessageView?.setOnClickListener {
-            //clickListener?.setOnTextClicked()
-        }
-        mView?.setOnClickListener {
-            //clickListener?.setOnToastClicked()
-        }
     }
 
     override fun getView(): View? {
