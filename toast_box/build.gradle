@@ -3,7 +3,7 @@ plugins {
     id 'kotlin-android'
 }
 apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.IMAlex233'
+group='com.github.xluu233'
 
 android {
     compileSdkVersion 30
