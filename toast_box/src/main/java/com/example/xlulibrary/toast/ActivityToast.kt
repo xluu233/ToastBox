@@ -55,6 +55,7 @@ class ActivityToast(private val context: Context) : Toast {
 
     override fun cancel() {
         toast.cancle()
+        ToastBoxRegister.unRegister(this)
     }
 
     override fun setText(text: String) {

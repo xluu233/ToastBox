@@ -41,9 +41,9 @@ class ToastBox(private val context:Context){
         duration?.let {
             mToastStyle.duration = it
         }
-        ToastBoxRegister.register(this@ToastBox)
         ToastStrategyImpl?.setStyle(mToastStyle)
         ToastStrategyImpl?.show(context,text.toString())
+        ToastBoxRegister.register( ToastStrategyImpl?.getIToast())
     }
 
     fun show(@StringRes res: Int?,duration:Long?=null):ToastBox  = apply{

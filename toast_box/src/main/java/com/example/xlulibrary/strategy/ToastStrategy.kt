@@ -17,6 +17,8 @@ interface ToastStrategy {
 
     fun createToast(context: Context): Toast
 
+    fun getIToast():Toast?
+
     fun show(context: Context,text:String)
 
     fun cancle()

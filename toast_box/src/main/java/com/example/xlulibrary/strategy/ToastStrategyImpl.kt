@@ -78,6 +78,9 @@ class ToastStrategyImpl : ToastStrategy{
         return toast
     }
 
+    override fun getIToast(): Toast? {
+        return toast
+    }
 
     override fun show(context:Context,text: String) {
         _toast = WeakReference(createToast(context))

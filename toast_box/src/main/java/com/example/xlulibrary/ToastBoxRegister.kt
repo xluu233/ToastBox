@@ -5,9 +5,9 @@ import android.app.Application
 import android.app.Application.ActivityLifecycleCallbacks
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import com.example.xlulibrary.data.TextStyle
 import com.example.xlulibrary.data.ToastType
+import com.example.xlulibrary.toast.Toast
 import com.example.xlulibrary.util.xLog
 import java.lang.ref.WeakReference
 import java.util.concurrent.LinkedBlockingQueue
@@ -36,7 +36,7 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
     /**
      * 用来保存toastBox实例
      */
-    private var _boxStack = WeakReference(LinkedBlockingQueue<ToastBox>())
+    private var _boxStack = WeakReference(LinkedBlockingQueue<Toast>())
     private var boxStack = _boxStack.get()!!
 
     /**
@@ -94,20 +94,24 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
      * 记录toastBox弹出数量
      */
     @Synchronized
-    fun register(toastBox: ToastBox){
+    fun register(toast: Toast?){
         xLog.d(TAG,"register")
-        boxStack.offer(toastBox)
+        toast?.let {
+            boxStack.offer(it)
+        }
         while (boxStack.size > stackSize){
             xLog.d(TAG,"POLL")
-            val box = boxStack.poll()
-            box?.dismiss()
+            val toast1 = boxStack.poll()
+            toast1.cancel()
             xLog.d(TAG,"toast_size:${boxStack.size}")
         }
     }
 
-    fun unRegister(toastBox: ToastBox){
+    fun unRegister(toast:Toast?){
         xLog.d(TAG,"unRegister")
-        boxStack.remove(toastBox)
+        toast?.let {
+            boxStack.remove(it)
+        }
     }
 
 
