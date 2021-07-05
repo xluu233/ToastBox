@@ -9,6 +9,7 @@ import com.example.xlulibrary.toast.ActivityToast
 import com.example.xlulibrary.toast.Toast
 import com.example.xlulibrary.style.ToastStyle
 import com.example.xlulibrary.style.NormalStyle
+import com.example.xlulibrary.toast.SystemToast
 import java.lang.ref.WeakReference
 
 /**
@@ -46,17 +47,19 @@ class ToastStrategyImpl : ToastStrategy{
         _view = WeakReference(view)
     }
 
+    private var iconDrawable:Int ?= null
+    override fun setIcon(drawable: Int?) {
+        this.iconDrawable = drawable
+    }
+
     @Synchronized
-    override fun createToast(context: Context): Toast {
+    override fun createToast(): Toast {
         val toast = when(ToastBoxRegister.toastType){
             ToastType.SystemToast -> {
-                ActivityToast(context)
+                SystemToast(ToastBoxRegister.application)
             }
-            ToastType.WindowsToast,ToastType.WindowsToastImage -> {
-                ActivityToast(context)
-            }
-            else -> {
-                ActivityToast(context)
+            ToastType.WindowsToast -> {
+                ActivityToast(ToastBoxRegister.getActivity())
             }
         }
         if (useCustomView && view!=null){
@@ -64,9 +67,11 @@ class ToastStrategyImpl : ToastStrategy{
             toast.setView(view)
             useCustomView = false
         }else{
-            toast.setView(style.createView(context))
+            toast.setView(style.createView(ToastBoxRegister.getContext()))
             toast.setTextStyle(style.textStyle)
             toast.setBackDrawable(style.backDrawable)
+            ToastBoxRegister.defaultIcon?.let { toast.setIcon(it) }
+            toast.setIcon(iconDrawable)
         }
         toast.setGravity(style.location)
         toast.setDuration(style.duration)
@@ -83,7 +88,7 @@ class ToastStrategyImpl : ToastStrategy{
     }
 
     override fun show(context:Context,text: String) {
-        _toast = WeakReference(createToast(context))
+        _toast = WeakReference(createToast())
         toast?.setText(text)
         toast?.show()
     }

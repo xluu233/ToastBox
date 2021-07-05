@@ -1,0 +1,8 @@
+<resources>
+
+    <style name="MiuiToast">
+        <item name="android:windowEnterAnimation">@anim/anim_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_out</item>
+    </style>
+
+</resources>

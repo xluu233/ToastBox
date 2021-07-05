@@ -18,6 +18,10 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
 
     private var currentActivity: WeakReference<Activity> ?= null
 
+
+    lateinit var application: Application
+
+    var defaultIcon : Int ?= null
     /**
      * 设置toast默认实现方式
      */
@@ -49,6 +53,7 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
      */
     fun init(application: Application):ToastBoxRegister = apply{
         application.registerActivityLifecycleCallbacks(this)
+        this@ToastBoxRegister.application = application
     }
 
     fun getActivity():Activity{

@@ -87,6 +87,11 @@ interface Toast {
     fun setTextStyle(style:Int)
 
     /**
+     * TODO 设置默认显示图标
+     */
+    fun setIcon(drawable: Int?)
+
+    /**
      * TODO 设置透明度
      */
     fun setAlpha(i:Float)

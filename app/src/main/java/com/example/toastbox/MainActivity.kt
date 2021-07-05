@@ -73,6 +73,20 @@ class MainActivity : AppCompatActivity() {
                 //this.finish()
             }
             R.id.button11 -> {
+                //自定义图标，Android12会默认显示app图标
+                //可以在application初始化中设置默认图标
+                ToastBox(this).setToastIcon(R.drawable.ic_launcher_foreground).show("This is ToastBox")
+
+                //如果在application中初始化了默认图标，toast中也可以设置隐藏
+                //ToastBox(this).setToastIcon(null).show("This is ToastBox")
+            }
+            R.id.button12 -> {
+                ToastBox(this).setAnim(R.style.MiuiToast).show("切换弹出动画")
+            }
+            R.id.button13 -> {
+
+            }
+            R.id.button14 -> {
 
             }
         }

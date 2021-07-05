@@ -8,10 +8,7 @@ package com.example.xlulibrary.data
  */
 enum class ToastType {
     SystemToast,
-    SystemToastImage,
 
     WindowsToast,
-    WindowsToastImage,
-
 
 }

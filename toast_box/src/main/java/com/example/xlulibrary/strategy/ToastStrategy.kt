@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference
  */
 interface ToastStrategy {
 
-    fun createToast(context: Context): Toast
+    fun createToast(): Toast
 
     fun getIToast():Toast?
 
@@ -28,5 +28,7 @@ interface ToastStrategy {
     fun setListener(clickItf: ToastClickItf)
 
     fun setView(view: View)
+
+    fun setIcon(drawable:Int?)
 
 }

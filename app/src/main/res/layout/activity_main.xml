@@ -99,9 +99,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Button"
+            android:text="自定义图标"
             android:onClick="toastNormal"/>
 
+
+        <Button
+            android:id="@+id/button12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="切换Anim动画"
+            android:onClick="toastNormal"/>
+
+        <Button
+            android:id="@+id/button13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="自定义图标"
+            android:onClick="toastNormal"/>
+
+        <Button
+            android:id="@+id/button14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="自定义图标"
+            android:onClick="toastNormal"/>
 
     </LinearLayout>
 </ScrollView>

@@ -5,9 +5,7 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import androidx.annotation.FloatRange
-import androidx.annotation.LayoutRes
-import androidx.annotation.StringRes
+import androidx.annotation.*
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.data.TextStyle
 import com.example.xlulibrary.data.ToastType
@@ -34,9 +32,9 @@ class ToastBox(private val context:Context){
     private var _mToastStrategy : WeakReference<ToastStrategy> ?= WeakReference(ToastStrategyImpl())
     private val ToastStrategyImpl:ToastStrategy? get() = _mToastStrategy?.get()
 
-    fun show(text: String?,duration:Long?=null):ToastBox  = apply{
+    fun show(text: String?,duration:Long?=null){
         if (text.isNullOrEmpty()) {
-            return@apply
+            return
         }
         duration?.let {
             mToastStyle.duration = it
@@ -96,6 +94,9 @@ class ToastBox(private val context:Context){
         ToastStrategyImpl?.cancle()
     }
 
+    fun setToastIcon(@DrawableRes drawableRes: Int?):ToastBox = apply{
+        ToastStrategyImpl?.setIcon(drawableRes)
+    }
 
     /**
      * TODO 设置通用显示样式
@@ -126,6 +127,9 @@ class ToastBox(private val context:Context){
         }
     }
 
+    fun setAnim(@StyleRes anim: Int):ToastBox = apply{
+        mToastStyle.anim = anim
+    }
 
 
 }
