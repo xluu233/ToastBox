@@ -4,8 +4,7 @@ import android.app.Activity
 import android.app.Application.ActivityLifecycleCallbacks
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import com.example.xlulibrary.toast.Toast
+import com.example.xlulibrary.toast.xToast
 import com.example.xlulibrary.util.xLog
 import java.lang.ref.WeakReference
 
@@ -20,7 +19,7 @@ class WindowLifecycle(private var activity: Activity) : ActivityLifecycleCallbac
     private val TAG = "WindowLifecycle"
 
     /** 自定义 Toast 实现类  */
-    private var mToastImpl: WeakReference<Toast> ?= null
+    private var xToastImpl: WeakReference<xToast> ?= null
 
 
 
@@ -37,7 +36,7 @@ class WindowLifecycle(private var activity: Activity) : ActivityLifecycleCallbac
             // 不能放在 onStop 或者 onDestroyed 方法中，因为此时新的 Activity 已经创建完成，必须在这个新的 Activity 未创建之前关闭这个 WindowManager
             // 调用取消显示会直接导致新的 Activity 的 onCreate 调用显示吐司可能显示不出来的问题，又或者有时候会立马显示然后立马消失的那种效果
             xLog.d(TAG,"${activity.localClassName}--onActivityPaused")
-            mToastImpl?.get()?.cancel()
+            xToastImpl?.get()?.cancel()
         }
     }
 
@@ -46,13 +45,13 @@ class WindowLifecycle(private var activity: Activity) : ActivityLifecycleCallbac
     override fun onActivityDestroyed(activity: Activity) {
         if (this.activity == activity) {
             xLog.d(TAG,"${activity.localClassName}--onActivityDestroyed")
-            mToastImpl?.get()?.cancel()
+            xToastImpl?.get()?.cancel()
             unregister()
         }
     }
 
-    fun register(toast: Toast?) {
-        mToastImpl = WeakReference(toast)
+    fun register(xToast: xToast?) {
+        xToastImpl = WeakReference(xToast)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             activity.registerActivityLifecycleCallbacks(this)
         } else {
@@ -61,8 +60,8 @@ class WindowLifecycle(private var activity: Activity) : ActivityLifecycleCallbac
     }
 
     fun unregister() {
-        mToastImpl?.get()?.clear()
-        mToastImpl = null
+        xToastImpl?.get()?.clear()
+        xToastImpl = null
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             activity.unregisterActivityLifecycleCallbacks(this)
         } else {

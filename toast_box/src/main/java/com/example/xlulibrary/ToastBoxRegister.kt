@@ -5,9 +5,12 @@ import android.app.Application
 import android.app.Application.ActivityLifecycleCallbacks
 import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import com.example.xlulibrary.data.TextStyle
 import com.example.xlulibrary.data.ToastType
-import com.example.xlulibrary.toast.Toast
+import com.example.xlulibrary.toast.ActivityToast
+import com.example.xlulibrary.toast.SystemToast
+import com.example.xlulibrary.toast.xToast
 import com.example.xlulibrary.util.xLog
 import java.lang.ref.WeakReference
 import java.util.concurrent.LinkedBlockingQueue
@@ -17,7 +20,6 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
     private val TAG = "ToastBoxRegister"
 
     private var currentActivity: WeakReference<Activity> ?= null
-
 
     lateinit var application: Application
 
@@ -38,15 +40,30 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
     var animStyle:Int = R.style.ToastAnim_1
 
     /**
+     * 设置系统默认toast动画
+     */
+    var anim:Int = R.anim.anim_in
+
+    /**
      * 用来保存toastBox实例
      */
-    private var _boxStack = WeakReference(LinkedBlockingQueue<Toast>())
+    private var _boxStack = WeakReference(LinkedBlockingQueue<xToast>())
     private var boxStack = _boxStack.get()!!
 
     /**
-     * 同时最多弹出的toast数量
+     * WindowsToast同时最多弹出的数量
      */
-    private var stackSize:Int = 3
+    var WindowsToastSize:Int = 3
+
+    /**
+     * SystemToast同时弹出的数量
+     */
+    var SystemToastSize:Int = 1
+
+    /**
+     * 系统默认toast时长
+     */
+    var SystemToastDuration:Int = Toast.LENGTH_SHORT
 
     /**
      * 在app中初始化，监听activity声明周期
@@ -99,24 +116,38 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
      * 记录toastBox弹出数量
      */
     @Synchronized
-    fun register(toast: Toast?){
-        xLog.d(TAG,"register")
-        toast?.let {
-            boxStack.offer(it)
+    fun register(xToast: xToast?){
+        if (xToast==null) return
+        boxStack.offer(xToast)
+
+        when(xToast){
+            is SystemToast -> {
+                while (boxStack.size > SystemToastSize){
+                    val toast = boxStack.poll()
+                    toast.cancel()
+                }
+            }
+            is ActivityToast -> {
+                while (boxStack.size > WindowsToastSize){
+                    val toast = boxStack.poll()
+                    toast.cancel()
+                }
+                /*val lastToast = boxStack.peek()
+                if (lastToast?.x== xToast.x &&  lastToast.y==xToast.y  &&  lastToast.getGravity()==xToast.getGravity()){
+                    //两者位置相同
+                    xToast.y = xToast.y.plus(100)
+                }*/
+            }
         }
-        while (boxStack.size > stackSize){
-            xLog.d(TAG,"POLL")
-            val toast1 = boxStack.poll()
-            toast1.cancel()
-            xLog.d(TAG,"toast_size:${boxStack.size}")
-        }
+        xToast.show()
+        xLog.d(TAG,"Register    ----  toast_size:${boxStack.size}")
     }
 
-    fun unRegister(toast:Toast?){
-        xLog.d(TAG,"unRegister")
-        toast?.let {
+    fun unRegister(xToast:xToast?){
+        xToast?.let {
             boxStack.remove(it)
         }
+        xLog.d(TAG,"unRegister  ----  toast_size:${boxStack.size}")
     }
 
 

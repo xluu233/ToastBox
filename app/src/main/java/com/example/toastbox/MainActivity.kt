@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.ToastBox
 import com.example.xlulibrary.data.TextStyle
@@ -43,7 +44,13 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.button5 -> {
                 //设置toast时间
-                ToastBox(this).show("5000L",5000L)
+                ToastBox(this).show("5000L",duration = 5000)
+
+                //如果是SystemToast，只能定义Toast.LENGTH_LONG（3500ms）和 Toast.LENGTH_SHORT（2000ms）
+                //所以只要设置Toast.LENGTH_LONG,只需设置时间>=3500ms,反之同理
+                ToastBox(this).show("Toast.LENGTH_LONG",duration = 3500)
+
+
             }
             R.id.button6 -> {
                 //设置xy必须在设置location后面
@@ -62,6 +69,7 @@ class MainActivity : AppCompatActivity() {
                 ToastBox(this).setTextStyle(TextStyle.Black).setXY(0,600).show("黑色Toast")
             }
             R.id.button9 -> {
+                //子线程弹出
                 thread {
                     ToastBox(this).show("${Thread.currentThread().name}")
                 }
@@ -70,18 +78,22 @@ class MainActivity : AppCompatActivity() {
                 ToastBox(this).show("Activity---1111")
                 val intent = Intent(this,TestActivity2::class.java)
                 startActivity(intent)
-                //this.finish()
+                this.finish()
             }
             R.id.button11 -> {
                 //自定义图标，Android12会默认显示app图标
                 //可以在application初始化中设置默认图标
+
                 ToastBox(this).setToastIcon(R.drawable.ic_launcher_foreground).show("This is ToastBox")
 
                 //如果在application中初始化了默认图标，toast中也可以设置隐藏
                 //ToastBox(this).setToastIcon(null).show("This is ToastBox")
             }
             R.id.button12 -> {
+
                 ToastBox(this).setAnim(R.style.MiuiToast).show("切换弹出动画")
+
+                //如果是SystemToast,设置ToastBoxRegister.anim的值即可
             }
             R.id.button13 -> {
 

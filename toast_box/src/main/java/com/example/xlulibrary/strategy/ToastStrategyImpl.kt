@@ -1,12 +1,14 @@
 package com.example.xlulibrary.strategy
 
+import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.View
 import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.data.ToastType
 import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.toast.ActivityToast
-import com.example.xlulibrary.toast.Toast
+import com.example.xlulibrary.toast.xToast
 import com.example.xlulibrary.style.ToastStyle
 import com.example.xlulibrary.style.NormalStyle
 import com.example.xlulibrary.toast.SystemToast
@@ -24,7 +26,7 @@ class ToastStrategyImpl : ToastStrategy{
     private var _view: WeakReference<View> ?= null
     private val view get() = _view?.get()
 
-    private var _toast: WeakReference<Toast> ?= null
+    private var _toast: WeakReference<xToast> ?= null
     private val toast get() = _toast?.get()
 
     private var style : ToastStyle = NormalStyle()
@@ -53,13 +55,17 @@ class ToastStrategyImpl : ToastStrategy{
     }
 
     @Synchronized
-    override fun createToast(): Toast {
+    override fun createToast(context:Context): xToast {
         val toast = when(ToastBoxRegister.toastType){
             ToastType.SystemToast -> {
-                SystemToast(ToastBoxRegister.application)
+                SystemToast(context)
             }
             ToastType.WindowsToast -> {
-                ActivityToast(ToastBoxRegister.getActivity())
+                if (context is Activity){
+                    ActivityToast(context as Activity)
+                }else{
+                    ActivityToast(ToastBoxRegister.getActivity())
+                }
             }
         }
         if (useCustomView && view!=null){
@@ -73,24 +79,25 @@ class ToastStrategyImpl : ToastStrategy{
             ToastBoxRegister.defaultIcon?.let { toast.setIcon(it) }
             toast.setIcon(iconDrawable)
         }
-        toast.setGravity(style.location)
-        toast.setDuration(style.duration)
-        toast.setAnim(style.anim)
         toast.x = style.x
         toast.y = style.y
+        toast.duration = style.duration
+        toast.setGravity(style.location)
+        toast.setAnimStyle(style.animStyle)
         toast.setAlpha(style.alpha)
         toast.setListener(clickListener)
         return toast
     }
 
-    override fun getIToast(): Toast? {
+    override fun getIToast(): xToast? {
         return toast
     }
 
     override fun show(context:Context,text: String) {
-        _toast = WeakReference(createToast())
+        _toast = WeakReference(createToast(context))
         toast?.setText(text)
-        toast?.show()
+        ToastBoxRegister.register(toast)
+        //toast?.show()
     }
 
     override fun cancle() {

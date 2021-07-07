@@ -1,10 +1,25 @@
 package com.example.xlulibrary.toast
 
-import android.app.Application
+import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.AnimRes
+import androidx.annotation.StyleRes
+import com.example.xlulibrary.R
+import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.itf.ToastClickItf
+import com.example.xlulibrary.util.findMessageView
+import com.example.xlulibrary.util.getLocaGravity
+import java.util.*
+import kotlin.concurrent.timerTask
+
 
 /**
  * @ClassName SystemToast
@@ -12,88 +27,143 @@ import com.example.xlulibrary.itf.ToastClickItf
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/7/5 17:39
  */
-class SystemToast(application: Application) : Toast {
+class SystemToast(private val context: Context) : xToast {
 
     override var x: Int = 0
     override var y: Int = 0
 
+    override var duration: Long = 3500L
+        set(value) {
+            field = value
+            if (value<2500){
+                mDuration = Toast.LENGTH_SHORT
+            }else{
+                mDuration = Toast.LENGTH_SHORT
+            }
+        }
+
+    private var toast: Toast ?= null
+
+    private var mGravity = 0
+
+    private var mDuration:Int = ToastBoxRegister.SystemToastDuration
+
+    private var clickListener:ToastClickItf ?= null
+
+    private var animation : Animation
+
+    private var mView : View ?= null
+
+    private var mMessageView : TextView ?= null
+
+    private var timer: Timer
+
+    init {
+        toast = Toast(context.applicationContext)
+        toast?.duration = mDuration
+        timer = Timer()
+        animation = AnimationUtils.loadAnimation(context, ToastBoxRegister.anim)
+    }
+
     override fun show() {
-        TODO("Not yet implemented")
+        mView?.animation = animation
+        toast?.view = mView
+        toast?.show()
     }
 
     override fun cancel() {
-        TODO("Not yet implemented")
+        clear()
     }
 
     override fun setText(text: String) {
-        TODO("Not yet implemented")
+        mMessageView?.text = text
     }
 
     override fun setView(view: View?) {
-        TODO("Not yet implemented")
+        mView = view
+        mView?.let {
+            mMessageView = findMessageView(it)
+        }
+        timer.schedule(timerTask {
+            clear()
+        },duration+100)
     }
 
     override fun getView(): View? {
-        TODO("Not yet implemented")
-    }
-
-    override fun setDuration(duration: Long) {
-        TODO("Not yet implemented")
-    }
-
-    override fun getDuration(): Long {
-        TODO("Not yet implemented")
+        return mView
     }
 
     override fun setGravity(location: Location) {
-        TODO("Not yet implemented")
+        mGravity = getLocaGravity(location)
+        toast?.setGravity(mGravity, x, y)
     }
 
     override fun getGravity(): Int {
-        TODO("Not yet implemented")
+        return mGravity
     }
 
-    override fun setAnim(anim: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun getAnim(): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun setListener(clickItf: ToastClickItf?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun getListener(): ToastClickItf? {
-        TODO("Not yet implemented")
-    }
-
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun setBackDrawable(drawable: Int) {
-        TODO("Not yet implemented")
+        mView?.background = context.getDrawable(drawable)
     }
 
     override fun setBackDrawable(drawable: Drawable) {
-        TODO("Not yet implemented")
+        mView?.background = drawable
     }
 
     override fun getBackDrawable(): Drawable? {
-        TODO("Not yet implemented")
+        return mView?.background
     }
 
-    override fun setTextStyle(style: Int) {
-        TODO("Not yet implemented")
+    override fun setTextStyle(@StyleRes style: Int) {
+        mMessageView?.setTextAppearance(style)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun setIcon(drawable: Int?) {
-        TODO("Not yet implemented")
+        val icon = mView?.findViewById<ImageView>(R.id.default_icon) as ImageView
+        if (drawable==null){
+            icon.visibility = View.GONE
+            return
+        }
+        val _drawable = context.getDrawable(drawable)
+        if (_drawable == null){
+            icon.visibility = View.GONE
+        }else{
+            icon.visibility = View.VISIBLE
+            icon.setImageDrawable(_drawable)
+        }
     }
 
     override fun setAlpha(i: Float) {
-        TODO("Not yet implemented")
+        mView?.alpha = i
+    }
+
+
+    override fun setAnimStyle(style: Int) {
+        //什么也不做
+    }
+
+    override fun getAnimStyle(): Int {
+        return 0
+    }
+
+    override fun setListener(clickItf: ToastClickItf?) {
+        this.clickListener = clickItf
+    }
+
+    override fun getListener(): ToastClickItf? {
+        return clickListener
     }
 
     override fun clear() {
-        TODO("Not yet implemented")
+        ToastBoxRegister.unRegister(this)
+        clickListener?.setOnToastDismissed()
+        toast?.cancel()
+        mMessageView = null
+        mView = null
+        timer.cancel()
     }
+
+
 }

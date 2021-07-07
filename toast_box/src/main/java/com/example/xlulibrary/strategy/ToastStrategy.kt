@@ -3,9 +3,8 @@ package com.example.xlulibrary.strategy
 import android.content.Context
 import android.view.View
 import com.example.xlulibrary.itf.ToastClickItf
-import com.example.xlulibrary.toast.Toast
+import com.example.xlulibrary.toast.xToast
 import com.example.xlulibrary.style.ToastStyle
-import java.lang.ref.WeakReference
 
 /**
  * @ClassName ToastD
@@ -15,9 +14,9 @@ import java.lang.ref.WeakReference
  */
 interface ToastStrategy {
 
-    fun createToast(): Toast
+    fun createToast(context:Context): xToast
 
-    fun getIToast():Toast?
+    fun getIToast():xToast?
 
     fun show(context: Context,text:String)
 

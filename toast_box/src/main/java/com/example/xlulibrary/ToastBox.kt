@@ -39,9 +39,10 @@ class ToastBox(private val context:Context){
         duration?.let {
             mToastStyle.duration = it
         }
-        ToastStrategyImpl?.setStyle(mToastStyle)
-        ToastStrategyImpl?.show(context,text.toString())
-        ToastBoxRegister.register( ToastStrategyImpl?.getIToast())
+        ToastBoxRegister.getActivity().runOnUiThread {
+            ToastStrategyImpl?.setStyle(mToastStyle)
+            ToastStrategyImpl?.show(context,text.toString())
+        }
     }
 
     fun show(@StringRes res: Int?,duration:Long?=null):ToastBox  = apply{
@@ -128,7 +129,7 @@ class ToastBox(private val context:Context){
     }
 
     fun setAnim(@StyleRes anim: Int):ToastBox = apply{
-        mToastStyle.anim = anim
+        mToastStyle.animStyle = anim
     }
 
 

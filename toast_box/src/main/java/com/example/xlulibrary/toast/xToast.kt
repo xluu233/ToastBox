@@ -1,8 +1,9 @@
 package com.example.xlulibrary.toast
 
-import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.view.View
+import androidx.annotation.AnimRes
+import androidx.annotation.StyleRes
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.itf.ToastClickItf
 
@@ -12,10 +13,12 @@ import com.example.xlulibrary.itf.ToastClickItf
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/6/18 16:42
  */
-interface Toast {
+interface xToast {
 
     var x:Int
     var y:Int
+    var duration:Long
+
 
     /**
      * TODO 显示
@@ -43,16 +46,6 @@ interface Toast {
     fun getView():View?
 
     /**
-     * TODO 设置显示时长
-     */
-    fun setDuration(duration: Long)
-
-    /**
-     * TODO 获取显示时长
-     */
-    fun getDuration(): Long
-
-    /**
      * TODO 设置重心偏移
      */
     fun setGravity(location: Location)
@@ -65,8 +58,8 @@ interface Toast {
     /**
      * TODO 设置动画样式
      */
-    fun setAnim(anim:Int)
-    fun getAnim():Int
+    fun setAnimStyle(style:Int)
+    fun getAnimStyle():Int
 
     /**
      * TODO 设置点击事件
@@ -84,7 +77,7 @@ interface Toast {
     /**
      * TODO 设置字体样式
      */
-    fun setTextStyle(style:Int)
+    fun setTextStyle(@StyleRes style:Int)
 
     /**
      * TODO 设置默认显示图标

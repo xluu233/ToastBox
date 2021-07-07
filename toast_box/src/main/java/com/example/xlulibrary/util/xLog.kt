@@ -11,7 +11,7 @@ import android.util.Log
 object xLog {
 
     var sLogName = "ToastBox"
-    var sIsShow = false
+    var sIsShow = true
 
     fun init(logName: String, isShow: Boolean) {
         sLogName = logName
@@ -20,7 +20,7 @@ object xLog {
 
     fun d(TAG: String, content: String?) {
         if (sIsShow) {
-            xLog.d("[$sLogName]$TAG", content!!)
+            Log.d("[$sLogName]$TAG", content!!)
         }
     }
 
@@ -50,7 +50,7 @@ object xLog {
 
     fun d(content: String?) {
         if (sIsShow) {
-            xLog.d("[$sLogName]", content!!)
+            Log.d("[$sLogName]", content!!)
         }
     }
 
@@ -78,12 +78,5 @@ object xLog {
         }
     }
 
-    private fun log(content: String?){
-
-    }
-
-    private fun log(TAG: String,content: String?){
-
-    }
 
 }

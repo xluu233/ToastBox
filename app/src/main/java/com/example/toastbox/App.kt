@@ -16,15 +16,26 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
         ToastBoxRegister.init(this).apply {
-            //toast类型：系统toast，windowsManger实现自定义toast
-            toastType = ToastType.WindowsToast
+            /**
+             * toast类型
+             * SystemToast：系统自带Toast实现
+             * WindowsToast：WindowsManger实现
+             * 建议使用WindowsToast
+             */
+            toastType = ToastType.SystemToast
+
             //text样式：白色和灰色
             textStyle = TextStyle.GRAY
 
             //可以设置默认显示图标
             //defaultIcon = R.drawable.ic_launcher_background
+
+            //设置默认动画
+            //animStyle = R.style.xxx
         }
+
     }
 
 

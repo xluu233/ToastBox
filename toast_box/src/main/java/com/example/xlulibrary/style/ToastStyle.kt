@@ -52,5 +52,7 @@ interface ToastStyle {
     /**
      * 弹出动画
      */
-    var anim:Int
+    var animStyle:Int
+
+
 }

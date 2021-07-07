@@ -46,7 +46,7 @@ class NormalStyle : ToastStyle {
 
     override var textStyle: Int = getDefaultTextAppreance()
 
-    override var anim: Int = ToastBoxRegister.animStyle
+    override var animStyle: Int = ToastBoxRegister.animStyle
 
     var xyChanged = false
 
