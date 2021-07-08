@@ -139,7 +139,7 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
                 }*/
             }
         }
-        xLog.d(TAG,"Register    ----  toast_size:${boxStack.size}")
+        //xLog.d(TAG,"Register    ----  toast_size:${boxStack.size}")
     }
 
     @Synchronized
@@ -147,7 +147,7 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
         xToast?.let {
             boxStack.remove(it)
         }
-        xLog.d(TAG,"unRegister  ----  toast_size:${boxStack.size}")
+        //xLog.d(TAG,"unRegister  ----  toast_size:${boxStack.size}")
     }
 
 

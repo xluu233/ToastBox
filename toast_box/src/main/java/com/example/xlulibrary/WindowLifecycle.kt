@@ -37,6 +37,7 @@ class WindowLifecycle(private var activity: Activity) : ActivityLifecycleCallbac
             // 调用取消显示会直接导致新的 Activity 的 onCreate 调用显示吐司可能显示不出来的问题，又或者有时候会立马显示然后立马消失的那种效果
             xLog.d(TAG,"${activity.localClassName}--onActivityPaused")
             xToastImpl?.get()?.cancel()
+            //unregister()
         }
     }
 
@@ -45,7 +46,7 @@ class WindowLifecycle(private var activity: Activity) : ActivityLifecycleCallbac
     override fun onActivityDestroyed(activity: Activity) {
         if (this.activity == activity) {
             xLog.d(TAG,"${activity.localClassName}--onActivityDestroyed")
-            xToastImpl?.get()?.cancel()
+            //xToastImpl?.get()?.cancel()
             unregister()
         }
     }
