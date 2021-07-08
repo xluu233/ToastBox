@@ -18,9 +18,7 @@ import java.util.concurrent.LinkedBlockingQueue
 object ToastBoxRegister : ActivityLifecycleCallbacks {
 
     private val TAG = "ToastBoxRegister"
-
     private var currentActivity: WeakReference<Activity> ?= null
-
     lateinit var application: Application
 
     var defaultIcon : Int ?= null
@@ -139,10 +137,10 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
                 }*/
             }
         }
-        xToast.show()
         xLog.d(TAG,"Register    ----  toast_size:${boxStack.size}")
     }
 
+    @Synchronized
     fun unRegister(xToast:xToast?){
         xToast?.let {
             boxStack.remove(it)

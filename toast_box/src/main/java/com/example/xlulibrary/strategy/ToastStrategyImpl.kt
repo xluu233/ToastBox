@@ -58,7 +58,7 @@ class ToastStrategyImpl : ToastStrategy{
     override fun createToast(context:Context): xToast {
         val toast = when(ToastBoxRegister.toastType){
             ToastType.SystemToast -> {
-                SystemToast(context)
+                SystemToast()
             }
             ToastType.WindowsToast -> {
                 if (context is Activity){
@@ -97,7 +97,7 @@ class ToastStrategyImpl : ToastStrategy{
         _toast = WeakReference(createToast(context))
         toast?.setText(text)
         ToastBoxRegister.register(toast)
-        //toast?.show()
+        toast?.show()
     }
 
     override fun cancle() {

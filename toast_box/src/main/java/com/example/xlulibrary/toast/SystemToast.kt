@@ -1,6 +1,7 @@
 package com.example.xlulibrary.toast
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.annotation.AnimRes
 import androidx.annotation.StyleRes
 import com.example.xlulibrary.R
 import com.example.xlulibrary.ToastBoxRegister
+import com.example.xlulibrary.WindowLifecycle
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.util.findMessageView
@@ -27,7 +29,7 @@ import kotlin.concurrent.timerTask
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/7/5 17:39
  */
-class SystemToast(private val context: Context) : xToast {
+class SystemToast() : xToast {
 
     override var x: Int = 0
     override var y: Int = 0
@@ -35,10 +37,10 @@ class SystemToast(private val context: Context) : xToast {
     override var duration: Long = 3500L
         set(value) {
             field = value
-            if (value<2500){
-                mDuration = Toast.LENGTH_SHORT
+            mDuration = if (value<3500L){
+                Toast.LENGTH_SHORT
             }else{
-                mDuration = Toast.LENGTH_SHORT
+                Toast.LENGTH_LONG
             }
         }
 
@@ -58,20 +60,31 @@ class SystemToast(private val context: Context) : xToast {
 
     private var timer: Timer
 
+    //private val windowLifecycle : WindowLifecycle
+
     init {
-        toast = Toast(context.applicationContext)
-        toast?.duration = mDuration
+        toast = Toast(ToastBoxRegister.application)
         timer = Timer()
-        animation = AnimationUtils.loadAnimation(context, ToastBoxRegister.anim)
+        animation = AnimationUtils.loadAnimation(ToastBoxRegister.application, ToastBoxRegister.anim)
+
+        //注册监听生命周期
+//        windowLifecycle = if (context is Activity){
+//            WindowLifecycle(context)
+//        }else{
+//            WindowLifecycle(ToastBoxRegister.getActivity())
+//        }
+//        windowLifecycle.register(this)
     }
 
     override fun show() {
+        toast?.duration = mDuration
         mView?.animation = animation
         toast?.view = mView
         toast?.show()
     }
 
     override fun cancel() {
+        //windowLifecycle.unregister()
         clear()
     }
 
@@ -85,7 +98,7 @@ class SystemToast(private val context: Context) : xToast {
             mMessageView = findMessageView(it)
         }
         timer.schedule(timerTask {
-            clear()
+            cancel()
         },duration+100)
     }
 
@@ -104,7 +117,7 @@ class SystemToast(private val context: Context) : xToast {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun setBackDrawable(drawable: Int) {
-        mView?.background = context.getDrawable(drawable)
+        mView?.background = ToastBoxRegister.application.getDrawable(drawable)
     }
 
     override fun setBackDrawable(drawable: Drawable) {
@@ -126,7 +139,7 @@ class SystemToast(private val context: Context) : xToast {
             icon.visibility = View.GONE
             return
         }
-        val _drawable = context.getDrawable(drawable)
+        val _drawable = ToastBoxRegister.application.getDrawable(drawable)
         if (_drawable == null){
             icon.visibility = View.GONE
         }else{

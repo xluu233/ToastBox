@@ -60,8 +60,8 @@ class ActivityToast(private val activity: Activity) : xToast {
     }
 
     override fun cancel() {
-        toast.cancle()
         ToastBoxRegister.unRegister(this)
+        toast.cancle()
     }
 
     override fun setText(text: String) {

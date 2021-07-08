@@ -27,7 +27,7 @@ class App : Application() {
             toastType = ToastType.SystemToast
 
             //text样式：白色和灰色
-            textStyle = TextStyle.GRAY
+            textStyle = TextStyle.White
 
             //可以设置默认显示图标
             //defaultIcon = R.drawable.ic_launcher_background

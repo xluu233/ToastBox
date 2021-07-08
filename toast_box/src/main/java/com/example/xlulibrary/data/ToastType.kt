@@ -7,6 +7,7 @@ package com.example.xlulibrary.data
  * @Date 2021/6/30 17:31
  */
 enum class ToastType {
+
     SystemToast,
 
     WindowsToast,

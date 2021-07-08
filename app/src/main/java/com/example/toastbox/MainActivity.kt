@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.ToastBox
 import com.example.xlulibrary.data.TextStyle
@@ -48,8 +47,7 @@ class MainActivity : AppCompatActivity() {
 
                 //如果是SystemToast，只能定义Toast.LENGTH_LONG（3500ms）和 Toast.LENGTH_SHORT（2000ms）
                 //所以只要设置Toast.LENGTH_LONG,只需设置时间>=3500ms,反之同理
-                ToastBox(this).show("Toast.LENGTH_LONG",duration = 3500)
-
+                //ToastBox(this).show("Toast.LENGTH_LONG",duration = 3500)
 
             }
             R.id.button6 -> {
@@ -76,9 +74,9 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.button10 -> {
                 ToastBox(this).show("Activity---1111")
-                val intent = Intent(this,TestActivity2::class.java)
+                val intent = Intent(this,TestActivity::class.java)
                 startActivity(intent)
-                this.finish()
+                //this.finish()
             }
             R.id.button11 -> {
                 //自定义图标，Android12会默认显示app图标
