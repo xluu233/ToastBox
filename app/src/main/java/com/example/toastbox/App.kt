@@ -24,7 +24,7 @@ class App : Application() {
              * WindowsToast：WindowsManger实现
              * 建议使用WindowsToast
              */
-            toastType = ToastType.WindowsToast
+            toastType = ToastType.SystemToast
 
             //text样式：白色和灰色
             textStyle = TextStyle.White

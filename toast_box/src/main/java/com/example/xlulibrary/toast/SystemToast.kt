@@ -62,31 +62,23 @@ class SystemToast() : xToast {
 
     private var timer: Timer
 
-    //private val windowLifecycle : WindowLifecycle
-
     init {
         toast = Toast(ToastBoxRegister.application)
         timer = Timer()
         animation = AnimationUtils.loadAnimation(ToastBoxRegister.application, ToastBoxRegister.anim)
 
-        //注册监听生命周期
-//        windowLifecycle = if (context is Activity){
-//            WindowLifecycle(context)
-//        }else{
-//            WindowLifecycle(ToastBoxRegister.getActivity())
-//        }
-//        windowLifecycle.register(this)
     }
 
     override fun show() {
         toast?.duration = mDuration
         mView?.animation = animation
         toast?.view = mView
+        ToastBoxRegister.register(this)
         toast?.show()
     }
 
     override fun cancel() {
-        //windowLifecycle.unregister()
+        ToastBoxRegister.unRegister(this)
         clear()
     }
 
@@ -100,7 +92,7 @@ class SystemToast() : xToast {
             mMessageView = findMessageView(it)
         }
         timer.schedule(timerTask {
-            cancel()
+            this@SystemToast.cancel()
         },3600L)
     }
 
@@ -175,7 +167,6 @@ class SystemToast() : xToast {
     }
 
     override fun clear() {
-        //ToastBoxRegister.unRegister(this)
         clickListener?.setOnToastDismissed()
         toast?.cancel()
         ViewUtils.gcViews(mView)
