@@ -95,8 +95,8 @@ class ToastBox(private val context:Context){
         ToastStrategyImpl?.cancle()
     }
 
-    fun setToastIcon(@DrawableRes drawableRes: Int?):ToastBox = apply{
-        ToastStrategyImpl?.setIcon(drawableRes)
+    fun setIcon(@DrawableRes drawableRes: Int?, left: Int=0, top: Int=0, right: Int=0, bottom: Int=0):ToastBox = apply{
+        ToastStrategyImpl?.setIcon(drawableRes,left, top, right, bottom)
     }
 
     /**

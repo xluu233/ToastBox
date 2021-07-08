@@ -81,14 +81,14 @@ interface xToast {
 
     /**
      * TODO 设置默认显示图标
+     * int left, int top, int right, int bottom
      */
-    fun setIcon(drawable: Int?)
+    fun setIcon(drawable: Int?,left:Int, top:Int, right:Int, bottom:Int)
 
     /**
      * TODO 设置透明度
      */
     fun setAlpha(i:Float)
-    //fun getAlpha():Float
 
     fun clear()
 

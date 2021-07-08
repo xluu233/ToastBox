@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.WindowManager
+import android.view.inspector.WindowInspector
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StyleRes
@@ -18,6 +19,7 @@ import com.example.xlulibrary.WindowLifecycle
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.util.ViewUtils
+import com.example.xlulibrary.util.findImageView
 import com.example.xlulibrary.util.findMessageView
 import com.example.xlulibrary.util.getLocaGravity
 import java.lang.ref.WeakReference
@@ -38,9 +40,6 @@ class ActivityToast(private val activity: Activity) : xToast {
     /** Toast 显示重心  */
     var mGravity = 0
 
-    /** Toast 显示时长  */
-    var mDuration = 0L
-
     /*动画*/
     var anim:Int ?= null
 
@@ -56,6 +55,7 @@ class ActivityToast(private val activity: Activity) : xToast {
     }
 
     override fun show() {
+        ToastBoxRegister.register(this)
         toast.show()
     }
 
@@ -122,21 +122,25 @@ class ActivityToast(private val activity: Activity) : xToast {
         mMessageView?.setTextAppearance(style)
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
-    override fun setIcon(drawable: Int?) {
-        val icon = mView?.findViewById<ImageView>(R.id.default_icon) as ImageView
+    override fun setIcon(drawable: Int?, left: Int, top: Int, right: Int, bottom: Int) {
+        if (mView == null) return
+        val icon:ImageView ?= findImageView(mView!!)
+
         if (drawable==null){
-            icon.visibility = View.GONE
+            icon?.visibility = View.GONE
             return
         }
         val _drawable = activity.getDrawable(drawable)
         if (_drawable == null){
-            icon.visibility = View.GONE
+            icon?.visibility = View.GONE
         }else{
-            icon.visibility = View.VISIBLE
-            icon.setImageDrawable(_drawable)
+            icon?.visibility = View.VISIBLE
+            icon?.setImageDrawable(_drawable)
+            icon?.setPadding(left, top, right, bottom)
         }
+
     }
+
 
     override fun setAlpha(i: Float) {
         mView?.alpha = i
@@ -171,7 +175,7 @@ class WindowsMangerToast(private val activity: Activity,private val xToast: xToa
     fun show() {
         if (!mIsShow) {
             //directShow(true)
-            clearCallBack()
+            //clearCallBack()
             handler.post(showRunnable)
         }
     }
@@ -179,7 +183,7 @@ class WindowsMangerToast(private val activity: Activity,private val xToast: xToa
     fun cancle(){
         if (mIsShow){
             //directShow(false)
-            clearCallBack()
+            //clearCallBack()
             handler.post(cancleRunnable)
         }
     }
@@ -190,10 +194,21 @@ class WindowsMangerToast(private val activity: Activity,private val xToast: xToa
     }
 
     private val showRunnable : Runnable = Runnable {
-        while (xToast.getView()?.parent != null){
-            mWdm.get()?.removeViewImmediate(xToast.getView())
+        if (xToast.getView() == null) return@Runnable
+
+        val view = xToast.getView()!!
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            if (WindowInspector.getGlobalWindowViews().contains(view)){
+                mWdm.get()?.removeViewImmediate(view)
+            }
+        }else{
+            if(view.isAttachedToWindow){
+                mWdm.get()?.removeViewImmediate(view)
+            }
         }
-        mWdm.get()?.addView(xToast.getView(), mParams)//将其加载到windowManager上
+
+
+        mWdm.get()?.addView(view, mParams)//将其加载到windowManager上
         mTimer.schedule(object : TimerTask() {
             override fun run() {
                 cancle()
@@ -203,11 +218,19 @@ class WindowsMangerToast(private val activity: Activity,private val xToast: xToa
     }
 
     private val cancleRunnable : Runnable = Runnable {
-/*        if (toast.getView()?.parent != null){
-            mWdm.get()?.removeView(toast.getView())
-        }*/
-        //mWdm.get()?.removeViewImmediate(toast.getView())
-        mWdm.get()?.removeView(xToast.getView())
+        if (xToast.getView() == null) return@Runnable
+
+        val view = xToast.getView()!!
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            if (WindowInspector.getGlobalWindowViews().contains(view)){
+                mWdm.get()?.removeViewImmediate(view)
+            }
+        }else{
+            if(view.isAttachedToWindow){
+                mWdm.get()?.removeViewImmediate(view)
+            }
+        }
+
         xToast.getListener()?.setOnToastDismissed()
         mIsShow = false
         mTimer.cancel()

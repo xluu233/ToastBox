@@ -17,6 +17,8 @@ import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.WindowLifecycle
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.itf.ToastClickItf
+import com.example.xlulibrary.util.ViewUtils
+import com.example.xlulibrary.util.findImageView
 import com.example.xlulibrary.util.findMessageView
 import com.example.xlulibrary.util.getLocaGravity
 import java.util.*
@@ -99,7 +101,7 @@ class SystemToast() : xToast {
         }
         timer.schedule(timerTask {
             cancel()
-        },duration+100)
+        },3600L)
     }
 
     override fun getView(): View? {
@@ -132,20 +134,23 @@ class SystemToast() : xToast {
         mMessageView?.setTextAppearance(style)
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
-    override fun setIcon(drawable: Int?) {
-        val icon = mView?.findViewById<ImageView>(R.id.default_icon) as ImageView
+    override fun setIcon(drawable: Int?, left: Int, top: Int, right: Int, bottom: Int) {
+        if (mView == null) return
+        val icon:ImageView ?= findImageView(mView!!)
+
         if (drawable==null){
-            icon.visibility = View.GONE
+            icon?.visibility = View.GONE
             return
         }
         val _drawable = ToastBoxRegister.application.getDrawable(drawable)
         if (_drawable == null){
-            icon.visibility = View.GONE
+            icon?.visibility = View.GONE
         }else{
-            icon.visibility = View.VISIBLE
-            icon.setImageDrawable(_drawable)
+            icon?.visibility = View.VISIBLE
+            icon?.setImageDrawable(_drawable)
+            icon?.setPadding(left, top, right, bottom)
         }
+
     }
 
     override fun setAlpha(i: Float) {
@@ -170,9 +175,10 @@ class SystemToast() : xToast {
     }
 
     override fun clear() {
-        ToastBoxRegister.unRegister(this)
+        //ToastBoxRegister.unRegister(this)
         clickListener?.setOnToastDismissed()
         toast?.cancel()
+        ViewUtils.gcViews(mView)
         mMessageView = null
         mView = null
         timer.cancel()

@@ -22,7 +22,6 @@ import java.lang.ref.WeakReference
  */
 class ToastStrategyImpl : ToastStrategy{
 
-
     private var _view: WeakReference<View> ?= null
     private val view get() = _view?.get()
 
@@ -50,8 +49,17 @@ class ToastStrategyImpl : ToastStrategy{
     }
 
     private var iconDrawable:Int ?= null
-    override fun setIcon(drawable: Int?) {
+    private var left:Int = 0
+    private var top:Int = 0
+    private var right:Int = 0
+    private var bottom:Int = 0
+
+    override fun setIcon(drawable: Int?,left:Int, top:Int, right:Int, bottom:Int) {
         this.iconDrawable = drawable
+        this.left = left
+        this.top = top
+        this.right = right
+        this.bottom = bottom
     }
 
     @Synchronized
@@ -76,8 +84,8 @@ class ToastStrategyImpl : ToastStrategy{
             toast.setView(style.createView(ToastBoxRegister.getContext()))
             toast.setTextStyle(style.textStyle)
             toast.setBackDrawable(style.backDrawable)
-            ToastBoxRegister.defaultIcon?.let { toast.setIcon(it) }
-            toast.setIcon(iconDrawable)
+            ToastBoxRegister.defaultIcon?.let { toast.setIcon(it,left, top, right, bottom) }
+            toast.setIcon(iconDrawable,left, top, right, bottom)
         }
         toast.x = style.x
         toast.y = style.y
@@ -96,7 +104,6 @@ class ToastStrategyImpl : ToastStrategy{
     override fun show(context:Context,text: String) {
         _toast = WeakReference(createToast(context))
         toast?.setText(text)
-        ToastBoxRegister.register(toast)
         toast?.show()
     }
 

@@ -2,14 +2,18 @@ package com.example.xlulibrary.util
 
 
 import android.R
+import android.media.Image
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.data.TextStyle
 import java.lang.ref.WeakReference
 import kotlin.reflect.KProperty
+
 
 /**
  * @ClassName Utils
@@ -50,6 +54,35 @@ fun findMessageView(view: View): TextView {
         return view.findViewById<View>(R.id.message) as TextView
     }
     throw IllegalArgumentException("You must include a TextView with an ID value of android.R.id.message")
+}
+
+/**
+ * TODO 自定义View布局中必须包含一个ImageView
+ *
+ * @param view
+ * @return
+ */
+fun findImageView(view: View): ImageView? {
+    if (view is ImageView) return view
+
+    if (view is ViewGroup){
+        for (i in 0 until view.childCount){
+            val childView = view.getChildAt(i)
+            when(childView){
+                is ViewGroup -> {
+                     return findImageView(childView)
+                }
+                is ImageView -> {
+                    return childView
+                }
+                else -> {
+                    continue
+                }
+            }
+        }
+    }
+    return null
+    //throw IllegalArgumentException("You ViewGroup must include a ImageView")
 }
 
 

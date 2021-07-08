@@ -82,7 +82,9 @@ class MainActivity : AppCompatActivity() {
                 //自定义图标，Android12会默认显示app图标
                 //可以在application初始化中设置默认图标
 
-                ToastBox(this).setToastIcon(R.drawable.ic_launcher_foreground).show("This is ToastBox")
+                ToastBox(this).setIcon(R.drawable.ic_launcher_foreground).show("This is ToastBox")
+
+                ToastBox(this).setIcon(R.drawable.icon,left = 10,top = 5,bottom = 5,right = 10).setXY(0,300).show("This is ToastBox")
 
                 //如果在application中初始化了默认图标，toast中也可以设置隐藏
                 //ToastBox(this).setToastIcon(null).show("This is ToastBox")

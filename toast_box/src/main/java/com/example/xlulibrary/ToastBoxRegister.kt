@@ -45,8 +45,10 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
     /**
      * 用来保存toastBox实例
      */
-    private var _boxStack = WeakReference(LinkedBlockingQueue<xToast>())
-    private var boxStack = _boxStack.get()!!
+//    private var _boxStack = WeakReference(LinkedBlockingQueue<xToast>())
+//    private var boxStack = _boxStack.get()!!
+
+    private var boxStack = LinkedBlockingQueue<xToast>()
 
     /**
      * WindowsToast同时最多弹出的数量
