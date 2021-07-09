@@ -2,10 +2,8 @@ package com.example.xlulibrary.strategy
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
 import android.view.View
 import com.example.xlulibrary.ToastBoxRegister
-import com.example.xlulibrary.data.ToastType
 import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.toast.ActivityToast
 import com.example.xlulibrary.toast.xToast
@@ -48,7 +46,7 @@ class ToastStrategyImpl : ToastStrategy{
         _view = WeakReference(view)
     }
 
-    private var iconDrawable:Int ?= null
+/*    private var iconDrawable:Int ?= null
     private var left:Int = 0
     private var top:Int = 0
     private var right:Int = 0
@@ -60,38 +58,31 @@ class ToastStrategyImpl : ToastStrategy{
         this.top = top
         this.right = right
         this.bottom = bottom
-    }
+    }*/
 
     @Synchronized
     override fun createToast(context:Context): xToast {
-        val toast = when(ToastBoxRegister.toastType){
-            ToastType.SystemToast -> {
-                SystemToast()
-            }
-            ToastType.WindowsToast -> {
-                if (context is Activity){
-                    ActivityToast(context as Activity)
-                }else{
-                    ActivityToast(ToastBoxRegister.getActivity())
-                }
-            }
+        val toast = if (context is Activity){
+            ActivityToast(context as Activity)
+        }else{
+            ActivityToast(ToastBoxRegister.getActivity())
         }
+
         if (useCustomView && view!=null){
             //自定义View
             toast.setView(view)
             useCustomView = false
         }else{
             toast.setView(style.createView(ToastBoxRegister.getContext()))
-            toast.setTextStyle(style.textStyle)
-            toast.setBackDrawable(style.backDrawable)
-            ToastBoxRegister.defaultIcon?.let { toast.setIcon(it,left, top, right, bottom) }
-            toast.setIcon(iconDrawable,left, top, right, bottom)
+            style.textStyle?.let { toast.setTextStyle(it) }
+            style.backDrawable?.let { toast.setBackDrawable(it) }
+            toast.setIcon(style.iconDrawable,style.left, style.top, style.right, style.bottom)
         }
         toast.x = style.x
         toast.y = style.y
         toast.duration = style.duration
         toast.setGravity(style.location)
-        toast.setAnimStyle(style.animStyle)
+        style.animStyle?.let { toast.setAnimStyle(it) }
         toast.setAlpha(style.alpha)
         toast.setListener(clickListener)
         return toast

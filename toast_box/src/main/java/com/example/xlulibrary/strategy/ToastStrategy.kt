@@ -28,6 +28,6 @@ interface ToastStrategy {
 
     fun setView(view: View)
 
-    fun setIcon(drawable:Int?,left:Int, top:Int, right:Int, bottom:Int)
+    //fun setIcon(drawable:Int?,left:Int, top:Int, right:Int, bottom:Int)
 
 }

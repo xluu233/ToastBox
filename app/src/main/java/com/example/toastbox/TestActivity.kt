@@ -5,7 +5,6 @@ import android.os.Bundle
 import com.example.toastbox.databinding.ActivityTestBinding
 import com.example.xlulibrary.ToastBox
 import com.example.xlulibrary.ToastBoxRegister
-import com.example.xlulibrary.data.ToastType
 
 class TestActivity : AppCompatActivity() {
 
@@ -21,9 +20,7 @@ class TestActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (ToastBoxRegister.toastType != ToastType.SystemToast){
-            ToastBox(this).show("这是Activity-2弹出的toast",10000L)
-        }
+        ToastBox(this).show("这是Activity-2弹出的toast",5000L)
     }
 
 

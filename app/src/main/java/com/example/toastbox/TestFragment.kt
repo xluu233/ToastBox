@@ -27,7 +27,7 @@ class TestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ToastBox(requireContext()).setLocation(Location.CENTER).show("这是Fragment弹出的toast",10000L)
+        ToastBox(requireContext()).setLocation(Location.CENTER).show("这是Fragment弹出的toast",5000L)
     }
 
 

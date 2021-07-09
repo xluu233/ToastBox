@@ -6,8 +6,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:minHeight="40dp"
-    android:elevation="1dp"
-    android:background="@drawable/normal_shape_black"
+    android:elevation="1px"
     android:gravity="center">
 
     <ImageView
@@ -17,7 +16,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

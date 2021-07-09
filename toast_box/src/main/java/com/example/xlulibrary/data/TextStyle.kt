@@ -10,5 +10,5 @@ enum class TextStyle {
     Black,
     White,
     GRAY,
-
+    Shadow
 }

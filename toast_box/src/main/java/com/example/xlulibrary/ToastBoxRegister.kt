@@ -7,7 +7,6 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import com.example.xlulibrary.data.TextStyle
-import com.example.xlulibrary.data.ToastType
 import com.example.xlulibrary.toast.ActivityToast
 import com.example.xlulibrary.toast.SystemToast
 import com.example.xlulibrary.toast.xToast
@@ -16,16 +15,12 @@ import java.lang.ref.WeakReference
 import java.util.concurrent.LinkedBlockingQueue
 
 object ToastBoxRegister : ActivityLifecycleCallbacks {
-
     private val TAG = "ToastBoxRegister"
+
     private var currentActivity: WeakReference<Activity> ?= null
     lateinit var application: Application
 
     var defaultIcon : Int ?= null
-    /**
-     * 设置toast默认实现方式
-     */
-    var toastType:ToastType = ToastType.WindowsToast
 
     /**
      * 设置toast字体和背景样式
@@ -139,7 +134,7 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
                 }*/
             }
         }
-        //xLog.d(TAG,"Register    ----  toast_size:${boxStack.size}")
+        xLog.d(TAG,"Register    ----  toast_size:${boxStack.size}")
     }
 
     @Synchronized
@@ -147,7 +142,7 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
         xToast?.let {
             boxStack.remove(it)
         }
-        //xLog.d(TAG,"unRegister  ----  toast_size:${boxStack.size}")
+        xLog.d(TAG,"unRegister  ----  toast_size:${boxStack.size}")
     }
 
 

@@ -21,6 +21,7 @@ import com.example.xlulibrary.util.ViewUtils
 import com.example.xlulibrary.util.findImageView
 import com.example.xlulibrary.util.findMessageView
 import com.example.xlulibrary.util.getLocaGravity
+import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -31,7 +32,9 @@ import kotlin.concurrent.timerTask
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/7/5 17:39
  */
-class SystemToast() : xToast {
+
+@SuppressLint("UseCompatLoadingForDrawables")
+class SystemToast : xToast {
 
     override var x: Int = 0
     override var y: Int = 0
@@ -46,7 +49,7 @@ class SystemToast() : xToast {
             }
         }
 
-    private var toast: Toast ?= null
+    private var toast: Toast ?= Toast(ToastBoxRegister.application)
 
     private var mGravity = 0
 
@@ -54,50 +57,47 @@ class SystemToast() : xToast {
 
     private var clickListener:ToastClickItf ?= null
 
-    private var animation : Animation
+    private var animation : Animation ?= AnimationUtils.loadAnimation(ToastBoxRegister.application, ToastBoxRegister.anim)
 
-    private var mView : View ?= null
+    private var mView : WeakReference<View> ?= null
 
-    private var mMessageView : TextView ?= null
+    private var mMessageView : WeakReference<TextView> ?= null
 
-    private var timer: Timer
+    private var timer: Timer ?= Timer()
 
-    init {
-        toast = Toast(ToastBoxRegister.application)
-        timer = Timer()
-        animation = AnimationUtils.loadAnimation(ToastBoxRegister.application, ToastBoxRegister.anim)
 
-    }
 
     override fun show() {
+        //cancel()
         toast?.duration = mDuration
-        mView?.animation = animation
-        toast?.view = mView
-        ToastBoxRegister.register(this)
+        mView?.get()?.animation = animation
+        toast?.view = mView?.get()
+        //ToastBoxRegister.register(this)
         toast?.show()
     }
 
     override fun cancel() {
-        ToastBoxRegister.unRegister(this)
+        //ToastBoxRegister.unRegister(this)
         clear()
     }
 
     override fun setText(text: String) {
-        mMessageView?.text = text
+        mMessageView?.get()?.text = text
     }
 
     override fun setView(view: View?) {
-        mView = view
-        mView?.let {
-            mMessageView = findMessageView(it)
+        mView = WeakReference(view)
+        view?.let {
+            mMessageView = WeakReference(findMessageView(it))
         }
-        timer.schedule(timerTask {
+        timer = Timer()
+        timer?.schedule(timerTask {
             this@SystemToast.cancel()
         },3600L)
     }
 
     override fun getView(): View? {
-        return mView
+        return null
     }
 
     override fun setGravity(location: Location) {
@@ -109,26 +109,25 @@ class SystemToast() : xToast {
         return mGravity
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     override fun setBackDrawable(drawable: Int) {
-        mView?.background = ToastBoxRegister.application.getDrawable(drawable)
+        mView?.get()?.background = ToastBoxRegister.application.getDrawable(drawable)
     }
 
     override fun setBackDrawable(drawable: Drawable) {
-        mView?.background = drawable
+        mView?.get()?.background = drawable
     }
 
     override fun getBackDrawable(): Drawable? {
-        return mView?.background
+        return mView?.get()?.background
     }
 
     override fun setTextStyle(@StyleRes style: Int) {
-        mMessageView?.setTextAppearance(style)
+        mMessageView?.get()?.setTextAppearance(style)
     }
 
     override fun setIcon(drawable: Int?, left: Int, top: Int, right: Int, bottom: Int) {
-        if (mView == null) return
-        val icon:ImageView ?= findImageView(mView!!)
+        if (mView?.get() == null) return
+        val icon:ImageView ?= findImageView(mView?.get()!!)
 
         if (drawable==null){
             icon?.visibility = View.GONE
@@ -146,7 +145,7 @@ class SystemToast() : xToast {
     }
 
     override fun setAlpha(i: Float) {
-        mView?.alpha = i
+        mView?.get()?.alpha = i
     }
 
 
@@ -169,10 +168,12 @@ class SystemToast() : xToast {
     override fun clear() {
         clickListener?.setOnToastDismissed()
         toast?.cancel()
-        ViewUtils.gcViews(mView)
         mMessageView = null
         mView = null
-        timer.cancel()
+        timer?.cancel()
+        timer = null
+        animation = null
+        toast = null
     }
 
 

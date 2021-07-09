@@ -6,6 +6,7 @@ import android.view.View
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.R
 import com.example.xlulibrary.ToastBoxRegister
+import com.example.xlulibrary.data.TextStyle
 import com.example.xlulibrary.util.getDefaultBackDrawable
 import com.example.xlulibrary.util.getDefaultTextAppreance
 
@@ -42,11 +43,17 @@ class NormalStyle : ToastStyle {
             field = value
         }
 
-    override var backDrawable: Int = getDefaultBackDrawable()
+    override var backDrawable: Int ?= getDefaultBackDrawable()
 
-    override var textStyle: Int = getDefaultTextAppreance()
+    override var textStyle: Int ?= getDefaultTextAppreance()
 
-    override var animStyle: Int = ToastBoxRegister.animStyle
+    override var animStyle: Int ?= ToastBoxRegister.animStyle
+
+    override var iconDrawable: Int? = ToastBoxRegister.defaultIcon
+    override var left: Int = 0
+    override var top: Int = 0
+    override var right: Int = 0
+    override var bottom: Int = 0
 
     var xyChanged = false
 

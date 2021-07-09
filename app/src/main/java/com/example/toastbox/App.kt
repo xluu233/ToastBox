@@ -1,10 +1,8 @@
 package com.example.toastbox
 
 import android.app.Application
-import android.widget.Toast
 import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.data.TextStyle
-import com.example.xlulibrary.data.ToastType
 
 /**
  * @ClassName App
@@ -18,14 +16,6 @@ class App : Application() {
         super.onCreate()
 
         ToastBoxRegister.init(this).apply {
-            /**
-             * toast类型
-             * SystemToast：系统自带Toast实现
-             * WindowsToast：WindowsManger实现
-             * 建议使用WindowsToast
-             */
-            toastType = ToastType.SystemToast
-
             //text样式：白色和灰色
             textStyle = TextStyle.White
 

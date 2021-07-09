@@ -42,17 +42,27 @@ interface ToastStyle {
     /**
      * 背景样式
      */
-    var backDrawable : Int
+    var backDrawable : Int?
 
     /**
      * 字体样式
      */
-    var textStyle : Int
+    var textStyle : Int?
 
     /**
      * 弹出动画
      */
-    var animStyle:Int
+    var animStyle:Int?
 
+
+    /**
+     * 默认图标
+     * 以及图标padding
+     */
+    var iconDrawable:Int?
+    var left:Int
+    var top:Int
+    var right:Int
+    var bottom:Int
 
 }

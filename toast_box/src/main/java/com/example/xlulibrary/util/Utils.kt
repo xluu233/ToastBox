@@ -2,7 +2,6 @@ package com.example.xlulibrary.util
 
 
 import android.R
-import android.media.Image
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -97,7 +96,7 @@ class Weak<T>(r: T) {
     }
 }
 
-fun getDefaultBackDrawable():Int{
+fun getDefaultBackDrawable():Int?{
     var drawablw:Int = com.example.xlulibrary.R.drawable.normal_shape_gray
     ToastBoxRegister.textStyle?.let {
         drawablw = when(it){
@@ -109,6 +108,9 @@ fun getDefaultBackDrawable():Int{
             }
             TextStyle.GRAY -> {
                 com.example.xlulibrary.R.drawable.normal_shape_gray
+            }
+            TextStyle.Shadow -> {
+                com.example.xlulibrary.R.drawable.shadow
             }
         }
     }
@@ -127,6 +129,9 @@ fun getDefaultTextAppreance():Int{
             }
             TextStyle.GRAY -> {
                 com.example.xlulibrary.R.style.NormalStyle_textAppreance_gray
+            }
+            TextStyle.Shadow -> {
+                com.example.xlulibrary.R.style.NormalStyle_textAppreance_white
             }
         }
     }
