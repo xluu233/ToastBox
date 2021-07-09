@@ -6,7 +6,7 @@ ToastBox是一个自定义吐司库，可以实现多种自定义toast
 ```
 
 <div align=center>
-<img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(1).jpg" alt="drawing" width="300"/>
+<img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(1).jpg" alt="drawing" width="500"/>
 </div>
 
 
