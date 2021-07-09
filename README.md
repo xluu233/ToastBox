@@ -4,7 +4,12 @@
 ```
 ToastBox是一个自定义吐司库，可以实现多种自定义toast
 ```
-![demo](https://github.com/xluu233/ToastBox/blob/master/img/box%20(1).jpg)
+
+<table>
+    <tr>
+        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(1).jpg">nav1</center></td>
+    </tr>
+</table>
 
 ### 具体功能
 
@@ -13,9 +18,9 @@ ToastBox是一个自定义吐司库，可以实现多种自定义toast
 
 <table>
     <tr>
-        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(2).jp">nav1</center></td>
-        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(2).jp">nav2</center></td>
-        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(2).jp">nav3</center></td>
+        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(2).jpg">nav1</center></td>
+        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(2).jpg">nav2</center></td>
+        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(2).jpg">nav3</center></td>
     </tr>
 </table>
 
