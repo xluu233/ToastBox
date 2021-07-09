@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.xlulibrary.ToastBox
 import com.example.xlulibrary.data.Location
+import com.example.xlulibrary.data.TextStyle
 
 
 class TestFragment : Fragment() {
@@ -27,7 +28,8 @@ class TestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ToastBox(requireContext()).setLocation(Location.CENTER).show("这是Fragment弹出的toast",5000L)
+        //ToastBox(requireContext()).setLocation(Location.CENTER).show("这是Fragment弹出的toast",5000L)
+        ToastBox(requireContext()).setView(R.layout.custom_toast_common_1).show("This is Custom View",5000L)
     }
 
 

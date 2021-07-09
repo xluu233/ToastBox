@@ -44,11 +44,6 @@ class MainActivity : AppCompatActivity() {
             R.id.button5 -> {
                 //设置toast时间
                 ToastBox(this).show("5000L",duration = 5000)
-
-                //如果是SystemToast，只能定义Toast.LENGTH_LONG（3500ms）和 Toast.LENGTH_SHORT（2000ms）
-                //所以只要设置Toast.LENGTH_LONG,只需设置时间>=3500ms,反之同理
-                //ToastBox(this).show("Toast.LENGTH_LONG",duration = 3500)
-
             }
             R.id.button6 -> {
                 //设置xy必须在设置location后面
@@ -90,17 +85,7 @@ class MainActivity : AppCompatActivity() {
                 //ToastBox(this).setToastIcon(null).show("This is ToastBox")
             }
             R.id.button12 -> {
-
                 ToastBox(this).setAnim(R.style.MiuiToast).show("切换弹出动画")
-
-                //如果是SystemToast,设置ToastBoxRegister.anim的值即可
-            }
-            R.id.button13 -> {
-
-
-            }
-            R.id.button14 -> {
-
             }
         }
     }

@@ -14,13 +14,14 @@ class TestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initView()
     }
 
 
     override fun onResume() {
         super.onResume()
-        ToastBox(this).show("这是Activity-2弹出的toast",5000L)
+        //ToastBox(this).show("这是Activity-2弹出的toast",5000L)
+
+        initView()
     }
 
 
