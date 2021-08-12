@@ -58,8 +58,8 @@ interface xToast {
     /**
      * TODO 设置动画样式
      */
-    fun setAnimStyle(style:Int)
-    fun getAnimStyle():Int
+    fun setAnimStyle(style:Int?)
+    fun getAnimStyle():Int?
 
     /**
      * TODO 设置点击事件
@@ -70,14 +70,14 @@ interface xToast {
     /**
      * TODO 设置背景样式
      */
-    fun setBackDrawable(drawable: Int)
-    fun setBackDrawable(drawable: Drawable)
+    fun setBackDrawable(drawable: Int?)
+    fun setBackDrawable(drawable: Drawable?)
     fun getBackDrawable():Drawable?
 
     /**
      * TODO 设置字体样式
      */
-    fun setTextStyle(@StyleRes style:Int)
+    fun setTextStyle(@StyleRes style:Int?)
 
     /**
      * TODO 设置默认显示图标

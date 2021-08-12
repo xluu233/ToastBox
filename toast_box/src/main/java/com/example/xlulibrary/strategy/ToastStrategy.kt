@@ -14,11 +14,11 @@ import com.example.xlulibrary.style.ToastStyle
  */
 interface ToastStrategy {
 
-    fun createToast(context:Context): xToast
+    fun createToast(): xToast
 
     fun getIToast():xToast?
 
-    fun show(context: Context,text:String)
+    fun show(text:String)
 
     fun cancle()
 
@@ -28,6 +28,5 @@ interface ToastStrategy {
 
     fun setView(view: View)
 
-    //fun setIcon(drawable:Int?,left:Int, top:Int, right:Int, bottom:Int)
 
 }

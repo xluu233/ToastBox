@@ -13,25 +13,18 @@ import android.view.inspector.WindowInspector
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StyleRes
-import com.example.xlulibrary.R
 import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.WindowLifecycle
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.itf.ToastClickItf
-import com.example.xlulibrary.util.ViewUtils
 import com.example.xlulibrary.util.findImageView
 import com.example.xlulibrary.util.findMessageView
-import com.example.xlulibrary.util.getLocaGravity
+import com.example.xlulibrary.util.getLocalGravity
 import java.lang.ref.WeakReference
 import java.util.*
 
-/**
- * @ClassName ToastImpl
- * @Description TODO
- * @Author AlexLu_1406496344@qq.com
- * @Date 2021/6/18 17:10
- */
-class ActivityToast(private val activity: Activity) : xToast {
+
+class ActivityToast() : xToast {
 
     override var x: Int = 0
     override var y: Int = 0
@@ -41,9 +34,9 @@ class ActivityToast(private val activity: Activity) : xToast {
     var mGravity = 0
 
     /*动画*/
-    var anim:Int ?= null
+    private var anim:Int ?= null
 
-    private var mView:View ?= null
+    private var mView : View ?= null
     private var mMessageView : TextView ?= null
 
     /*事件监听*/
@@ -51,7 +44,7 @@ class ActivityToast(private val activity: Activity) : xToast {
 
 
     private val toast by lazy {
-        WindowsMangerToast(activity,this)
+        WindowsMangerToast(this)
     }
 
     override fun show() {
@@ -61,7 +54,7 @@ class ActivityToast(private val activity: Activity) : xToast {
 
     override fun cancel() {
         ToastBoxRegister.unRegister(this)
-        toast.cancle()
+        toast.cancel()
     }
 
     override fun setText(text: String) {
@@ -82,19 +75,19 @@ class ActivityToast(private val activity: Activity) : xToast {
     }
 
     override fun setGravity(location: Location) {
-        mGravity = getLocaGravity(location)
+        mGravity = getLocalGravity(location)
     }
 
     override fun getGravity(): Int {
         return mGravity
     }
 
-    override fun setAnimStyle(style: Int) {
+    override fun setAnimStyle(style: Int?) {
         this.anim = style
     }
 
-    override fun getAnimStyle(): Int {
-        return anim!!
+    override fun getAnimStyle(): Int? {
+        return anim
     }
 
     override fun setListener(clickItf: ToastClickItf?) {
@@ -106,11 +99,13 @@ class ActivityToast(private val activity: Activity) : xToast {
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    override fun setBackDrawable(drawable: Int) {
-        mView?.background = activity.getDrawable(drawable)
+    override fun setBackDrawable(drawable: Int?) {
+        if (drawable==null) return
+        mView?.background = ToastBoxRegister.getActivity().getDrawable(drawable)
     }
 
-    override fun setBackDrawable(drawable: Drawable) {
+    override fun setBackDrawable(drawable: Drawable?) {
+        if (drawable==null) return
         mView?.background = drawable
     }
 
@@ -118,27 +113,23 @@ class ActivityToast(private val activity: Activity) : xToast {
         return mView?.background
     }
 
-    override fun setTextStyle(@StyleRes style: Int) {
-        mMessageView?.setTextAppearance(style)
+    override fun setTextStyle(@StyleRes style: Int?) {
+        style?.let {
+            mMessageView?.setTextAppearance(it)
+        }
     }
 
     override fun setIcon(drawable: Int?, left: Int, top: Int, right: Int, bottom: Int) {
         if (mView == null) return
-        val icon:ImageView ?= findImageView(mView!!)
+        val icon:ImageView ?= findImageView(mView)
 
         if (drawable==null){
             icon?.visibility = View.GONE
-            return
-        }
-        val _drawable = activity.getDrawable(drawable)
-        if (_drawable == null){
-            icon?.visibility = View.GONE
         }else{
             icon?.visibility = View.VISIBLE
-            icon?.setImageDrawable(_drawable)
+            icon?.setImageDrawable(ToastBoxRegister.getActivity().getDrawable(drawable))
             icon?.setPadding(left, top, right, bottom)
         }
-
     }
 
 
@@ -147,7 +138,7 @@ class ActivityToast(private val activity: Activity) : xToast {
     }
 
     override fun clear() {
-        ViewUtils.gcViews(mView)
+        //ViewUtils.gcViews(mView)
         mMessageView = null
         mView = null
     }
@@ -155,7 +146,9 @@ class ActivityToast(private val activity: Activity) : xToast {
 
 }
 
-class WindowsMangerToast(private val activity: Activity,private val xToast: xToast){
+class WindowsMangerToast(private val xToast: xToast){
+
+    private val activity = ToastBoxRegister.getActivity()
 
     private var mIsShow: Boolean = false
     private val mTimer: Timer = Timer()
@@ -180,17 +173,17 @@ class WindowsMangerToast(private val activity: Activity,private val xToast: xToa
         }
     }
 
-    fun cancle(){
+    fun cancel(){
         if (mIsShow){
             //directShow(false)
             //clearCallBack()
-            handler.post(cancleRunnable)
+            handler.post(cancelRunnable)
         }
     }
 
     private fun clearCallBack(){
         handler.removeCallbacks(showRunnable)
-        handler.removeCallbacks(cancleRunnable)
+        handler.removeCallbacks(cancelRunnable)
     }
 
     private val showRunnable : Runnable = Runnable {
@@ -207,17 +200,16 @@ class WindowsMangerToast(private val activity: Activity,private val xToast: xToa
             }
         }
 
-
         mWdm.get()?.addView(view, mParams)//将其加载到windowManager上
         mTimer.schedule(object : TimerTask() {
             override fun run() {
-                cancle()
+                this@WindowsMangerToast.cancel()
             }
         }, xToast.duration)
         mIsShow = true
     }
 
-    private val cancleRunnable : Runnable = Runnable {
+    private val cancelRunnable : Runnable = Runnable {
         if (xToast.getView() == null) return@Runnable
 
         val view = xToast.getView()!!
@@ -239,29 +231,6 @@ class WindowsMangerToast(private val activity: Activity,private val xToast: xToa
     }
 
 
-    private fun directShow(show:Boolean){
-        activity.runOnUiThread {
-            if (show){
-                mWdm.get()?.addView(xToast.getView(), mParams)//将其加载到windowManager上
-                mTimer.schedule(object : TimerTask() {
-                    override fun run() {
-                        cancle()
-                    }
-                }, xToast.duration)
-                mIsShow = true
-            }else{
-                mWdm.get()?.removeView(xToast.getView())
-                xToast.getListener()?.setOnToastDismissed()
-                mIsShow = false
-                mTimer.cancel()
-                mParams = null
-                windowLifecycle.unregister()
-            }
-        }
-    }
-
-
-
     private fun setParams() {
         mParams = WindowManager.LayoutParams()
         mParams?.apply {
@@ -270,7 +239,9 @@ class WindowsMangerToast(private val activity: Activity,private val xToast: xToa
             format = PixelFormat.TRANSLUCENT
             flags = (WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             gravity = xToast.getGravity()
-            windowAnimations = xToast.getAnimStyle()
+            xToast.getAnimStyle()?.let {
+                windowAnimations = it
+            }
             this.x = xToast.x
             this.y = xToast.y
         }

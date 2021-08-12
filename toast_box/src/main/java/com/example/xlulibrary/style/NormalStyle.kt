@@ -6,9 +6,8 @@ import android.view.View
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.R
 import com.example.xlulibrary.ToastBoxRegister
-import com.example.xlulibrary.data.TextStyle
 import com.example.xlulibrary.util.getDefaultBackDrawable
-import com.example.xlulibrary.util.getDefaultTextAppreance
+import com.example.xlulibrary.util.getDefaultTextAppearance
 
 /**
  * @ClassName NormalStyle
@@ -45,7 +44,7 @@ class NormalStyle : ToastStyle {
 
     override var backDrawable: Int ?= getDefaultBackDrawable()
 
-    override var textStyle: Int ?= getDefaultTextAppreance()
+    override var textStyle: Int ?= getDefaultTextAppearance()
 
     override var animStyle: Int ?= ToastBoxRegister.animStyle
 
@@ -57,8 +56,8 @@ class NormalStyle : ToastStyle {
 
     var xyChanged = false
 
-    override fun createView(context: Context) : View{
-        return LayoutInflater.from(context).inflate(R.layout.toast_default, null)
+    override fun createView() : View{
+        return LayoutInflater.from(ToastBoxRegister.getActivity()).inflate(R.layout.toast_default, null)
     }
 
 }

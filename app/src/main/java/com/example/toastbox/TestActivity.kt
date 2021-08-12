@@ -19,15 +19,12 @@ class TestActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        //ToastBox(this).show("这是Activity-2弹出的toast",5000L)
-
         initView()
     }
 
 
     private fun initView() {
         //val fragmentContainerView = binding.fragment
-
         supportFragmentManager.beginTransaction().add(R.id.fragment,TestFragment.newInstance()).commit()
     }
 

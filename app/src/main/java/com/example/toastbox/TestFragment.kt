@@ -17,10 +17,6 @@ class TestFragment : Fragment() {
         fun newInstance() = TestFragment()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_test, container, false)
     }
@@ -28,8 +24,7 @@ class TestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //ToastBox(requireContext()).setLocation(Location.CENTER).show("这是Fragment弹出的toast",5000L)
-        ToastBox(requireContext()).setView(R.layout.custom_toast_common_1).show("This is Custom View",5000L)
+        ToastBox().setView(R.layout.custom_toast_common_1).show("This is Custom View",5000L)
     }
 
 

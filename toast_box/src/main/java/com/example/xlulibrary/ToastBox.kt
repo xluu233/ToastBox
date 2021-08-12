@@ -3,7 +3,6 @@ package com.example.xlulibrary
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.*
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.data.TextStyle
@@ -21,33 +20,13 @@ import java.util.*
  * @Author AlexLu_1406496344@qq.com
  * @Date 2021/6/17 16:40
  */
-class ToastBox(private val context:Context){
+class ToastBox{
 
     private var _mToastStyle : ToastStyle ?= NormalStyle()
     private val mToastStyle get() = _mToastStyle!!
 
     private var _mToastStrategy : WeakReference<ToastStrategy> ?= WeakReference(ToastStrategyImpl())
     private val ToastStrategyImpl:ToastStrategy? get() = _mToastStrategy?.get()
-
-/*    companion object SystemToast{
-
-        var location : Location = Location.BOTTOM
-        var style : ToastStyle = NormalStyle()
-
-
-        fun showSysToast(text: String?,duration:Int = Toast.LENGTH_SHORT):SystemToast = apply{
-
-        }
-
-        fun showSysToast(@StringRes res: Int?,duration:Int = Toast.LENGTH_SHORT):SystemToast = apply{
-            val text = res?.let { ToastBoxRegister.application.resources.getText(it) }
-            if (text.isNullOrEmpty()) {
-                return@apply
-            }
-            showSysToast(text.toString(),duration)
-        }
-
-    }*/
 
 
     fun show(text: String?,duration:Long?=null){
@@ -57,14 +36,12 @@ class ToastBox(private val context:Context){
         duration?.let {
             mToastStyle.duration = it
         }
-        ToastBoxRegister.getActivity().runOnUiThread {
-            ToastStrategyImpl?.setStyle(mToastStyle)
-            ToastStrategyImpl?.show(context,text.toString())
-        }
+        ToastStrategyImpl?.setStyle(mToastStyle)
+        ToastStrategyImpl?.show(text.toString())
     }
 
     fun show(@StringRes res: Int?,duration:Long?=null):ToastBox  = apply{
-        val text = res?.let { context.resources.getText(it) }
+        val text = res?.let { ToastBoxRegister.getActivity().resources.getText(it) }
         if (text.isNullOrEmpty()) {
             return@apply
         }
@@ -84,7 +61,7 @@ class ToastBox(private val context:Context){
     }
 
     fun setView(@LayoutRes id:Int):ToastBox = apply{
-        val view = LayoutInflater.from(context).inflate(id,null)
+        val view = LayoutInflater.from(ToastBoxRegister.getActivity()).inflate(id,null)
         ToastStrategyImpl?.setView(view)
     }
 

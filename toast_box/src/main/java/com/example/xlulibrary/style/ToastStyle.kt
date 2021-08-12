@@ -16,7 +16,7 @@ interface ToastStyle {
     /**
      * 创建视图
      */
-    fun createView(context: Context):View
+    fun createView():View
 
     /**
      * 位置

@@ -10,71 +10,71 @@ import android.util.Log
  */
 object xLog {
 
-    var sLogName = "ToastBox"
-    var sIsShow = false
+    private var LogName = "ToastBox"
+    private var showLog = false
 
-    fun init(logName: String, isShow: Boolean) {
-        sLogName = logName
-        sIsShow = isShow
+    fun init(logName: String, showLog: Boolean) {
+        LogName = logName
+        this.showLog = showLog
     }
 
     fun d(TAG: String, content: String?) {
-        if (sIsShow) {
-            Log.d("[$sLogName]$TAG", content!!)
+        if (showLog) {
+            Log.d("[$LogName]$TAG", content!!)
         }
     }
 
     fun v(TAG: String, content: String?) {
-        if (sIsShow) {
-            Log.v("[$sLogName]$TAG", content!!)
+        if (showLog) {
+            Log.v("[$LogName]$TAG", content!!)
         }
     }
 
     fun w(TAG: String, content: String?) {
-        if (sIsShow) {
-            Log.w("[$sLogName]$TAG", content!!)
+        if (showLog) {
+            Log.w("[$LogName]$TAG", content!!)
         }
     }
 
     fun e(TAG: String, content: String?) {
-        if (sIsShow) {
-            Log.e("[$sLogName]$TAG", content!!)
+        if (showLog) {
+            Log.e("[$LogName]$TAG", content!!)
         }
     }
 
     fun i(TAG: String, content: String?) {
-        if (sIsShow) {
-            Log.i("[$sLogName]$TAG", content!!)
+        if (showLog) {
+            Log.i("[$LogName]$TAG", content!!)
         }
     }
 
     fun d(content: String?) {
-        if (sIsShow) {
-            Log.d("[$sLogName]", content!!)
+        if (showLog) {
+            Log.d("[$LogName]", content!!)
         }
     }
 
     fun v(content: String?) {
-        if (sIsShow) {
-            Log.v("[$sLogName]", content!!)
+        if (showLog) {
+            Log.v("[$LogName]", content!!)
         }
     }
 
     fun w(content: String?) {
-        if (sIsShow) {
-            Log.w("[$sLogName]", content!!)
+        if (showLog) {
+            Log.w("[$LogName]", content!!)
         }
     }
 
     fun e(content: String?) {
-        if (sIsShow) {
-            Log.e("[$sLogName]", content!!)
+        if (showLog) {
+            Log.e("[$LogName]", content!!)
         }
     }
 
     fun i(content: String?) {
-        if (sIsShow) {
-            Log.i("[$sLogName]", content!!)
+        if (showLog) {
+            Log.i("[$LogName]", content!!)
         }
     }
 

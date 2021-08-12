@@ -5,20 +5,23 @@ import android.app.Application
 import android.app.Application.ActivityLifecycleCallbacks
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.xlulibrary.data.TextStyle
 import com.example.xlulibrary.toast.ActivityToast
-import com.example.xlulibrary.toast.SystemToast
 import com.example.xlulibrary.toast.xToast
 import com.example.xlulibrary.util.xLog
 import java.lang.ref.WeakReference
 import java.util.concurrent.LinkedBlockingQueue
 
 object ToastBoxRegister : ActivityLifecycleCallbacks {
+
     private val TAG = "ToastBoxRegister"
 
-    private var currentActivity: WeakReference<Activity> ?= null
-    lateinit var application: Application
+    private var _currentActivity: WeakReference<Activity> ?= null
+    private val currentActivity get() = _currentActivity?.get()!!
+
+    private lateinit var application: Application
 
     var defaultIcon : Int ?= null
 
@@ -32,16 +35,6 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
      */
     var animStyle:Int = R.style.ToastAnim_1
 
-    /**
-     * 设置系统默认toast动画
-     */
-    var anim:Int = R.anim.anim_in
-
-    /**
-     * 用来保存toastBox实例
-     */
-//    private var _boxStack = WeakReference(LinkedBlockingQueue<xToast>())
-//    private var boxStack = _boxStack.get()!!
 
     private var boxStack = LinkedBlockingQueue<xToast>()
 
@@ -50,15 +43,6 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
      */
     var WindowsToastSize:Int = 3
 
-    /**
-     * SystemToast同时弹出的数量
-     */
-    var SystemToastSize:Int = 1
-
-    /**
-     * 系统默认toast时长
-     */
-    var SystemToastDuration:Int = Toast.LENGTH_SHORT
 
     /**
      * 在app中初始化，监听activity声明周期
@@ -69,40 +53,39 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
     }
 
     fun getActivity():Activity{
-        return currentActivity?.get()!!
-    }
-
-    fun getContext():Context{
-        return currentActivity?.get()?.baseContext!!
+        return currentActivity
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-
+        Log.d(TAG, "onActivityCreated: ${activity.localClassName}")
+        _currentActivity = WeakReference(activity)
     }
 
     override fun onActivityStarted(activity: Activity) {
-
+        Log.d(TAG, "onActivityStarted: ${activity.localClassName}")
     }
 
     override fun onActivityResumed(activity: Activity) {
-        currentActivity = WeakReference(activity)
+        Log.d(TAG, "onActivityResumed: ${activity.localClassName}")
+        _currentActivity = WeakReference(activity)
     }
 
     override fun onActivityPaused(activity: Activity) {
-
+        Log.d(TAG, "onActivityPaused: ${activity.localClassName}")
     }
 
     override fun onActivityStopped(activity: Activity) {
-
+        Log.d(TAG, "onActivityStopped: ${activity.localClassName}")
     }
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-
+        Log.d(TAG, "onActivitySaveInstanceState: ${activity.localClassName}")
     }
 
     override fun onActivityDestroyed(activity: Activity) {
-        if (activity == currentActivity){
-            currentActivity = null
+        Log.d(TAG, "onActivityDestroyed: ${activity.localClassName}")
+        if (activity.javaClass.name == currentActivity.javaClass.name){
+            _currentActivity = null
         }
     }
 
@@ -115,24 +98,9 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
         if (xToast==null) return
         boxStack.offer(xToast)
 
-        when(xToast){
-            is SystemToast -> {
-                while (boxStack.size > SystemToastSize){
-                    val toast = boxStack.poll()
-                    toast.cancel()
-                }
-            }
-            is ActivityToast -> {
-                while (boxStack.size > WindowsToastSize){
-                    val toast = boxStack.poll()
-                    toast.cancel()
-                }
-                /*val lastToast = boxStack.peek()
-                if (lastToast?.x== xToast.x &&  lastToast.y==xToast.y  &&  lastToast.getGravity()==xToast.getGravity()){
-                    //两者位置相同
-                    xToast.y = xToast.y.plus(100)
-                }*/
-            }
+        while (boxStack.size > WindowsToastSize){
+            val toast = boxStack.poll()
+            toast.cancel()
         }
         xLog.d(TAG,"Register    ----  toast_size:${boxStack.size}")
     }

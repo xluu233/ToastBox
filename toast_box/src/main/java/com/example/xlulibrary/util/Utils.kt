@@ -10,18 +10,8 @@ import android.widget.TextView
 import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.data.TextStyle
-import java.lang.ref.WeakReference
-import kotlin.reflect.KProperty
 
-
-/**
- * @ClassName Utils
- * @Description TODO
- * @Author AlexLu_1406496344@qq.com
- * @Date 2021/6/18 16:20
- */
-
-fun getLocaGravity(location: Location): Int {
+fun getLocalGravity(location: Location): Int {
     return when(location){
         Location.TOP -> {
             Gravity.TOP
@@ -56,23 +46,19 @@ fun findMessageView(view: View): TextView {
 }
 
 /**
- * TODO 自定义View布局中必须包含一个ImageView
- *
- * @param view
- * @return
+ * 自定义View布局中必须包含一个ImageView
  */
-fun findImageView(view: View): ImageView? {
+fun findImageView(view: View?): ImageView? {
     if (view is ImageView) return view
 
     if (view is ViewGroup){
         for (i in 0 until view.childCount){
-            val childView = view.getChildAt(i)
-            when(childView){
+            return when(val childView = view.getChildAt(i)){
                 is ViewGroup -> {
-                     return findImageView(childView)
+                    findImageView(childView)
                 }
                 is ImageView -> {
-                    return childView
+                    childView
                 }
                 else -> {
                     continue
@@ -85,18 +71,7 @@ fun findImageView(view: View): ImageView? {
 }
 
 
-fun <T> weak(initializer: () -> T) = Weak(initializer.invoke())
-class Weak<T>(r: T) {
-    private var reference: WeakReference<T?> = WeakReference(r)
-
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): T? = reference.get()
-
-    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) {
-        this.reference = WeakReference(value)
-    }
-}
-
-fun getDefaultBackDrawable():Int?{
+fun getDefaultBackDrawable():Int{
     var drawablw:Int = com.example.xlulibrary.R.drawable.normal_shape_gray
     ToastBoxRegister.textStyle?.let {
         drawablw = when(it){
@@ -109,15 +84,12 @@ fun getDefaultBackDrawable():Int?{
             TextStyle.GRAY -> {
                 com.example.xlulibrary.R.drawable.normal_shape_gray
             }
-            TextStyle.Shadow -> {
-                com.example.xlulibrary.R.drawable.shadow
-            }
         }
     }
     return drawablw
 }
 
-fun getDefaultTextAppreance():Int{
+fun getDefaultTextAppearance():Int{
     var drawablw:Int = com.example.xlulibrary.R.style.NormalStyle_textAppreance_gray
     ToastBoxRegister.textStyle?.let {
         drawablw = when(it){
@@ -129,9 +101,6 @@ fun getDefaultTextAppreance():Int{
             }
             TextStyle.GRAY -> {
                 com.example.xlulibrary.R.style.NormalStyle_textAppreance_gray
-            }
-            TextStyle.Shadow -> {
-                com.example.xlulibrary.R.style.NormalStyle_textAppreance_white
             }
         }
     }
