@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/toast_back_white"
-    android:backgroundTint="#B0E0E6"
+    android:backgroundTint="#FF8C69"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.airbnb.lottie.LottieAnimationView
@@ -18,8 +18,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/info" />
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/fail" />
 
     <View
         android:id="@+id/colorView"
