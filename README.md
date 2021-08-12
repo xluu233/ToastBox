@@ -5,7 +5,11 @@
 ToastBox是一个自定义吐司库，可以实现多种自定义toast
 ```
 
-<img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(1).jpg" alt="drawing" width="300"/>
+<div align=center>
+<img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(1).jpg" alt="drawing" width="500"/>
+</div>
+
+
 
 
 ### 具体功能
@@ -15,14 +19,14 @@ ToastBox是一个自定义吐司库，可以实现多种自定义toast
 
 <table>
     <tr>
-        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(2).jpg">nav1</center></td>
-        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(3).jpg">nav2</center></td>
+        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(2).jpg">---</center></td>
+        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(3).jpg">many style</center></td>
     </tr>
 </table>
 
 <table>
     <tr>
-        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(4).jpg">nav1</center></td>
+        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(4).jpg">自定义View</center></td>
     </tr>
 </table>
 
