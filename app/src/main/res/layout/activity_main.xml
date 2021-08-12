@@ -21,6 +21,15 @@
             android:onClick="toastNormal"
             android:text="普普通通的Toast"/>
 
+
+        <Button
+            android:id="@+id/lottie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="toastNormal"
+            android:text="Lottie动画toast"/>
+
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"

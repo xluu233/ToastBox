@@ -29,7 +29,8 @@ fun getLocalGravity(location: Location): Int {
 /**
  * 智能获取用于显示消息的 TextView
  */
-fun findMessageView(view: View): TextView {
+fun findMessageView2(view: View?): TextView? {
+    if (view == null) return null
     if (view is TextView) {
         if (view.getId() == View.NO_ID) {
             view.setId(R.id.message)
@@ -45,10 +46,38 @@ fun findMessageView(view: View): TextView {
     throw IllegalArgumentException("You must include a TextView with an ID value of android.R.id.message")
 }
 
+
 /**
- * 自定义View布局中必须包含一个ImageView
+ * 自定义View布局中必须包含一个TextView，返回第一个TextView
+ */
+fun findMessageView(view: View?): TextView? {
+    if (view == null) return null
+    if (view is TextView) {
+        return view
+    }
+    if (view is ViewGroup){
+        for (i in 0 until view.childCount){
+            return when(val childView = view.getChildAt(i)){
+                is ViewGroup -> {
+                    findMessageView(childView)
+                }
+                is TextView -> {
+                    childView
+                }
+                else -> {
+                    continue
+                }
+            }
+        }
+    }
+    return null
+}
+
+/**
+ * 自定义View布局中必须包含一个ImageView，返回第一个ImageView
  */
 fun findImageView(view: View?): ImageView? {
+    if (view == null) return null
     if (view is ImageView) return view
 
     if (view is ViewGroup){

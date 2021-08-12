@@ -53,11 +53,13 @@ class ToastStrategyImpl : ToastStrategy{
             //自定义View
             toast.setView(view)
             useCustomView = false
+            toast.isCustomView = true
         }else{
             toast.setView(style.createView())
             toast.setTextStyle(style.textStyle)
             toast.setBackDrawable(style.backDrawable)
             toast.setIcon(style.iconDrawable,style.left, style.top, style.right, style.bottom)
+            toast.isCustomView = false
         }
         toast.x = style.x
         toast.y = style.y

@@ -27,6 +27,10 @@ class MainActivity : AppCompatActivity() {
                 //正常使用
                 ToastBox().show("This is ToastBox")
             }
+            R.id.lottie -> {
+                val intent = Intent(this,LottieActivity::class.java)
+                startActivity(intent)
+            }
             R.id.button2 -> {
                 //在不同的位置弹出
                 ToastBox().setLocation(Location.TOP).show("TOP ToastBox")
@@ -39,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.button4 -> {
                 //自定义布局，传入View或者layout
-                ToastBox().setView(R.layout.custom_toast_common_1).show("Warning",5000L)
+                ToastBox().setView(R.layout.toast_custom).show("Warning",5000L)
             }
             R.id.button5 -> {
                 //设置toast时间

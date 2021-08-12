@@ -29,17 +29,12 @@ class ActivityToast() : xToast {
     override var x: Int = 0
     override var y: Int = 0
     override var duration: Long = 2500L
+    override var isCustomView: Boolean = false
 
-    /** Toast 显示重心  */
-    var mGravity = 0
-
-    /*动画*/
+    private var mGravity = 0
     private var anim:Int ?= null
-
-    private var mView : View ?= null
-    private var mMessageView : TextView ?= null
-
-    /*事件监听*/
+    private var mView:View ?= null
+    private var mMessageView:TextView ?= null
     private var clickListener:ToastClickItf ?= null
 
 
@@ -67,7 +62,7 @@ class ActivityToast() : xToast {
             mMessageView = null
             return
         }
-        mMessageView = findMessageView(mView!!)
+        mMessageView = findMessageView(mView)
     }
 
     override fun getView(): View? {
@@ -200,7 +195,7 @@ class WindowsMangerToast(private val xToast: xToast){
             }
         }
 
-        mWdm.get()?.addView(view, mParams)//将其加载到windowManager上
+        mWdm.get()?.addView(view, mParams)
         mTimer.schedule(object : TimerTask() {
             override fun run() {
                 this@WindowsMangerToast.cancel()

@@ -18,7 +18,7 @@ interface xToast {
     var x:Int
     var y:Int
     var duration:Long
-
+    var isCustomView:Boolean
 
     /**
      * TODO 显示

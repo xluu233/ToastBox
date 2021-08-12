@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/toast_back1"
-    android:layout_width="300dp"
-    android:layout_height="80dp">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imageView"
@@ -20,13 +20,13 @@
         app:srcCompat="@drawable/warning" />
 
     <TextView
-        android:id="@android:id/message"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="TextView"
         android:textSize="20sp"
+        android:gravity="center"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"

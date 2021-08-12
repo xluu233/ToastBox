@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.xlulibrary.ToastBox
-import com.example.xlulibrary.data.Location
-import com.example.xlulibrary.data.TextStyle
 
 
 class TestFragment : Fragment() {
@@ -24,7 +22,7 @@ class TestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ToastBox().setView(R.layout.custom_toast_common_1).show("This is Custom View",5000L)
+        ToastBox().setView(R.layout.toast_custom).show("This is Custom View",5000L)
     }
 
 
