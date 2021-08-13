@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import com.airbnb.lottie.LottieAnimationView
 import com.example.xlulibrary.ToastBox
+import com.example.xlulibrary.data.Location
 
 class LottieActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,12 +23,19 @@ class LottieActivity : AppCompatActivity() {
         ToastBox().setView(R.layout.toast_lottie_fail).setXY(0,900).show("Failed!")
     }
 
+
+    private fun showSysToast(){
+        ToastBox.showSys("系统Toast实现",layout = R.layout.toast_lottie_fail,duration = Toast.LENGTH_LONG)
+        //ToastBox.showSys("Sys Toast Success",layout = R.layout.toast_lottie_success,location = Location.CENTER )
+        //ToastBox.showSys("Sys Toast Net",layout = R.layout.toast_lottie_error,location = Location.TOP )
+    }
+
+
     fun toast(view: View) {
         when(view.id){
             R.id.button13 -> {
                 //info
-                showAll()
-                //ToastBox().setView(R.layout.toast_lottie_info).show("Show Message~")
+                ToastBox().setView(R.layout.toast_lottie_info).show("Show Message~")
             }
             R.id.button14 -> {
                 //net error
@@ -39,6 +48,9 @@ class LottieActivity : AppCompatActivity() {
             R.id.button16 -> {
                 //fail
                 ToastBox().setView(R.layout.toast_lottie_fail).show("Failed!")
+            }
+            R.id.button17 -> {
+                showSysToast()
             }
         }
     }

@@ -32,17 +32,9 @@ fun toast(content: String, duration: Int = Toast.LENGTH_SHORT) {
     finalToast(content, duration,ToastBoxRegister.getActivity())
 }
 
-fun toast(@StringRes id: Int, duration: Int = Toast.LENGTH_SHORT) {
-    finalToast(ToastBoxRegister.getActivity().getString(id), duration,ToastBoxRegister.getActivity())
-}
-
 fun longToast(content: String, duration: Int = Toast.LENGTH_LONG) {
     if (TextUtils.isEmpty(content))return
     finalToast(content, duration,ToastBoxRegister.getActivity())
-}
-
-fun longToast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG) {
-    finalToast(ToastBoxRegister.getActivity().getString(id), duration,ToastBoxRegister.getActivity())
 }
 
 

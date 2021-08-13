@@ -21,7 +21,7 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
     private var _currentActivity: WeakReference<Activity> ?= null
     private val currentActivity get() = _currentActivity?.get()!!
 
-    private lateinit var application: Application
+    lateinit var application: Application
 
     var defaultIcon : Int ?= null
 
