@@ -23,30 +23,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
+        useIR = true
     }
 
-//    publishing {
-//        publications {
-
-//        }
-//
-//        repositories {
-//            maven {
-//                allowInsecureProtocol true
-//                name = "xluu233"
-//                url = "https://github.com/xluu233/ToastBox"
-//                credentials {
-//                    username = "xluu233"
-//                    password = "as13677291420as"
-//                }
-//            }
-//        }
-//    }
 }
 
 afterEvaluate {
