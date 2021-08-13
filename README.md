@@ -1,34 +1,54 @@
 # ToastBOX
 
 
-```
-ToastBox是一个自定义吐司库，可以实现多种自定义toast
-```
+> ToastBox是一个自定义吐司库，可以实现自定义View、显示时长、显示位置、各种自定义风格。有WindowsManger和系统Toast两种实现方式，配合Lottie动画库可以做一些好看的toast
+
+
+#### 普通的toast:
 
 <div align=center>
-<img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(1).jpg" alt="drawing" width="500"/>
+<img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/580a4bf391ad47d9b87892deab3080e1~tplv-k3u1fbpfcp-watermark.image" width="300" height="XXX" />
 </div>
 
 
+#### 一些有意思的toast：
+
+<div align=center>
+<img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7253b6acce354403bbf61e73c46815ae~tplv-k3u1fbpfcp-watermark.image" width="400" height="XXX" />
+</div>
+
+**success：**
+<div align=center>
+<img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7fd376adf1164baa81d13eebe5a92e94~tplv-k3u1fbpfcp-watermark.image" width="xxx" height="XXX" />
+</div>
+
+**fail:**
+<div align=center>
+<img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c181942878874969bfb318087386449f~tplv-k3u1fbpfcp-watermark.image" width="XXX" height="XXX" />
+</div>
+
+**网络错误：**
+<div align=center>
+<img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1203ffe2ae564f4f9540b731b894103a~tplv-k3u1fbpfcp-watermark.image" width="XXX" height="XXX" />
+</div>
+
+**普通信息：**
+<div align=center>
+<img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/70788df056a54b378a9a914dcece1bba~tplv-k3u1fbpfcp-watermark.image" width="XXX" height="XXX" />
+</div>
+
+**网络错误：**
+<div align=center>
+<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0d9975a34bce4f1bbe0d3bed99bd4dcb~tplv-k3u1fbpfcp-watermark.image" width="XXX" height="XXX" />
+</div>
 
 
-### 具体功能
+关于LottieToast的演示，可以查看：[LottieActivity](https://github.com/xluu233/ToastBox/blob/master/app/src/main/java/com/example/toastbox/LottieActivity.kt)
 
-自定义View、显示时长、显示位置、各种自定义风格
+Lottie中有很多看好的动画，你也可以自己设计一个。
 
-
-<table>
-    <tr>
-        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(2).jpg">---</center></td>
-        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(3).jpg">many style</center></td>
-    </tr>
-</table>
-
-<table>
-    <tr>
-        <td ><center><img src="https://github.com/xluu233/ToastBox/blob/master/img/box%20(4).jpg">自定义View</center></td>
-    </tr>
-</table>
+[Lottie动画](https://lottiefiles.com/featured)  
+[Lottie开发文档](http://airbnb.io/lottie/#/android?id=loading-an-animation)
 
 ### 快速接入：
 
@@ -40,78 +60,89 @@ Add it in your root build.gradle at the end of repositories:
 			maven { url 'https://jitpack.io' }
 		}
 	}
-
+	
 Step 2. Add the dependency
 
 	dependencies {
-	    implementation 'com.github.xluu233:ToastBox:0.3'
+	    implementation 'com.github.xluu233:ToastBox:0.4'
 	}
-
-[![](https://jitpack.io/v/xluu233/ToastBox.svg)](https://jitpack.io/#xluu233/ToastBox)
+	
 
 ### 使用：
 
-stetup1: 在Application中初始化
+**stetup1:** 在Application中初始化
 
 ```
-ToastBoxRegister.init(this)
-
+        ToastBoxRegister.init(this)
 ```
 
-setup2：简单调用
+初始化时可以配置一些参数
+
+```
+        ToastBoxRegister.init(this).apply {
+            //text样式：白色和灰色
+            textStyle = TextStyle.White
+            //可以设置默认显示图标
+            defaultIcon = R.drawable.ic_launcher_background
+            //设置默认动画
+            animStyle = R.style.xxx
+        }
+```
+
+**setup2**:简单调用
 
 ```
 ToastBox(this).show("This is ToastBox")
 ```
 
-### 更多演示请参考demo
+### 更多参数设置
 
 
 ```
 //正常使用
-ToastBox(this).show("This is ToastBox")
-
+ToastBox().show("This is ToastBox")
 
 //在不同的位置弹出
-ToastBox(this).setLocation(Location.TOP).show("TOP ToastBox")
-ToastBox(this).setLocation(Location.CENTER).show("Center ToastBox")
-ToastBox(this).setLocation(Location.BOTTOM).show("Bottom ToastBox")
-
+ToastBox().setLocation(Location.TOP).show("TOP ToastBox")
+ToastBox().setLocation(Location.CENTER).show("Center ToastBox")
+ToastBox().setLocation(Location.BOTTOM).show("Bottom ToastBox")
 
 //修改透明度
-ToastBox(this).setLocation(Location.CENTER).setAlpha(0.5f).show("Center ToastBox")
-
+ToastBox().setLocation(Location.CENTER).setAlpha(0.5f).show("Center ToastBox")
 
 //自定义布局，传入View或者layout
-ToastBox(this).setView(R.layout.custom_toast_common_1).show("This is Custom View",5000L)
-
+ToastBox().setView(R.layout.custom_toast_common_1).show("This is Custom View",5000L)
 
 //设置toast时间
-ToastBox(this).show("5000L",duration = 5000)
-
+ToastBox().show("5000L",duration = 5000)
 
 //设置xy必须在设置location后面
-ToastBox(this).setLocation(Location.BOTTOM).setXY(100,200).show("Center ToastBox")
-
+ToastBox().setLocation(Location.BOTTOM).setXY(100,200).show("Center ToastBox")
 
 //设置监听
-ToastBox(this).setListener(object : ToastClickItf{
+ToastBox().setListener(object : ToastClickItf{
     override fun setOnToastDismissed() {
         xLog.d(TAG,"toast dismissed")
     }
 }).show("哈啊啊啊啊啊哼哼",3000L)
 
-
-
 //不同风格的toast
-ToastBox(this).setTextStyle(TextStyle.GRAY).show("灰色Toast")
-ToastBox(this).setTextStyle(TextStyle.White).setXY(0,300).show("白色Toast")
-ToastBox(this).setTextStyle(TextStyle.Black).setXY(0,600).show("黑色Toast")
-
+ToastBox().setTextStyle(TextStyle.GRAY).show("灰色Toast")
+ToastBox().setTextStyle(TextStyle.White).setXY(0,300).show("白色Toast")
+ToastBox().setTextStyle(TextStyle.Black).setXY(0,600).show("黑色Toast")
 
 //设置动画
-ToastBox(this).setAnim(R.style.MiuiToast).show("切换弹出动画")
+ToastBox().setAnim(R.style.MiuiToast).show("切换弹出动画")
 
 //自定义图标
-ToastBox(this).setIcon(R.drawable.icon).show("This is ToastBox")
+ToastBox().setIcon(R.drawable.icon).show("This is ToastBox")
 ```
+
+---
+卑微Androider求一个Star*
+
+
+**相关文章**:  
+[写一个MVVM快速开发框架（一）基础类封装 ](https://juejin.cn/post/6989918599007698957) 
+
+[写一个MVVM快速开发框架（二）组件化改造](https://juejin.cn/post/6995082240287850527)
