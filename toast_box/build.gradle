@@ -32,12 +32,7 @@ android {
 
 //    publishing {
 //        publications {
-//            release(MavenPublication) {
-//                from components.release
-//                groupId = 'com.github.xluu233'
-//                artifactId = 'ToastBox'
-//                version = '0.4.3'
-//            }
+
 //        }
 //
 //        repositories {
@@ -54,6 +49,30 @@ android {
 //    }
 }
 
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.xluu233'
+                artifactId = 'ToastBox'
+                version = '0.4.3'
+            }
+            debug(MavenPublication) {
+                from components.debug
+                groupId = 'com.github.xluu233'
+                artifactId = 'ToastBox'
+                version = '1.0.0'
+            }
+        }
+        // note repositories goes under publishing
+        repositories {
+            maven {
+                url = "https://github.com/xluu233/ToastBox"
+            }
+        }
+    }
+}
 dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
