@@ -3,14 +3,6 @@
 
 > ToastBox是一个自定义吐司库，可以实现自定义View、显示时长、显示位置、各种自定义风格。有WindowsManger和系统Toast两种实现方式，配合Lottie动画库可以做一些好看的toast
 
-
-#### 普通的toast:
-
-<div align=center>
-<img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/580a4bf391ad47d9b87892deab3080e1~tplv-k3u1fbpfcp-watermark.image" width="300" height="XXX" />
-</div>
-
-
 #### 一些有意思的toast：
 
 <div align=center>
