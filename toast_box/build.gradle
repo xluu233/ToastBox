@@ -38,16 +38,11 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-                groupId = 'com.github.xluu233'
-                artifactId = 'ToastBox'
-                version = '0.4.3'
+                groupId = 'com.example.xlulibrary'
+                artifactId = 'xlulibrary'
+                version = '0.4.5'
             }
-            debug(MavenPublication) {
-                from components.debug
-                groupId = 'com.github.xluu233'
-                artifactId = 'ToastBox'
-                version = '1.0.0'
-            }
+
         }
         // note repositories goes under publishing
         repositories {
