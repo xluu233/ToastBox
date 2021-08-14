@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/toast/ToastBox/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3764102564102564" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/drawable/icon.xml" value="0.3764102564102564" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/drawable/radius_10.xml" value="0.23802083333333332" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/drawable/toast_back1.xml" value="0.3764102564102564" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/drawable/toast_back_white.xml" value="0.37743589743589745" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/drawable/warning.xml" value="0.3764102564102564" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/font/montserrat_bold.xml" value="0.3912820512820513" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/font/montserrat_regular.xml" value="0.253125" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/layout/activity_lottie.xml" value="0.3671875" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/layout/activity_main.xml" value="0.3671875" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/layout/activity_test.xml" value="0.3671875" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/layout/custom_toast_common_1.xml" value="0.36614583333333334" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/layout/fragment_test.xml" value="0.36614583333333334" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/layout/toast_custom.xml" value="0.3671875" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/layout/toast_lottie_error.xml" value="0.5055624227441285" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/layout/toast_lottie_fail.xml" value="0.3671875" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/layout/toast_lottie_info.xml" value="0.3671875" />
+        <entry key="..\:/toast/ToastBox/app/src/main/res/layout/toast_lottie_success.xml" value="0.3671875" />
+        <entry key="..\:/toast/ToastBox/toast_box/src/main/res/drawable/color_view_background.xml" value="0.38333333333333336" />
+        <entry key="..\:/toast/ToastBox/toast_box/src/main/res/drawable/normal_shape_black.xml" value="0.38333333333333336" />
+        <entry key="..\:/toast/ToastBox/toast_box/src/main/res/drawable/normal_shape_gray.xml" value="0.38333333333333336" />
+        <entry key="..\:/toast/ToastBox/toast_box/src/main/res/drawable/normal_shape_white.xml" value="0.38333333333333336" />
+        <entry key="..\:/toast/ToastBox/toast_box/src/main/res/drawable/shadow.xml" value="0.25052083333333336" />
+        <entry key="..\:/toast/ToastBox/toast_box/src/main/res/drawable/test.xml" value="0.38333333333333336" />
+        <entry key="..\:/toast/ToastBox/toast_box/src/main/res/drawable/toast_back_white.xml" value="0.2786458333333333" />
+        <entry key="..\:/toast/ToastBox/toast_box/src/main/res/layout/toast_default.xml" value="0.3671875" />
+        <entry key="..\:/toast/ToastBox/toast_box/src/main/res/layout/toast_net.xml" value="0.3671875" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

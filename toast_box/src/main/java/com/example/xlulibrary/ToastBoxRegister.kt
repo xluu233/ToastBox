@@ -90,6 +90,9 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
     }
 
 
+
+
+
     /**
      * 记录toastBox弹出数量
      */
@@ -99,8 +102,8 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
         boxStack.offer(xToast)
 
         while (boxStack.size > WindowsToastSize){
-            val toast = boxStack.poll()
-            toast.cancel()
+            val toast : xToast ?= boxStack.poll()
+            toast?.cancel()
         }
         xLog.d(TAG,"Register    ----  toast_size:${boxStack.size}")
     }
