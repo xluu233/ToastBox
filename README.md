@@ -3,7 +3,7 @@
 
 > ToastBox是一个自定义吐司库，可以实现自定义View、显示时长、显示位置、各种自定义风格。有WindowsManger和系统Toast两种实现方式，配合Lottie动画库可以做一些好看的toast
 
-#### 一些有意思的toast：
+### 展示
 
 <div align=center>
 <img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7253b6acce354403bbf61e73c46815ae~tplv-k3u1fbpfcp-watermark.image" width="400" height="XXX" />
@@ -28,14 +28,6 @@
 <div align=center>
 <img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/70788df056a54b378a9a914dcece1bba~tplv-k3u1fbpfcp-watermark.image" width="XXX" height="XXX" />
 </div>
-
-**网络错误：**
-<div align=center>
-<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0d9975a34bce4f1bbe0d3bed99bd4dcb~tplv-k3u1fbpfcp-watermark.image" width="XXX" height="XXX" />
-</div>
-
-
-关于LottieToast的演示，可以查看：[LottieActivity](https://github.com/xluu233/ToastBox/blob/master/app/src/main/java/com/example/toastbox/LottieActivity.kt)
 
 Lottie中有很多看好的动画，你也可以自己设计一个。
 
