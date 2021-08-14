@@ -8,18 +8,18 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-//                groupId = 'com.example.xlulibrary'
-//                artifactId = 'xlulibrary'
-//                version = '0.4.5'
+                groupId = 'com.example.xlulibrary'
+                artifactId = 'xlulibrary'
+                version = '0.5.0'
             }
 
         }
         // note repositories goes under publishing
-//        repositories {
-//            maven {
-//                url = "https://github.com/xluu233/ToastBox"
-//            }
-//        }
+        repositories {
+            maven {
+                url = "https://github.com/xluu233/ToastBox"
+            }
+        }
     }
 }
 
