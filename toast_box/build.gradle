@@ -3,6 +3,25 @@ plugins {
     id 'kotlin-android'
     id 'maven-publish'
 }
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+//                groupId = 'com.example.xlulibrary'
+//                artifactId = 'xlulibrary'
+//                version = '0.4.5'
+            }
+
+        }
+        // note repositories goes under publishing
+//        repositories {
+//            maven {
+//                url = "https://github.com/xluu233/ToastBox"
+//            }
+//        }
+    }
+}
 
 android {
     compileSdkVersion 30
@@ -33,25 +52,7 @@ android {
 
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId = 'com.example.xlulibrary'
-                artifactId = 'xlulibrary'
-                version = '0.4.5'
-            }
 
-        }
-        // note repositories goes under publishing
-        repositories {
-            maven {
-                url = "https://github.com/xluu233/ToastBox"
-            }
-        }
-    }
-}
 dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
