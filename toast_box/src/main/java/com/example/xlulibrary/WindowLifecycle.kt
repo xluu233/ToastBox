@@ -10,10 +10,9 @@ import com.example.xlulibrary.util.xLog
 
 class WindowLifecycle(private val activity: Activity) : ActivityLifecycleCallbacks {
 
-    private val TAG = "${activity.localClassName}"
-
-//    private var _xToastImpl: WeakReference<xToast> ?= null
-//    private val xToastImpl get() = _xToastImpl?.get()!!
+    private val TAG by lazy {
+        activity.localClassName
+    }
 
     private var xToast : xToast ?= null
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}

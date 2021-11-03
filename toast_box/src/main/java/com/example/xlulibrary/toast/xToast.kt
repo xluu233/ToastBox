@@ -3,6 +3,7 @@ package com.example.xlulibrary.toast
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.annotation.AnimRes
+import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.itf.ToastClickItf
@@ -70,7 +71,7 @@ interface xToast {
     /**
      * TODO 设置背景样式
      */
-    fun setBackDrawable(drawable: Int?)
+    fun setBackDrawable(@DrawableRes drawable: Int?)
     fun setBackDrawable(drawable: Drawable?)
     fun getBackDrawable():Drawable?
 
@@ -83,7 +84,7 @@ interface xToast {
      * TODO 设置默认显示图标
      * int left, int top, int right, int bottom
      */
-    fun setIcon(drawable: Int?,left:Int, top:Int, right:Int, bottom:Int)
+    fun setIcon(@DrawableRes drawable: Int?,left:Int, top:Int, right:Int, bottom:Int)
 
     /**
      * TODO 设置透明度

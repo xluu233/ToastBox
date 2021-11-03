@@ -14,7 +14,7 @@ import com.example.xlulibrary.style.ToastStyle
  */
 interface ToastStrategy {
 
-    fun createToast(): xToast
+    fun createToast(): xToast?
 
     fun getIToast():xToast?
 

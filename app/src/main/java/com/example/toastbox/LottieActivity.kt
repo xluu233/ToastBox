@@ -14,7 +14,7 @@ class LottieActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lottie)
 
-        showAll()
+        //showAll()
     }
 
     private fun showAll() {
@@ -26,8 +26,6 @@ class LottieActivity : AppCompatActivity() {
 
     private fun showSysToast(){
         ToastBox.showSys("系统Toast实现",layout = R.layout.toast_lottie_fail,duration = Toast.LENGTH_LONG)
-        //ToastBox.showSys("Sys Toast Success",layout = R.layout.toast_lottie_success,location = Location.CENTER )
-        //ToastBox.showSys("Sys Toast Net",layout = R.layout.toast_lottie_error,location = Location.TOP )
     }
 
 

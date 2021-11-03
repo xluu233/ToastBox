@@ -3,12 +3,8 @@ package com.example.xlulibrary
 import android.app.Activity
 import android.app.Application
 import android.app.Application.ActivityLifecycleCallbacks
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import com.example.xlulibrary.data.TextStyle
-import com.example.xlulibrary.toast.ActivityToast
 import com.example.xlulibrary.toast.xToast
 import com.example.xlulibrary.util.xLog
 import java.lang.ref.WeakReference
@@ -19,11 +15,9 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
     private val TAG = "ToastBoxRegister"
 
     private var _currentActivity: WeakReference<Activity> ?= null
-    private val currentActivity get() = _currentActivity?.get()!!
+    private val currentActivity get() = _currentActivity?.get()
 
     lateinit var application: Application
-
-    var defaultIcon : Int ?= null
 
     /**
      * 设置toast字体和背景样式
@@ -52,45 +46,42 @@ object ToastBoxRegister : ActivityLifecycleCallbacks {
         this@ToastBoxRegister.application = application
     }
 
-    fun getActivity():Activity{
+    fun getActivity():Activity?{
         return currentActivity
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        Log.d(TAG, "onActivityCreated: ${activity.localClassName}")
+        xLog.d(TAG, "onActivityCreated: ${activity.localClassName}")
         _currentActivity = WeakReference(activity)
     }
 
     override fun onActivityStarted(activity: Activity) {
-        Log.d(TAG, "onActivityStarted: ${activity.localClassName}")
+        xLog.d(TAG, "onActivityStarted: ${activity.localClassName}")
     }
 
     override fun onActivityResumed(activity: Activity) {
-        Log.d(TAG, "onActivityResumed: ${activity.localClassName}")
+        xLog.d(TAG, "onActivityResumed: ${activity.localClassName}")
         _currentActivity = WeakReference(activity)
     }
 
     override fun onActivityPaused(activity: Activity) {
-        Log.d(TAG, "onActivityPaused: ${activity.localClassName}")
+        xLog.d(TAG, "onActivityPaused: ${activity.localClassName}")
     }
 
     override fun onActivityStopped(activity: Activity) {
-        Log.d(TAG, "onActivityStopped: ${activity.localClassName}")
+        xLog.d(TAG, "onActivityStopped: ${activity.localClassName}")
     }
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-        Log.d(TAG, "onActivitySaveInstanceState: ${activity.localClassName}")
+        xLog.d(TAG, "onActivitySaveInstanceState: ${activity.localClassName}")
     }
 
     override fun onActivityDestroyed(activity: Activity) {
-        Log.d(TAG, "onActivityDestroyed: ${activity.localClassName}")
-        if (activity.javaClass.name == currentActivity.javaClass.name){
+        xLog.d(TAG, "onActivityDestroyed: ${activity.localClassName}")
+        if (activity.javaClass.name == currentActivity?.javaClass?.name){
             _currentActivity = null
         }
     }
-
-
-
 
 
     /**

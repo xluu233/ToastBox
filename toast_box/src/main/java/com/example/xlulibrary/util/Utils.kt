@@ -2,11 +2,14 @@ package com.example.xlulibrary.util
 
 
 import android.R
+import android.util.TypedValue
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.LayoutRes
 import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.data.TextStyle
@@ -25,6 +28,9 @@ fun getLocalGravity(location: Location): Int {
     }
 }
 
+val Int.sp get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this.toFloat(), ToastBoxRegister.application.resources.displayMetrics)
+//val Float.dp get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, App.mInstance.resources.displayMetrics)
+val Int.dp get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), ToastBoxRegister.application.resources.displayMetrics)
 
 /**
  * 智能获取用于显示消息的 TextView
@@ -134,4 +140,8 @@ fun getDefaultTextAppearance():Int{
         }
     }
     return drawablw
+}
+
+fun getLayoutView(@LayoutRes layout:Int):View{
+    return LayoutInflater.from(ToastBoxRegister.application).inflate(layout, null)
 }

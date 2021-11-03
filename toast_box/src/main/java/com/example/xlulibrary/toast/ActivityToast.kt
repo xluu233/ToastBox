@@ -7,16 +7,23 @@ import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inspector.WindowInspector
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.xlulibrary.R
 import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.WindowLifecycle
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.itf.ToastClickItf
+import com.example.xlulibrary.util.dp
 import com.example.xlulibrary.util.findImageView
 import com.example.xlulibrary.util.findMessageView
 import com.example.xlulibrary.util.getLocalGravity
@@ -24,7 +31,7 @@ import java.lang.ref.WeakReference
 import java.util.*
 
 
-class ActivityToast() : xToast {
+class ActivityToast(activity: Activity) : xToast {
 
     override var x: Int = 0
     override var y: Int = 0
@@ -39,7 +46,7 @@ class ActivityToast() : xToast {
 
 
     private val toast by lazy {
-        WindowsMangerToast(this)
+        WindowsMangerToast(this,activity)
     }
 
     override fun show() {
@@ -93,10 +100,9 @@ class ActivityToast() : xToast {
         return clickListener
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
-    override fun setBackDrawable(drawable: Int?) {
+    override fun setBackDrawable(@DrawableRes drawable: Int?) {
         if (drawable==null) return
-        mView?.background = ToastBoxRegister.getActivity().getDrawable(drawable)
+        mView?.background = AppCompatResources.getDrawable(ToastBoxRegister.application,drawable)
     }
 
     override fun setBackDrawable(drawable: Drawable?) {
@@ -114,16 +120,15 @@ class ActivityToast() : xToast {
         }
     }
 
-    override fun setIcon(drawable: Int?, left: Int, top: Int, right: Int, bottom: Int) {
-        if (mView == null) return
-        val icon:ImageView ?= findImageView(mView)
+    override fun setIcon(@DrawableRes drawable: Int?, left: Int, top: Int, right: Int, bottom: Int) {
+        val icon: ImageView = findImageView(mView) ?: return
 
         if (drawable==null){
-            icon?.visibility = View.GONE
+            icon.visibility = View.GONE
         }else{
-            icon?.visibility = View.VISIBLE
-            icon?.setImageDrawable(ToastBoxRegister.getActivity().getDrawable(drawable))
-            icon?.setPadding(left, top, right, bottom)
+            icon.visibility = View.VISIBLE
+            icon.setImageDrawable(AppCompatResources.getDrawable(ToastBoxRegister.application,drawable))
+            icon.setPadding(left, top, right, bottom)
         }
     }
 
@@ -141,9 +146,7 @@ class ActivityToast() : xToast {
 
 }
 
-class WindowsMangerToast(private val xToast: xToast){
-
-    private val activity = ToastBoxRegister.getActivity()
+class WindowsMangerToast(private val xToast: xToast,activity:Activity){
 
     private var mIsShow: Boolean = false
     private val mTimer: Timer = Timer()

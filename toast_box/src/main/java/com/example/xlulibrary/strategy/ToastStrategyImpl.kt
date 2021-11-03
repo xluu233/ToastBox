@@ -46,29 +46,33 @@ class ToastStrategyImpl : ToastStrategy{
     }
 
     @Synchronized
-    override fun createToast(): xToast {
-        val toast = ActivityToast()
-
-        if (useCustomView && view!=null){
-            //自定义View
-            toast.setView(view)
-            useCustomView = false
-            toast.isCustomView = true
+    override fun createToast(): xToast? {
+        val activity = ToastBoxRegister.getActivity()
+        if (activity == null || activity.isDestroyed || activity.isFinishing){
+            return null
         }else{
-            toast.setView(style.createView())
-            toast.setTextStyle(style.textStyle)
-            toast.setBackDrawable(style.backDrawable)
-            toast.setIcon(style.iconDrawable,style.left, style.top, style.right, style.bottom)
-            toast.isCustomView = false
+            val toast = ActivityToast(activity)
+
+            if (useCustomView && view!=null){
+                //自定义View
+                toast.setView(view)
+                useCustomView = false
+                toast.isCustomView = true
+            }else{
+                toast.setView(style.createView())
+                toast.setTextStyle(style.textStyle)
+                toast.setBackDrawable(style.backDrawable)
+                toast.isCustomView = false
+            }
+            toast.x = style.x
+            toast.y = style.y
+            toast.duration = style.duration
+            toast.setGravity(style.location)
+            toast.setAnimStyle(style.animStyle)
+            toast.setAlpha(style.alpha)
+            toast.setListener(clickListener)
+            return toast
         }
-        toast.x = style.x
-        toast.y = style.y
-        toast.duration = style.duration
-        toast.setGravity(style.location)
-        toast.setAnimStyle(style.animStyle)
-        toast.setAlpha(style.alpha)
-        toast.setListener(clickListener)
-        return toast
     }
 
     override fun getIToast(): xToast? {

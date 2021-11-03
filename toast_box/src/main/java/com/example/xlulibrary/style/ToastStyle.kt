@@ -55,14 +55,4 @@ interface ToastStyle {
     var animStyle:Int?
 
 
-    /**
-     * 默认图标
-     * 以及图标padding
-     */
-    var iconDrawable:Int?
-    var left:Int
-    var top:Int
-    var right:Int
-    var bottom:Int
-
 }

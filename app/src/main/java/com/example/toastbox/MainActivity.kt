@@ -8,6 +8,7 @@ import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.ToastBox
 import com.example.xlulibrary.data.TextStyle
 import com.example.xlulibrary.itf.ToastClickItf
+import com.example.xlulibrary.util.dp
 import com.example.xlulibrary.util.xLog
 import kotlin.concurrent.thread
 
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
                 ToastBox().show("This is ToastBox")
             }
             R.id.lottie -> {
+                //配合lottie使用
                 val intent = Intent(this,LottieActivity::class.java)
                 startActivity(intent)
             }
@@ -54,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                 ToastBox().setLocation(Location.BOTTOM).setXY(100,200).show("Center ToastBox")
             }
             R.id.button7 -> {
+                //设置监听
                 ToastBox().setListener(object : ToastClickItf{
                     override fun setOnToastDismissed() {
                         xLog.d(TAG,"toast dismissed")
@@ -61,6 +64,7 @@ class MainActivity : AppCompatActivity() {
                 }).show("哈啊啊啊啊啊哼哼",3000L)
             }
             R.id.button8 -> {
+                //设置弹出XY位置
                 ToastBox().setTextStyle(TextStyle.GRAY).show("灰色Toast")
                 ToastBox().setTextStyle(TextStyle.White).setXY(0,300).show("白色Toast")
                 ToastBox().setTextStyle(TextStyle.Black).setXY(0,600).show("黑色Toast")
@@ -72,23 +76,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             R.id.button10 -> {
-                ToastBox().show("Activity---1111")
+                //测试activity切换情况下toast
+                ToastBox().show("MainActivity.class")
                 val intent = Intent(this,TestActivity::class.java)
                 startActivity(intent)
-                this.finish()
             }
             R.id.button11 -> {
-                //自定义图标，Android12会默认显示app图标
-                //可以在application初始化中设置默认图标
-
-                ToastBox().setIcon(R.drawable.ic_launcher_foreground).show("This is ToastBox")
-
-                ToastBox().setIcon(R.drawable.icon,left = 10,top = 5,bottom = 5,right = 10).setXY(0,300).show("This is ToastBox")
-
-                //如果在application中初始化了默认图标，toast中也可以设置隐藏
-                //ToastBox().setToastIcon(null).show("This is ToastBox")
-            }
-            R.id.button12 -> {
+                //设置动画
                 ToastBox().setAnim(R.style.MiuiToast).show("切换弹出动画")
             }
         }

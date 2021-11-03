@@ -50,10 +50,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
 
     implementation 'com.airbnb.android:lottie:4.0.0'
-    //implementation project(path: ':toast_box')
-
-    //implementation 'com.github.xluu233:ToastBox:0.4.9'
-
-    implementation 'com.github.xluu233:ToastBox:0.5.1'
+    implementation project(path: ':toast_box')
+    
+//    implementation 'com.github.xluu233:ToastBox:0.5.1'
 
 }
