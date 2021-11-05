@@ -1,7 +1,8 @@
 package com.example.xlulibrary
 
+import android.os.Handler
+import android.text.TextUtils
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.*
@@ -36,46 +37,54 @@ class ToastBox{
         private var _toast:WeakReference<Toast> ?= null
         private val toast get() = _toast?.get()
 
-        private var oldMsg: String? = null
-        private var time: Long = 0
-
         /*系统toast实现*/
-        fun showSys(@StringRes res: Int,duration: Int = Toast.LENGTH_LONG,view: View ?= null,@LayoutRes layout:Int ?= null,location: Location = Location.BOTTOM){
+        fun toast(@StringRes res: Int,duration: Int = Toast.LENGTH_SHORT,view: View ?= null,@LayoutRes layout:Int ?= null,location: Location = Location.BOTTOM){
             val content = ToastBoxRegister.application.resources.getString(res)
-            showSys(content,duration,view, layout, location)
+            toast(content,duration,view, layout, location)
         }
 
-        fun showSys(text: Any?,duration: Int = Toast.LENGTH_LONG,view: View ?= null,@LayoutRes layout:Int ?= null,location: Location = Location.BOTTOM){
+        fun toast(text: Any?,duration: Int = Toast.LENGTH_SHORT,view: View ?= null,@LayoutRes layout:Int ?= null,location: Location = Location.BOTTOM){
             val content = text?.toString()
             if (content.isNullOrEmpty()) {
                 return
             }
-            toast?.cancel()
-            _toast = null
-            _toast = WeakReference(Toast(ToastBoxRegister.application))
+            val looper = ToastBoxRegister.getActivity()?.mainLooper
+            val handler = looper?.let {
+                Handler(it)
+            }
+            val context = ToastBoxRegister.application
+            handler?.post {
+                toast?.cancel()
+                _toast = null
+                if (view==null && layout==null){
+                    _toast = WeakReference(Toast.makeText(context,content,duration))
+                }else{
+                    _toast = WeakReference(Toast(context))
 
-            view?.let {
-                toast?.view = it
-            }
-            layout?.let {
-                toast?.view = getLayoutView(layout)
-            }
-            val textView = findMessageView(toast?.view)
-            textView?.text = content
+                    view?.let {
+                        toast?.view = it
+                    }
+                    layout?.let {
+                        toast?.view = getLayoutView(layout)
+                    }
+                    val textView = findMessageView(toast?.view)
+                    textView?.text = content
 
-            when(location){
-                Location.BOTTOM -> {
-                    toast?.setGravity(Gravity.BOTTOM, 0, 100)
+                    when(location){
+                        Location.BOTTOM -> {
+                            toast?.setGravity(Gravity.BOTTOM, 0, 100)
+                        }
+                        Location.CENTER -> {
+                            toast?.setGravity(Gravity.CENTER, 0, 0)
+                        }
+                        Location.TOP -> {
+                            toast?.setGravity(Gravity.TOP, 0, -100)
+                        }
+                    }
+                    toast?.duration = duration
                 }
-                Location.CENTER -> {
-                    toast?.setGravity(Gravity.CENTER, 0, 0)
-                }
-                Location.TOP -> {
-                    toast?.setGravity(Gravity.TOP, 0, -100)
-                }
+                toast?.show()
             }
-            toast?.duration = duration
-            toast?.show()
         }
 
     }

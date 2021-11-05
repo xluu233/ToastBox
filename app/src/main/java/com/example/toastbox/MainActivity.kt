@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.ToastBox
+import com.example.xlulibrary.ToastBox.Companion.toast
 import com.example.xlulibrary.data.TextStyle
 import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.util.dp
@@ -26,7 +27,9 @@ class MainActivity : AppCompatActivity() {
         when(view.id){
             R.id.button -> {
                 //正常使用
-                ToastBox().show("This is ToastBox")
+                //ToastBox().show("This is ToastBox")
+
+                toast("jhaha")
             }
             R.id.lottie -> {
                 //配合lottie使用

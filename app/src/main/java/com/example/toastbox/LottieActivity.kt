@@ -25,7 +25,7 @@ class LottieActivity : AppCompatActivity() {
 
 
     private fun showSysToast(){
-        ToastBox.showSys("系统Toast实现",layout = R.layout.toast_lottie_fail,duration = Toast.LENGTH_LONG)
+        ToastBox.toast("系统Toast实现",layout = R.layout.toast_lottie_fail,duration = Toast.LENGTH_LONG)
     }
 
 
