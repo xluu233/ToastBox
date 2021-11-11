@@ -3,14 +3,13 @@ package com.example.toastbox
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.ToastBox
 import com.example.xlulibrary.ToastBox.Companion.toast
 import com.example.xlulibrary.data.TextStyle
 import com.example.xlulibrary.itf.ToastClickItf
-import com.example.xlulibrary.util.dp
-import com.example.xlulibrary.util.xLog
 import kotlin.concurrent.thread
 
 
@@ -62,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                 //设置监听
                 ToastBox().setListener(object : ToastClickItf{
                     override fun setOnToastDismissed() {
-                        xLog.d(TAG,"toast dismissed")
+                        Log.d(TAG,"toast dismissed")
                     }
                 }).show("哈啊啊啊啊啊哼哼",3000L)
             }

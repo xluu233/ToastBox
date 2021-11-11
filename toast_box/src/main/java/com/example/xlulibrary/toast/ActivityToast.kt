@@ -1,15 +1,12 @@
 package com.example.xlulibrary.toast
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
-import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inspector.WindowInspector
 import android.widget.ImageView
@@ -17,16 +14,13 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.xlulibrary.R
 import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.WindowLifecycle
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.itf.ToastClickItf
-import com.example.xlulibrary.util.dp
-import com.example.xlulibrary.util.findImageView
-import com.example.xlulibrary.util.findMessageView
-import com.example.xlulibrary.util.getLocalGravity
+import com.example.xlulibrary.util.Utils.findImageView
+import com.example.xlulibrary.util.Utils.findMessageView
+import com.example.xlulibrary.util.Utils.getLocalGravity
 import java.lang.ref.WeakReference
 import java.util.*
 

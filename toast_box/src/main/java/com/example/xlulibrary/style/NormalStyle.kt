@@ -1,23 +1,19 @@
 package com.example.xlulibrary.style
 
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.appcompat.widget.LinearLayoutCompat.HORIZONTAL
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.xlulibrary.data.Location
 import com.example.xlulibrary.R
 import com.example.xlulibrary.ToastBoxRegister
-import com.example.xlulibrary.util.dp
-import com.example.xlulibrary.util.getDefaultBackDrawable
-import com.example.xlulibrary.util.getDefaultTextAppearance
-import com.example.xlulibrary.util.sp
+import com.example.xlulibrary.util.Utils.dp
+import com.example.xlulibrary.util.Utils.getDefaultBackDrawable
+import com.example.xlulibrary.util.Utils.getDefaultTextAppearance
 
 /**
  * @ClassName NormalStyle

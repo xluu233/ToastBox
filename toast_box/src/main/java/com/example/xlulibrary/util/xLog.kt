@@ -2,8 +2,7 @@ package com.example.xlulibrary.util
 
 import android.util.Log
 
-
-object xLog {
+internal object xLog {
 
     private var LogName = "ToastBox"
     private var showLog = false

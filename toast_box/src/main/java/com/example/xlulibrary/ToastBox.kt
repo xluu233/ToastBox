@@ -1,7 +1,6 @@
 package com.example.xlulibrary
 
 import android.os.Handler
-import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
@@ -13,8 +12,8 @@ import com.example.xlulibrary.strategy.ToastStrategyImpl
 import com.example.xlulibrary.strategy.ToastStrategy
 import com.example.xlulibrary.style.ToastStyle
 import com.example.xlulibrary.style.NormalStyle
-import com.example.xlulibrary.util.findMessageView
-import com.example.xlulibrary.util.getLayoutView
+import com.example.xlulibrary.util.Utils.findMessageView
+import com.example.xlulibrary.util.Utils.getLayoutView
 import java.lang.ref.WeakReference
 import java.util.*
 
