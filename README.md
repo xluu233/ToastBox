@@ -52,6 +52,48 @@ ToastBoxRegister.init(this).apply {
 ToastBox().show("This is ToastBox")
 ```
 
+### 具体使用
+
+- 弹出系统toast
+
+```
+toast("系统Toast实现",layout = R.layout.toast_lottie_fail,duration = Toast.LENGTH_LONG)
+```
+
+- 设置toast时间
+
+```
+ToastBox().show("5000L",duration = 5000)
+```
+
+- 在不同的位置弹出
+```
+ToastBox().setLocation(Location.TOP).show("TOP ToastBox")
+ToastBox().setLocation(Location.CENTER).show("Center ToastBox")
+ToastBox().setLocation(Location.BOTTOM).show("Bottom ToastBox")
+```
+
+- 设置弹出XY位置
+```
+ToastBox().setTextStyle(TextStyle.GRAY).show("灰色Toast")
+ToastBox().setTextStyle(TextStyle.White).setXY(0,300).show("白色Toast")
+ToastBox().setTextStyle(TextStyle.Black).setXY(0,600).show("黑色Toast")
+```
+
+- 设置动画
+```
+ToastBox().setAnim(R.style.MiuiToast).show("切换弹出动画")
+```
+
+- 设置监听
+```
+ToastBox().setListener(object : ToastClickItf{
+      override fun setOnToastDismissed() {
+           Log.d(TAG,"toast dismissed")
+      }
+}).show("哈啊啊啊啊啊哼哼",3000L)
+```
+
 ### 详细设置
 
 
@@ -65,20 +107,6 @@ setListener()|设置监听
 setTextStyle(TextStyle.GRAY)|设置通用样式
 setAnim(R.style.MiuiToast)|设置弹出动画
 
-
-
-### 更多演示
-
-- 弹出系统toast
-
-```
-ToastBox.showSys("系统Toast实现",layout = R.layout.toast_lottie_fail,duration = Toast.LENGTH_LONG)
-```
-- 设置toast时间
-
-```
-ToastBox().show("5000L",duration = 5000)
-```
 
 如果想要实现更多自定义效果，建议传入自定义布局，自定义布局中以第一个`TextView`显示文本消息
 
