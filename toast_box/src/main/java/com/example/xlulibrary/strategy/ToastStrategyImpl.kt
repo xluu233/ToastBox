@@ -16,7 +16,6 @@ import com.example.xlulibrary.style.NormalStyle
  */
 class ToastStrategyImpl : ToastStrategy{
 
-
     private var view:View ?= null
     private var toast:xToast ?= null
 
@@ -46,8 +45,7 @@ class ToastStrategyImpl : ToastStrategy{
         if (activity == null || activity.isDestroyed || activity.isFinishing){
             return null
         }else{
-            val toast = ActivityToast(activity)
-
+            val toast = ActivityToast()
             if (useCustomView && view!=null){
                 //自定义View
                 toast.setView(view)

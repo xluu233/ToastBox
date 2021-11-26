@@ -102,7 +102,6 @@ class NormalStyle : ToastStyle {
             gravity = Gravity.CENTER
         }
         layout.addView(textView)
-
         return layout
     }
 
@@ -114,7 +113,6 @@ class NormalStyle : ToastStyle {
             gravity = Gravity.CENTER
             orientation = LinearLayout.HORIZONTAL
         }
-
         val textView = TextView(ToastBoxRegister.application)
         val textParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(WRAP_CONTENT,WRAP_CONTENT)
         textParams.apply {
@@ -127,7 +125,6 @@ class NormalStyle : ToastStyle {
             minHeight = 30.dp.toInt()
         }
         layout.addView(textView)
-
         return layout
     }
 

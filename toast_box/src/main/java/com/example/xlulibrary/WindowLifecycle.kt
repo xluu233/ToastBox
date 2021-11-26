@@ -8,6 +8,7 @@ import com.example.xlulibrary.toast.xToast
 import com.example.xlulibrary.util.xLog
 
 
+/*
 internal class WindowLifecycle(private val activity: Activity) : ActivityLifecycleCallbacks {
 
     private val TAG by lazy {
@@ -49,4 +50,4 @@ internal class WindowLifecycle(private val activity: Activity) : ActivityLifecyc
             activity.application.unregisterActivityLifecycleCallbacks(this)
         }
     }
-}
+}*/

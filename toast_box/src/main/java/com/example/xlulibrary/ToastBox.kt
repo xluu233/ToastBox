@@ -28,6 +28,7 @@ class ToastBox{
     private var _mToastStrategy : WeakReference<ToastStrategy> ?= WeakReference(ToastStrategyImpl())
     private val toastStrategyImpl:ToastStrategy? get() = _mToastStrategy?.get()
 
+
     companion object{
 
         private var _toast:WeakReference<Toast> ?= null
@@ -38,6 +39,7 @@ class ToastBox{
             val content = ToastBoxRegister.application.resources.getString(res)
             toast(content,duration,view, layout, location)
         }
+
 
         fun toast(text: Any?,duration: Int = Toast.LENGTH_SHORT,view: View ?= null,@LayoutRes layout:Int ?= null,location: Location = Location.BOTTOM){
             val content = text?.toString()

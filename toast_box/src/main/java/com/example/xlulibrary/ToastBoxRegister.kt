@@ -103,8 +103,9 @@ object ToastBoxRegister : Initializer<Unit> {
 
     @Synchronized
     fun unRegister(xToast:xToast?){
-        xToast?.let {
-            boxStack.remove(it)
+        xToast?.apply {
+            boxStack.remove(this)
+            clear()
         }
         xLog.d(TAG,"unRegister  ----  toast_size:${boxStack.size}")
     }

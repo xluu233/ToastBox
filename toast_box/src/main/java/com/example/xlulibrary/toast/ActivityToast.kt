@@ -17,7 +17,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import com.example.xlulibrary.Location
 import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.ToastClickItf
-import com.example.xlulibrary.WindowLifecycle
 import com.example.xlulibrary.util.Utils.findImageView
 import com.example.xlulibrary.util.Utils.findMessageView
 import com.example.xlulibrary.util.Utils.getLocalGravity
@@ -25,7 +24,7 @@ import java.lang.ref.WeakReference
 import java.util.*
 
 
-class ActivityToast(activity: Activity) : xToast {
+class ActivityToast : xToast {
 
     override var x: Int = 0
     override var y: Int = 0
@@ -40,16 +39,14 @@ class ActivityToast(activity: Activity) : xToast {
 
 
     private val toast by lazy {
-        WindowsMangerToast(this,activity)
+        WindowsMangerToast(this)
     }
 
     override fun show() {
-        ToastBoxRegister.register(this)
         toast.show()
     }
 
     override fun cancel() {
-        ToastBoxRegister.unRegister(this)
         toast.cancel()
     }
 
@@ -126,56 +123,43 @@ class ActivityToast(activity: Activity) : xToast {
         }
     }
 
-
     override fun setAlpha(i: Float) {
         mView?.alpha = i
     }
 
     override fun clear() {
-        //ViewUtils.gcViews(mView)
         mMessageView = null
         mView = null
     }
 
-
 }
 
-class WindowsMangerToast(private val xToast: xToast,activity:Activity){
+class WindowsMangerToast(private val xToast: xToast){
 
     private var mIsShow: Boolean = false
     private val mTimer: Timer = Timer()
-    private var mParams: WindowManager.LayoutParams? = null
-    private val windowLifecycle = WindowLifecycle(activity)
+    private var mParams: WindowManager.LayoutParams ?= null
     private val handler = Handler(Looper.getMainLooper())
 
     private val mWdm: WeakReference<WindowManager> by lazy {
-        WeakReference(activity.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
+        WeakReference(ToastBoxRegister.getActivity()?.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
     }
 
     init {
         setParams()
-        windowLifecycle.register(xToast)
+        ToastBoxRegister.register(xToast)
     }
 
     fun show() {
         if (!mIsShow) {
-            //directShow(true)
-            //clearCallBack()
             handler.post(showRunnable)
         }
     }
 
     fun cancel(){
         if (mIsShow){
-            //directShow(false)
-            //clearCallBack()
             handler.post(cancelRunnable)
         }
-    }
-
-    private fun clearCallBack(){
-        handler.removeCallbacks(showRunnable)
-        handler.removeCallbacks(cancelRunnable)
     }
 
     private val showRunnable : Runnable = Runnable {
@@ -199,6 +183,7 @@ class WindowsMangerToast(private val xToast: xToast,activity:Activity){
             }
         }, xToast.duration)
         mIsShow = true
+        //ToastBoxRegister.register(xToast)
     }
 
     private val cancelRunnable : Runnable = Runnable {
@@ -219,7 +204,7 @@ class WindowsMangerToast(private val xToast: xToast,activity:Activity){
         mIsShow = false
         mTimer.cancel()
         mParams = null
-        windowLifecycle.unregister()
+        ToastBoxRegister.unRegister(xToast)
     }
 
 
