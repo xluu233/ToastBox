@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.LayoutRes
+import com.example.xlulibrary.Location
+import com.example.xlulibrary.TextStyle
 import com.example.xlulibrary.ToastBoxRegister
-import com.example.xlulibrary.data.Location
-import com.example.xlulibrary.data.TextStyle
 
 internal object Utils {
     fun getLocalGravity(location: Location): Int {

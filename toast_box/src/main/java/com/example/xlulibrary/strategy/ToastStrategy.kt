@@ -1,8 +1,7 @@
 package com.example.xlulibrary.strategy
 
-import android.content.Context
 import android.view.View
-import com.example.xlulibrary.itf.ToastClickItf
+import com.example.xlulibrary.ToastClickItf
 import com.example.xlulibrary.toast.xToast
 import com.example.xlulibrary.style.ToastStyle
 
@@ -18,15 +17,14 @@ interface ToastStrategy {
 
     fun getIToast():xToast?
 
-    fun show(text:String)
-
-    fun cancle()
-
     fun setStyle(style: ToastStyle)
 
     fun setListener(clickItf: ToastClickItf)
 
     fun setView(view: View)
 
+    fun show(text:String)
+
+    fun cancle()
 
 }

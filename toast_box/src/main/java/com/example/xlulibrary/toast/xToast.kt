@@ -5,8 +5,8 @@ import android.view.View
 import androidx.annotation.AnimRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
-import com.example.xlulibrary.data.Location
-import com.example.xlulibrary.itf.ToastClickItf
+import com.example.xlulibrary.Location
+import com.example.xlulibrary.ToastClickItf
 
 /**
  * @ClassName Toast

@@ -5,9 +5,6 @@ import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.*
-import com.example.xlulibrary.data.Location
-import com.example.xlulibrary.data.TextStyle
-import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.strategy.ToastStrategyImpl
 import com.example.xlulibrary.strategy.ToastStrategy
 import com.example.xlulibrary.style.ToastStyle

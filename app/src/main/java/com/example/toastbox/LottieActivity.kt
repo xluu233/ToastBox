@@ -2,12 +2,9 @@ package com.example.toastbox
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
-import com.airbnb.lottie.LottieAnimationView
 import com.example.xlulibrary.ToastBox
-import com.example.xlulibrary.data.Location
 
 class LottieActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

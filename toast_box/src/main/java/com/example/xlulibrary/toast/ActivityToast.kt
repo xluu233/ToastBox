@@ -14,10 +14,10 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
 import androidx.appcompat.content.res.AppCompatResources
+import com.example.xlulibrary.Location
 import com.example.xlulibrary.ToastBoxRegister
+import com.example.xlulibrary.ToastClickItf
 import com.example.xlulibrary.WindowLifecycle
-import com.example.xlulibrary.data.Location
-import com.example.xlulibrary.itf.ToastClickItf
 import com.example.xlulibrary.util.Utils.findImageView
 import com.example.xlulibrary.util.Utils.findMessageView
 import com.example.xlulibrary.util.Utils.getLocalGravity
@@ -36,7 +36,7 @@ class ActivityToast(activity: Activity) : xToast {
     private var anim:Int ?= null
     private var mView:View ?= null
     private var mMessageView:TextView ?= null
-    private var clickListener:ToastClickItf ?= null
+    private var clickListener: ToastClickItf?= null
 
 
     private val toast by lazy {

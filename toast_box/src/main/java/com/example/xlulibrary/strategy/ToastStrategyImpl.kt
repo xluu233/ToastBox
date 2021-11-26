@@ -2,7 +2,7 @@ package com.example.xlulibrary.strategy
 
 import android.view.View
 import com.example.xlulibrary.ToastBoxRegister
-import com.example.xlulibrary.itf.ToastClickItf
+import com.example.xlulibrary.ToastClickItf
 import com.example.xlulibrary.toast.ActivityToast
 import com.example.xlulibrary.toast.xToast
 import com.example.xlulibrary.style.ToastStyle
@@ -16,17 +16,12 @@ import com.example.xlulibrary.style.NormalStyle
  */
 class ToastStrategyImpl : ToastStrategy{
 
-//    private var _view: WeakReference<View> ?= null
-//    private val view get() = _view?.get()
-
-//    private var _toast: WeakReference<xToast> ?= null
-//    private val toast get() = _toast?.get()
 
     private var view:View ?= null
     private var toast:xToast ?= null
 
     private var style : ToastStyle = NormalStyle()
-    private var clickListener:ToastClickItf ?= null
+    private var clickListener: ToastClickItf?= null
 
 
     override fun setStyle(style: ToastStyle) {

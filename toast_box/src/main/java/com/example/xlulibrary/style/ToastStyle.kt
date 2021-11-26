@@ -1,9 +1,7 @@
 package com.example.xlulibrary.style
 
-import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.View
-import com.example.xlulibrary.data.Location
+import com.example.xlulibrary.Location
 
 /**
  * @ClassName ToastStyle

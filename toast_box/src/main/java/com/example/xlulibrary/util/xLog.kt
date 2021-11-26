@@ -5,7 +5,7 @@ import android.util.Log
 internal object xLog {
 
     private var LogName = "ToastBox"
-    private var showLog = false
+    private var showLog = true
 
     fun init(logName: String, showLog: Boolean) {
         LogName = logName

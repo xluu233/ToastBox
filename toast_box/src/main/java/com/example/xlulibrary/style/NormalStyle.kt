@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.xlulibrary.data.Location
+import com.example.xlulibrary.Location
 import com.example.xlulibrary.R
 import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.util.Utils.dp

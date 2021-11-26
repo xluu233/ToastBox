@@ -5,11 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.example.xlulibrary.data.Location
+import com.example.xlulibrary.Location
+import com.example.xlulibrary.TextStyle
 import com.example.xlulibrary.ToastBox
 import com.example.xlulibrary.ToastBox.Companion.toast
-import com.example.xlulibrary.data.TextStyle
-import com.example.xlulibrary.itf.ToastClickItf
+import com.example.xlulibrary.ToastClickItf
 import kotlin.concurrent.thread
 
 
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.button7 -> {
                 //设置监听
-                ToastBox().setListener(object : ToastClickItf{
+                ToastBox().setListener(object : ToastClickItf {
                     override fun setOnToastDismissed() {
                         Log.d(TAG,"toast dismissed")
                     }
