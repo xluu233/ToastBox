@@ -1,6 +1,5 @@
 package com.example.xlulibrary.toast
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
@@ -15,11 +14,13 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
 import androidx.appcompat.content.res.AppCompatResources
 import com.example.xlulibrary.Location
-import com.example.xlulibrary.ToastBoxRegister
+import com.example.xlulibrary.ToastBox
 import com.example.xlulibrary.ToastClickItf
-import com.example.xlulibrary.util.Utils.findImageView
-import com.example.xlulibrary.util.Utils.findMessageView
-import com.example.xlulibrary.util.Utils.getLocalGravity
+import com.example.xlulibrary.ToastLifecycle
+import com.example.xlulibrary.ToastLifecycle.application
+import util.Utils.findImageView
+import util.Utils.findMessageView
+import util.Utils.getLocalGravity
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -93,7 +94,7 @@ class ActivityToast : xToast {
 
     override fun setBackDrawable(@DrawableRes drawable: Int?) {
         if (drawable==null) return
-        mView?.background = AppCompatResources.getDrawable(ToastBoxRegister.application,drawable)
+        mView?.background = AppCompatResources.getDrawable(application,drawable)
     }
 
     override fun setBackDrawable(drawable: Drawable?) {
@@ -118,7 +119,7 @@ class ActivityToast : xToast {
             icon.visibility = View.GONE
         }else{
             icon.visibility = View.VISIBLE
-            icon.setImageDrawable(AppCompatResources.getDrawable(ToastBoxRegister.application,drawable))
+            icon.setImageDrawable(AppCompatResources.getDrawable(application,drawable))
             icon.setPadding(left, top, right, bottom)
         }
     }
@@ -142,12 +143,12 @@ class WindowsMangerToast(private val xToast: xToast){
     private val handler = Handler(Looper.getMainLooper())
 
     private val mWdm: WeakReference<WindowManager> by lazy {
-        WeakReference(ToastBoxRegister.getActivity()?.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
+        WeakReference(ToastLifecycle.getActivity()?.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
     }
 
     init {
         setParams()
-        ToastBoxRegister.register(xToast)
+        ToastBox.register(xToast)
     }
 
     fun show() {
@@ -204,7 +205,7 @@ class WindowsMangerToast(private val xToast: xToast){
         mIsShow = false
         mTimer.cancel()
         mParams = null
-        ToastBoxRegister.unRegister(xToast)
+        ToastBox.unRegister(xToast)
     }
 
 

@@ -12,9 +12,9 @@ import com.example.xlulibrary.Location
 interface ToastStyle {
 
     /**
-     * 创建视图
+     * 视图
      */
-    fun createView():View
+    var view:View
 
     /**
      * 位置
@@ -45,12 +45,12 @@ interface ToastStyle {
     /**
      * 字体样式
      */
-    var textStyle : Int?
+    var textTheme : Int?
 
     /**
      * 弹出动画
      */
-    var animStyle:Int?
+    var anim :Int?
 
 
 }

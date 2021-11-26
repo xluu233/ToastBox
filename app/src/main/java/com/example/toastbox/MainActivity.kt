@@ -6,9 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.example.xlulibrary.Location
-import com.example.xlulibrary.TextStyle
+import com.example.xlulibrary.ToastTextStyle
 import com.example.xlulibrary.ToastBox
-import com.example.xlulibrary.ToastBox.Companion.toast
 import com.example.xlulibrary.ToastClickItf
 import kotlin.concurrent.thread
 
@@ -26,9 +25,7 @@ class MainActivity : AppCompatActivity() {
         when(view.id){
             R.id.button -> {
                 //正常使用
-                //ToastBox().show("This is ToastBox")
-
-                toast("jhaha")
+                ToastBox.showToast("This is ToastBox")
             }
             R.id.lottie -> {
                 //配合lottie使用
@@ -37,11 +34,11 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.button2 -> {
                 //在不同的位置弹出
-                ToastBox().setLocation(Location.TOP).show("TOP ToastBox")
-                ToastBox().setLocation(Location.CENTER).show("Center ToastBox")
-                ToastBox().setLocation(Location.BOTTOM).show("Bottom ToastBox")
+                ToastBox.setParams(location = Location.BOTTOM).showToast("Bottom ToastBox")
+                ToastBox.setParams(location = Location.CENTER).showToast("Center ToastBox")
+                ToastBox.setParams(location = Location.TOP).showToast("TOP ToastBox")
             }
-            R.id.button3 -> {
+            /*R.id.button3 -> {
                 //修改透明度
                 ToastBox().setLocation(Location.CENTER).setAlpha(0.5f).show("Center ToastBox")
             }
@@ -67,9 +64,9 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.button8 -> {
                 //设置弹出XY位置
-                ToastBox().setTextStyle(TextStyle.GRAY).show("灰色Toast")
-                ToastBox().setTextStyle(TextStyle.White).setXY(0,300).show("白色Toast")
-                ToastBox().setTextStyle(TextStyle.Black).setXY(0,600).show("黑色Toast")
+                ToastBox().setTextStyle(ToastTextStyle.GRAY).show("灰色Toast")
+                ToastBox().setTextStyle(ToastTextStyle.White).setXY(0,300).show("白色Toast")
+                ToastBox().setTextStyle(ToastTextStyle.Black).setXY(0,600).show("黑色Toast")
             }
             R.id.button9 -> {
                 //子线程弹出
@@ -86,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             R.id.button11 -> {
                 //设置动画
                 ToastBox().setAnim(R.style.MiuiToast).show("切换弹出动画")
-            }
+            }*/
         }
     }
 

@@ -3,8 +3,6 @@ package com.example.toastbox
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.toastbox.databinding.ActivityTestBinding
-import com.example.xlulibrary.ToastBox
-import com.example.xlulibrary.ToastBoxRegister
 
 class TestActivity : AppCompatActivity() {
 

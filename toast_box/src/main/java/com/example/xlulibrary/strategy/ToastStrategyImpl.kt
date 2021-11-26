@@ -1,8 +1,8 @@
 package com.example.xlulibrary.strategy
 
 import android.view.View
-import com.example.xlulibrary.ToastBoxRegister
 import com.example.xlulibrary.ToastClickItf
+import com.example.xlulibrary.ToastLifecycle
 import com.example.xlulibrary.toast.ActivityToast
 import com.example.xlulibrary.toast.xToast
 import com.example.xlulibrary.style.ToastStyle
@@ -41,7 +41,7 @@ class ToastStrategyImpl : ToastStrategy{
 
     @Synchronized
     override fun createToast(): xToast? {
-        val activity = ToastBoxRegister.getActivity()
+        val activity = ToastLifecycle.getActivity()
         if (activity == null || activity.isDestroyed || activity.isFinishing){
             return null
         }else{
@@ -52,8 +52,8 @@ class ToastStrategyImpl : ToastStrategy{
                 useCustomView = false
                 toast.isCustomView = true
             }else{
-                toast.setView(style.createView())
-                toast.setTextStyle(style.textStyle)
+                toast.setView(style.view)
+                toast.setTextStyle(style.textTheme)
                 toast.setBackDrawable(style.backDrawable)
                 toast.isCustomView = false
             }
@@ -61,7 +61,7 @@ class ToastStrategyImpl : ToastStrategy{
             toast.y = style.y
             toast.duration = style.duration
             toast.setGravity(style.location)
-            toast.setAnimStyle(style.animStyle)
+            toast.setAnimStyle(style.anim)
             toast.setAlpha(style.alpha)
             toast.setListener(clickListener)
             return toast

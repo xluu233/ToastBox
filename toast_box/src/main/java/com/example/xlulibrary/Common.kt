@@ -9,7 +9,7 @@ enum class Location {
 }
 
 /*toast风格*/
-enum class TextStyle {
+enum class ToastTextStyle {
     Black,
     White,
     GRAY

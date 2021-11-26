@@ -1,6 +1,8 @@
 package com.example.toastbox
 
 import android.app.Application
+import com.example.xlulibrary.Location
+import com.example.xlulibrary.ToastBox
 
 /**
  * @ClassName App
@@ -13,7 +15,17 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        //init可以省略，也可以配置一些全局默认参数
+        ToastBox.init(
+            x = 0,y = 100,
+            duration = 3500L,
+            alpha = 1.0f,
+            anim = R.style.MiuiToast,
+            location = Location.CENTER,
+        )
+
     }
+
 
 
 }

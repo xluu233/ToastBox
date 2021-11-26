@@ -1,4 +1,4 @@
-package com.example.xlulibrary.util
+package util
 
 import android.util.TypedValue
 import android.view.Gravity
@@ -9,8 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import com.example.xlulibrary.Location
-import com.example.xlulibrary.TextStyle
-import com.example.xlulibrary.ToastBoxRegister
+import com.example.xlulibrary.R
+import com.example.xlulibrary.ToastBox
+import com.example.xlulibrary.ToastLifecycle.application
+import com.example.xlulibrary.ToastTextStyle
 
 internal object Utils {
     fun getLocalGravity(location: Location): Int {
@@ -27,7 +29,7 @@ internal object Utils {
         }
     }
 
-    val Int.dp get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), ToastBoxRegister.application.resources.displayMetrics)
+    val Int.dp get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), application.resources.displayMetrics)
 
 
     /**
@@ -84,42 +86,34 @@ internal object Utils {
 
 
     fun getDefaultBackDrawable():Int{
-        var drawablw:Int = com.example.xlulibrary.R.drawable.normal_shape_gray
-        ToastBoxRegister.textStyle?.let {
-            drawablw = when(it){
-                TextStyle.Black -> {
-                    com.example.xlulibrary.R.drawable.normal_shape_black
-                }
-                TextStyle.White -> {
-                    com.example.xlulibrary.R.drawable.normal_shape_white
-                }
-                TextStyle.GRAY -> {
-                    com.example.xlulibrary.R.drawable.normal_shape_gray
-                }
+        return when(ToastBox.toastTextStyle){
+            ToastTextStyle.Black -> {
+                R.drawable.normal_shape_black
+            }
+            ToastTextStyle.White -> {
+                R.drawable.normal_shape_white
+            }
+            ToastTextStyle.GRAY -> {
+                R.drawable.normal_shape_gray
             }
         }
-        return drawablw
     }
 
     fun getDefaultTextAppearance():Int{
-        var drawablw:Int = com.example.xlulibrary.R.style.NormalStyle_textAppreance_gray
-        ToastBoxRegister.textStyle?.let {
-            drawablw = when(it){
-                TextStyle.Black -> {
-                    com.example.xlulibrary.R.style.NormalStyle_textAppreance_black
-                }
-                TextStyle.White -> {
-                    com.example.xlulibrary.R.style.NormalStyle_textAppreance_white
-                }
-                TextStyle.GRAY -> {
-                    com.example.xlulibrary.R.style.NormalStyle_textAppreance_gray
-                }
+        return when(ToastBox.toastTextStyle){
+            ToastTextStyle.Black -> {
+                R.style.NormalStyle_textAppreance_black
+            }
+            ToastTextStyle.White -> {
+                R.style.NormalStyle_textAppreance_white
+            }
+            ToastTextStyle.GRAY -> {
+                R.style.NormalStyle_textAppreance_gray
             }
         }
-        return drawablw
     }
 
-    fun getLayoutView(@LayoutRes layout:Int):View{
-        return LayoutInflater.from(ToastBoxRegister.application).inflate(layout, null)
+    fun getLayoutView(@LayoutRes layout:Int?):View?{
+        return if (layout==null) null else LayoutInflater.from(application).inflate(layout, null)
     }
 }

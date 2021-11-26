@@ -10,10 +10,11 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.xlulibrary.Location
 import com.example.xlulibrary.R
-import com.example.xlulibrary.ToastBoxRegister
-import com.example.xlulibrary.util.Utils.dp
-import com.example.xlulibrary.util.Utils.getDefaultBackDrawable
-import com.example.xlulibrary.util.Utils.getDefaultTextAppearance
+import com.example.xlulibrary.ToastBox
+import com.example.xlulibrary.ToastLifecycle.application
+import util.Utils.dp
+import util.Utils.getDefaultBackDrawable
+import util.Utils.getDefaultTextAppearance
 
 /**
  * @ClassName NormalStyle
@@ -23,48 +24,37 @@ import com.example.xlulibrary.util.Utils.getDefaultTextAppearance
  */
 class NormalStyle : ToastStyle {
 
-    override var location: Location = Location.BOTTOM
-        set(value) {
-            if (value!=Location.BOTTOM){
-                x = 0
-                y = 0
-            }
-            field = value
-        }
 
-    override var duration = 2500L
+    private var customView:View ?= null
 
-    override var alpha: Float = 1.0f
+    override var view: View = getNormalLayout()
+        get() = customView ?: field
 
-    override var x: Int = 0
-        set(value) {
-            xyChanged = true
-            field = value
-        }
+    override var location: Location = ToastBox.location
 
-    override var y: Int = 100
-        set(value) {
-            xyChanged = true
-            field = value
-        }
+    override var duration = ToastBox.duration
+
+    override var alpha: Float = ToastBox.alpha
+
+    override var x: Int = ToastBox.x
+
+    override var y: Int = ToastBox.y
 
     override var backDrawable: Int ?= getDefaultBackDrawable()
 
-    override var textStyle: Int ?= getDefaultTextAppearance()
+    override var textTheme: Int ?= getDefaultTextAppearance()
 
-    override var animStyle: Int ?= ToastBoxRegister.animStyle
+    override var anim: Int ?= ToastBox.anim
 
-    var xyChanged = false
-
-    fun getNormalLayout2():View{
-        val layout = ConstraintLayout(ToastBoxRegister.application)
+    fun getNormalLayoutWithIcon():View{
+        val layout = ConstraintLayout(application)
         layout.apply {
             layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             minHeight = 40.dp.toInt()
             elevation = 1.dp
             foregroundGravity = Gravity.CENTER
         }
-        val image = ImageView(ToastBoxRegister.application)
+        val image = ImageView(application)
         val imageParams: ConstraintLayout.LayoutParams = ConstraintLayout.LayoutParams(40.dp.toInt(),40.dp.toInt())
         imageParams.apply {
             startToStart = 0
@@ -83,7 +73,7 @@ class NormalStyle : ToastStyle {
         }
         layout.addView(image)
 
-        val textView = TextView(ToastBoxRegister.application)
+        val textView = TextView(application)
         val textParams: ConstraintLayout.LayoutParams = ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         textParams.apply {
             startToStart = R.id.normal_icon
@@ -106,14 +96,14 @@ class NormalStyle : ToastStyle {
     }
 
     private fun getNormalLayout():View{
-        val layout = LinearLayout(ToastBoxRegister.application)
+        val layout = LinearLayout(application)
         layout.apply {
             layoutParams = ViewGroup.LayoutParams(WRAP_CONTENT,WRAP_CONTENT)
             elevation = 1.dp
             gravity = Gravity.CENTER
             orientation = LinearLayout.HORIZONTAL
         }
-        val textView = TextView(ToastBoxRegister.application)
+        val textView = TextView(application)
         val textParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(WRAP_CONTENT,WRAP_CONTENT)
         textParams.apply {
             setMargins(15.dp.toInt(),5.dp.toInt(),15.dp.toInt(),5.dp.toInt())
@@ -126,10 +116,6 @@ class NormalStyle : ToastStyle {
         }
         layout.addView(textView)
         return layout
-    }
-
-    override fun createView() : View{
-        return getNormalLayout()
     }
 
 }

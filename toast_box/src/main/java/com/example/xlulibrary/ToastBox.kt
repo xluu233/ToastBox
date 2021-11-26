@@ -1,205 +1,307 @@
 package com.example.xlulibrary
 
+import android.app.Application
+import android.content.Context
 import android.os.Handler
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.*
-import com.example.xlulibrary.strategy.ToastStrategyImpl
+import androidx.startup.Initializer
+import com.example.xlulibrary.ToastLifecycle.application
 import com.example.xlulibrary.strategy.ToastStrategy
-import com.example.xlulibrary.style.ToastStyle
+import com.example.xlulibrary.strategy.ToastStrategyImpl
 import com.example.xlulibrary.style.NormalStyle
-import com.example.xlulibrary.util.Utils.findMessageView
-import com.example.xlulibrary.util.Utils.getLayoutView
+import com.example.xlulibrary.style.ToastStyle
+import com.example.xlulibrary.toast.xToast
+import com.example.xlulibrary.util.xLog
+import util.Utils
 import java.lang.ref.WeakReference
-import java.util.*
-
-/**
- * @ClassName ToastBox
- * @Description 吐司工坊
- * @Author AlexLu_1406496344@qq.com
- * @Date 2021/6/17 16:40
- */
-class ToastBox{
-
-    private var _mToastStyle : WeakReference<ToastStyle> = WeakReference(NormalStyle())
-    private val mToastStyle:ToastStyle get() = _mToastStyle.get()!!
-
-    private var _mToastStrategy : WeakReference<ToastStrategy> ?= WeakReference(ToastStrategyImpl())
-    private val toastStrategyImpl:ToastStrategy? get() = _mToastStrategy?.get()
+import java.util.concurrent.LinkedBlockingQueue
 
 
-    companion object{
+object ToastBox {
 
-        private var _toast:WeakReference<Toast> ?= null
-        private val toast get() = _toast?.get()
+    private val TAG = "ToastBoxRegister"
 
-        /*系统toast实现*/
-        fun toast(@StringRes res: Int,duration: Int = Toast.LENGTH_SHORT,view: View ?= null,@LayoutRes layout:Int ?= null,location: Location = Location.BOTTOM){
-            val content = ToastBoxRegister.application.resources.getString(res)
-            toast(content,duration,view, layout, location)
-        }
+    private var boxStack = LinkedBlockingQueue<xToast>()
+
+    private var _mToastStyle : WeakReference<ToastStyle> ?= null
+    private val mToastStyle: ToastStyle? get() = _mToastStyle?.get()
+
+    private var _mToastStrategy : WeakReference<ToastStrategy> ?= null
+    private val mToastStrategy: ToastStrategy? get() = _mToastStrategy?.get()
+
+    private var _toast:WeakReference<Toast> ?= null
+    private val toast get() = _toast?.get()
 
 
-        fun toast(text: Any?,duration: Int = Toast.LENGTH_SHORT,view: View ?= null,@LayoutRes layout:Int ?= null,location: Location = Location.BOTTOM){
-            val content = text?.toString()
-            if (content.isNullOrEmpty()) {
-                return
-            }
-            val looper = ToastBoxRegister.getActivity()?.mainLooper
-            val handler = looper?.let {
-                Handler(it)
-            }
-            val context = ToastBoxRegister.application
-            handler?.post {
-                toast?.cancel()
-                _toast = null
-                if (view==null && layout==null){
-                    _toast = WeakReference(Toast.makeText(context,content,duration))
-                }else{
-                    _toast = WeakReference(Toast(context))
 
-                    view?.let {
-                        toast?.view = it
-                    }
-                    layout?.let {
-                        toast?.view = getLayoutView(layout)
-                    }
-                    val textView = findMessageView(toast?.view)
-                    textView?.text = content
+    /**
+     * toast弹出位置
+     */
+    var location : Location = Location.BOTTOM
 
-                    when(location){
-                        Location.BOTTOM -> {
-                            toast?.setGravity(Gravity.BOTTOM, 0, 100)
-                        }
-                        Location.CENTER -> {
-                            toast?.setGravity(Gravity.CENTER, 0, 0)
-                        }
-                        Location.TOP -> {
-                            toast?.setGravity(Gravity.TOP, 0, -100)
-                        }
-                    }
-                    toast?.duration = duration
-                }
-                toast?.show()
-            }
-        }
+    /**
+     * 设置默认的toast字体和背景样式
+     * （这个是预先定义好的）
+     */
+    var toastTextStyle :ToastTextStyle = ToastTextStyle.White
 
+    /**
+     * 字体主题样式
+     */
+    var textTheme:Int = Utils.getDefaultTextAppearance()
+
+    /**
+     * toast背景样式
+     */
+    var backDrawable:Int = Utils.getDefaultBackDrawable()
+
+    /**
+     * 设置toast默认弹出动画
+     */
+    var anim :Int = R.style.ToastAnim_1
+
+    /**
+     * 设置toast同时最多弹出的数量
+     */
+    var maxToastSize:Int = 3
+
+    /**
+     * toast透明度
+     */
+    var alpha:Float = 1.0f
+
+    /**
+     * 弹出时间
+     */
+    var duration:Long = 2500L
+
+    /**
+     * 弹出的x、y坐标
+     */
+    var x:Int = 0
+    var y:Int = 100
+
+    /**
+     * 重新初始化默认toast style和strategy
+     */
+    private fun initToastStrategy(){
+        _mToastStyle = WeakReference(NormalStyle())
+        _mToastStrategy = WeakReference(ToastStrategyImpl())
     }
 
-    /*----------主要调用方法------------*/
-    fun show(text: Any?,duration:Long?=null){
-        val content = text?.toString()
-        if (content.isNullOrEmpty()) {
+    /**
+     * 初始化操作
+     */
+    fun init(
+        x:Int = this.x,
+        y:Int = this.y,
+        duration: Long = this.duration,
+        defaultTextStyle: ToastTextStyle = this.toastTextStyle,
+        location: Location = this.location,
+        maxToastSize:Int = this.maxToastSize,
+        @FloatRange(from = 0.0, to = 1.0) alpha: Float = this.alpha,
+        @StyleRes anim:Int = this.anim,
+        @DrawableRes backDrawable: Int = this.backDrawable,
+        @StyleRes textTheme :Int = this.textTheme
+    ){
+        this.x = x
+        this.y = y
+        this.location = location
+        this.anim = anim
+        this.maxToastSize = maxToastSize
+        this.alpha = alpha
+        this.duration = duration
+        this.toastTextStyle = defaultTextStyle
+        this.backDrawable = backDrawable
+        this.textTheme = textTheme
+    }
+
+    @Volatile
+    private var hasSetToastStyle: Boolean = false
+
+    /**
+     * 弹出toast之前设置参数，不会影响默认配置，优先级高于默认配置
+     */
+    fun setParams(x:Int = this.x,
+                  y:Int = this.y,
+                  duration: Long = this.duration,
+                  @FloatRange(from = 0.0, to = 1.0) alpha: Float = this.alpha,
+                  @StyleRes anim:Int = this.anim,
+                  defaultTextStyle: ToastTextStyle = this.toastTextStyle,
+                  location: Location = this.location,
+                  @DrawableRes backDrawable: Int ?= null,
+                  @StyleRes textTheme :Int ?= null,
+                  @LayoutRes layout: Int ?= null,
+                  view: View ?= null,
+                  listener:ToastClickItf ?=null
+    ):ToastBox = apply{
+        initToastStrategy()
+        mToastStyle?.let {
+            it.x = x
+            it.y = y
+            it.alpha = alpha
+            it.duration = duration
+            it.anim = anim
+            it.location = location
+            backDrawable?.let { backDrawable->
+                it.backDrawable = backDrawable
+            }
+            textTheme?.let { textTheme->
+                it.textTheme = textTheme
+            }
+            initDefaultToastStyle(defaultTextStyle)
+        }
+        layout?.let {
+            mToastStrategy?.setView(Utils.getLayoutView(it)!!)
+        }
+        view?.let {
+            mToastStrategy?.setView(it)
+        }
+        listener?.let {
+            mToastStrategy?.setListener(it)
+        }
+        mToastStyle?.let {
+            mToastStrategy?.setStyle(it)
+        }
+        hasSetToastStyle = true
+    }
+
+
+    private fun initDefaultToastStyle(defaultTextStyle: ToastTextStyle) {
+        mToastStyle?.let {
+            when(defaultTextStyle){
+                ToastTextStyle.Black -> {
+                    mToastStyle.apply {
+                        it.backDrawable = R.drawable.normal_shape_black
+                        it.textTheme = R.style.NormalStyle_textAppreance_black
+                    }
+                }
+                ToastTextStyle.White -> {
+                    mToastStyle.apply {
+                        it.backDrawable = R.drawable.normal_shape_white
+                        it.textTheme = R.style.NormalStyle_textAppreance_white
+                    }
+                }
+                ToastTextStyle.GRAY -> {
+                    mToastStyle.apply {
+                        it.backDrawable = R.drawable.normal_shape_gray
+                        it.textTheme = R.style.NormalStyle_textAppreance_gray
+                    }
+                }
+            }
+        }
+    }
+
+
+    fun showToast(@StringRes res:Int,system: Boolean = false){
+        val content = application.resources.getString(res)
+        if (content.isEmpty()) {
             return
         }
-        duration?.let {
-            mToastStyle.duration = it
+        showToast(content,system)
+    }
+
+    fun showToast(content: Any?, system: Boolean = false){
+        val str = content?.toString()
+        if (str.isNullOrEmpty()) {
+            return
         }
-        toastStrategyImpl?.setStyle(mToastStyle)
-        toastStrategyImpl?.show(content)
-    }
-
-    fun show(@StringRes res: Int,duration:Long?=null):ToastBox  = apply{
-        val content = ToastBoxRegister.application.resources.getString(res)
-        if (content.isEmpty()) {
-            return@apply
-        }
-        show(content)
-    }
-
-    /*---------参数设置--------------*/
-    fun setLocation(location: Location):ToastBox  = apply{
-        mToastStyle.location = location
-    }
-
-    fun setAlpha(@FloatRange(from = 0.0, to = 1.0) alpha: Float):ToastBox = apply{
-        mToastStyle.alpha = alpha
-    }
-
-    fun setView(view: View):ToastBox = apply{
-        toastStrategyImpl?.setView(view)
-    }
-
-    fun setView(@LayoutRes id:Int):ToastBox = apply{
-        val view = getLayoutView(id)
-        toastStrategyImpl?.setView(view)
-    }
-
-    fun setStyle(style: ToastStyle):ToastBox = apply{
-        _mToastStyle = WeakReference(style)
-    }
-
-    fun setXY(x:Int?=null,y:Int?=null):ToastBox = apply{
-        x?.let {
-            mToastStyle.x = it
-        }
-        y?.let {
-            mToastStyle.y = it
-        }
-    }
-
-    fun setListener(listener:ToastClickItf):ToastBox = apply{
-        toastStrategyImpl?.setListener(listener)
-    }
-
-    fun dismiss(){
-        toastStrategyImpl?.cancle()
-    }
-
-    /**
-     * 设置通用显示样式, 默认提供白色、黑色、灰色样式，其他样式可通过自定义ToastStyle实现
-     * @param textStyle
-     * @return
-     */
-    fun setTextStyle(style: TextStyle):ToastBox = apply{
-        when(style){
-            TextStyle.Black -> {
-                mToastStyle.apply {
-                    backDrawable = R.drawable.normal_shape_black
-                    textStyle = R.style.NormalStyle_textAppreance_black
-                }
+        //系统toast
+        if (system){
+            //自定义参数
+            if (hasSetToastStyle){
+                val duration = if (mToastStyle?.duration ?: 2500L >= 2500L) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+                toast(text = str,duration = duration,view = mToastStyle?.view, location = mToastStyle?.location ?: Location.BOTTOM)
+            }else{
+                //默认参数
+                val duration = if (this.duration > 2500L) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+                toast(text = str,duration = duration)
             }
-            TextStyle.White -> {
-                mToastStyle.apply {
-                    backDrawable = R.drawable.normal_shape_white
-                    textStyle = R.style.NormalStyle_textAppreance_white
+        }else{
+        //自定义toast
+            if (hasSetToastStyle){
+                mToastStrategy?.show(str)
+            }else{
+                initToastStrategy()
+                mToastStyle?.let {
+                    mToastStrategy?.setStyle(it)
                 }
-            }
-            TextStyle.GRAY -> {
-                mToastStyle.apply {
-                    backDrawable = R.drawable.normal_shape_gray
-                    textStyle = R.style.NormalStyle_textAppreance_gray
-                }
+                mToastStrategy?.show(str)
             }
         }
     }
 
+
     /**
-     * 自定义字体style
+     * Android11之后不在支持系统toast设置View
      */
-    fun setTextStyle(@StyleRes style:Int):ToastBox = apply {
-        mToastStyle.apply {
-            textStyle = style
+    private fun toast(text:String, duration: Int = Toast.LENGTH_SHORT, view: View?= null, @LayoutRes layout:Int ?= null, location: Location = Location.BOTTOM){
+        val looper = ToastLifecycle.getActivity()?.mainLooper
+        val handler = looper?.let {
+            Handler(it)
+        }
+        val context = application
+        handler?.post {
+            toast?.cancel()
+            _toast = null
+            if (view==null && layout==null){
+                _toast = WeakReference(Toast.makeText(context,text,duration))
+            }else{
+                _toast = WeakReference(Toast(context))
+                val _view:View ?= view ?: Utils.getLayoutView(layout)
+                toast?.view = _view
+
+                val textView = Utils.findMessageView(_view)
+                textView?.text = text
+
+                when(location){
+                    Location.BOTTOM -> {
+                        toast?.setGravity(Gravity.BOTTOM, 0, 100)
+                    }
+                    Location.CENTER -> {
+                        toast?.setGravity(Gravity.CENTER, 0, 0)
+                    }
+                    Location.TOP -> {
+                        toast?.setGravity(Gravity.TOP, 0, -100)
+                    }
+                }
+                toast?.duration = duration
+            }
+            toast?.show()
         }
     }
 
+
     /**
-     * 自定义背景样式
+     * 记录toastBox弹出数量
      */
-    fun setBackground(@DrawableRes drawable:Int):ToastBox = apply {
-        mToastStyle.apply {
-            backDrawable = drawable
+    @Synchronized
+    internal fun register(xToast: xToast?){
+        if (xToast==null) return
+        boxStack.offer(xToast)
+
+        while (boxStack.size > maxToastSize){
+            val toast : xToast ?= boxStack.poll()
+            toast?.cancel()
         }
+        xLog.d(TAG,"Register    ----  toast_size:${boxStack.size}")
     }
 
-    /**
-     * 设置动画
-     * @param anim
-     */
-    fun setAnim(@StyleRes anim: Int):ToastBox = apply{
-        mToastStyle.animStyle = anim
+    @Synchronized
+    internal fun unRegister(xToast:xToast?){
+        xToast?.apply {
+            boxStack.remove(this)
+            clear()
+        }
+        xLog.d(TAG,"unRegister  ----  toast_size:${boxStack.size}")
     }
 
+
+    init {
+        initToastStrategy()
+    }
 
 }

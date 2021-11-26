@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.example.xlulibrary.Location
 import com.example.xlulibrary.ToastBox
 
 class LottieActivity : AppCompatActivity() {
@@ -11,18 +12,19 @@ class LottieActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lottie)
 
-        //showAll()
+        showAll()
     }
 
     private fun showAll() {
-        ToastBox().setView(R.layout.toast_lottie_success).setXY(0,100).show("Success!")
-        ToastBox().setView(R.layout.toast_lottie_error).setXY(0,500).show("Net Error!")
-        ToastBox().setView(R.layout.toast_lottie_fail).setXY(0,900).show("Failed!")
+        ToastBox.setParams(layout = R.layout.toast_lottie_success, x = 0, y = 100, duration = 2500L).showToast("Success!")
+        ToastBox.setParams(layout = R.layout.toast_lottie_error, x = 0, y = 500, duration = 3500L).showToast("Net Error!")
+        ToastBox.setParams(layout = R.layout.toast_lottie_fail, x = 0, y = 900, duration = 4500L).showToast("Failed!")
     }
 
 
     private fun showSysToast(){
-        ToastBox.toast("系统Toast实现",layout = R.layout.toast_lottie_fail,duration = Toast.LENGTH_LONG)
+        //系统toast实现
+        ToastBox.setParams(layout = R.layout.toast_lottie_success).showToast("Success!",system = true)
     }
 
 
@@ -30,19 +32,19 @@ class LottieActivity : AppCompatActivity() {
         when(view.id){
             R.id.button13 -> {
                 //info
-                ToastBox().setView(R.layout.toast_lottie_info).show("Show Message~")
+                ToastBox.setParams(layout = R.layout.toast_lottie_info, location = Location.CENTER).showToast("Net Error!")
             }
             R.id.button14 -> {
                 //net error
-                ToastBox().setView(R.layout.toast_lottie_error).show("Net Error!")
+                ToastBox.setParams(layout = R.layout.toast_lottie_error, location = Location.TOP).showToast("Net Error!")
             }
             R.id.button15 -> {
                 //success
-                ToastBox().setView(R.layout.toast_lottie_success).show("Success!")
+                ToastBox.setParams(layout = R.layout.toast_lottie_success, location = Location.BOTTOM).showToast("Success!")
             }
             R.id.button16 -> {
                 //fail
-                ToastBox().setView(R.layout.toast_lottie_fail).show("Failed!")
+                ToastBox.setParams(layout = R.layout.toast_lottie_fail, x = 0, y = 900).showToast("Failed!")
             }
             R.id.button17 -> {
                 showSysToast()
