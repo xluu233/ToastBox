@@ -12,9 +12,9 @@ import com.example.xlulibrary.Location
 import com.example.xlulibrary.R
 import com.example.xlulibrary.ToastBox
 import com.example.xlulibrary.ToastLifecycle.application
-import util.Utils.dp
-import util.Utils.getDefaultBackDrawable
-import util.Utils.getDefaultTextAppearance
+import com.example.xlulibrary.util.Utils.dp
+import com.example.xlulibrary.util.Utils.getDefaultBackDrawable
+import com.example.xlulibrary.util.Utils.getDefaultTextAppearance
 
 /**
  * @ClassName NormalStyle

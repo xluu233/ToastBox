@@ -1,4 +1,4 @@
-package util
+package com.example.xlulibrary.util
 
 import android.util.TypedValue
 import android.view.Gravity

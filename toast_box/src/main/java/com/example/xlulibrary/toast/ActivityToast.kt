@@ -14,15 +14,14 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
 import androidx.appcompat.content.res.AppCompatResources
 import com.example.xlulibrary.Location
-import com.example.xlulibrary.ToastBox
 import com.example.xlulibrary.ToastClickItf
 import com.example.xlulibrary.ToastLifecycle
 import com.example.xlulibrary.ToastLifecycle.application
 import com.example.xlulibrary.ToastLifecycle.register
 import com.example.xlulibrary.ToastLifecycle.unRegister
-import util.Utils.findImageView
-import util.Utils.findMessageView
-import util.Utils.getLocalGravity
+import com.example.xlulibrary.util.Utils.findImageView
+import com.example.xlulibrary.util.Utils.findMessageView
+import com.example.xlulibrary.util.Utils.getLocalGravity
 import java.lang.ref.WeakReference
 import java.util.*
 

@@ -11,11 +11,8 @@ import com.example.xlulibrary.strategy.ToastStrategy
 import com.example.xlulibrary.strategy.ToastStrategyImpl
 import com.example.xlulibrary.style.NormalStyle
 import com.example.xlulibrary.style.ToastStyle
-import com.example.xlulibrary.toast.xToast
-import com.example.xlulibrary.util.xLog
-import util.Utils
+import com.example.xlulibrary.util.Utils
 import java.lang.ref.WeakReference
-import java.util.concurrent.LinkedBlockingQueue
 
 
 object ToastBox {
