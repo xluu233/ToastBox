@@ -23,6 +23,8 @@ interface ToastStrategy {
 
     fun setView(view: View)
 
+    fun getView():View?
+
     fun show(text:String)
 
     fun cancle()

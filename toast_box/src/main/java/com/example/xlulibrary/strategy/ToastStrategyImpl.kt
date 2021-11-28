@@ -39,6 +39,10 @@ class ToastStrategyImpl : ToastStrategy{
         this.view = view
     }
 
+    override fun getView(): View? {
+        return this.view
+    }
+
     @Synchronized
     override fun createToast(): xToast? {
         val activity = ToastLifecycle.getActivity()

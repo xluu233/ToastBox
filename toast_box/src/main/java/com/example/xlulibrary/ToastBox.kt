@@ -210,7 +210,7 @@ object ToastBox {
             //系统toast
             if (hasSetToastStyle){
                 val duration = if (mToastStyle?.duration ?: 2500L >= 2500L) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
-                toast(text = str,duration = duration,view = mToastStyle?.view, location = mToastStyle?.location ?: Location.BOTTOM)
+                toast(text = str,duration = duration,view = mToastStrategy?.getView(),  location = mToastStyle?.location ?: Location.BOTTOM)
             }else{
                 //默认参数
                 val duration = if (this.duration > 2500L) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
@@ -235,7 +235,7 @@ object ToastBox {
      * Android11之后不在支持系统toast设置View
      */
     private fun toast(text:String, duration: Int = Toast.LENGTH_SHORT, view: View?= null, @LayoutRes layout:Int ?= null, location: Location = Location.BOTTOM){
-        val looper = ToastLifecycle.getActivity()?.mainLooper
+        val looper = getActivity()?.mainLooper
         val handler = looper?.let {
             Handler(it)
         }
