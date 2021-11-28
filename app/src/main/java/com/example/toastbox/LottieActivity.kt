@@ -22,12 +22,6 @@ class LottieActivity : AppCompatActivity() {
     }
 
 
-    private fun showSysToast(){
-        //系统toast实现
-        ToastBox.setParams(layout = R.layout.toast_lottie_success).showToast("Success!",system = true)
-    }
-
-
     fun toast(view: View) {
         when(view.id){
             R.id.button13 -> {
@@ -50,6 +44,12 @@ class LottieActivity : AppCompatActivity() {
                 showSysToast()
             }
         }
+    }
+
+
+    private fun showSysToast(){
+        //系统toast实现
+        ToastBox.setParams(layout = R.layout.toast_lottie_success).showToast("Success!",system = true)
     }
 
 

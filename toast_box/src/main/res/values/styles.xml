@@ -8,16 +8,20 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="ToastAnim_1">
+    <style name="ToastAnim_OPEN">
         <item name="android:windowEnterAnimation">@anim/enter</item>
         <item name="android:windowExitAnimation">@anim/out</item>
     </style>
 
-    <style name="ToastAnim_2">
+    <style name="ToastAnim_MIUI">
         <item name="android:windowEnterAnimation">@anim/anim_in</item>
         <item name="android:windowExitAnimation">@anim/anim_out</item>
     </style>
 
+    <style name="ToastAnim_ALPHA">
+        <item name="android:windowEnterAnimation">@anim/alpha_in</item>
+        <item name="android:windowExitAnimation">@anim/alpha_out</item>
+    </style>
 
     <style name="NormalStyle_textAppreance_gray">
         <item name="android:textColor">@color/white</item>

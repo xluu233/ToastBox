@@ -22,7 +22,7 @@ class TestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ToastBox.showToast("This is Custom View")
+        ToastBox.setParams(layout = R.layout.toast_custom).showToast("This is Custom View")
     }
 
 

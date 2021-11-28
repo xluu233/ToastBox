@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/toast_back1"
+    android:background="@color/teal_200"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -14,17 +14,17 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:src="@android:drawable/stat_sys_upload_done"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/warning" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="TextView"
+        android:text="哈哈哈哈哈"
         android:textSize="20sp"
         android:gravity="center"
         android:textColor="@color/white"

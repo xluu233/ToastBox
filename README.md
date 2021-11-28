@@ -23,152 +23,92 @@ Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 
 	dependencies {
-	    implementation 'com.github.xluu233:ToastBox:0.6.1'
+	    implementation 'com.github.xluu233:ToastBox:0.7.0'
 	}
 	
 
 ### 快速使用：
 
-**stetup1:** 在Application中初始化
+**stetup1:** 初始化（可省略）
 
 ```
-ToastBoxRegister.init(this)
+        //init可以省略，也可以配置一些全局默认参数
+        ToastBox.init(
+            duration = 3500L,
+            alpha = 1.0f,
+            anim = R.style.MiuiToast,
+            location = Location.CENTER,
+            x = 0,y = 100,
+        )
+
 ```
 
-【可选】初始化时可以配置一些参数
-
-```
-ToastBoxRegister.init(this).apply {
-    //text样式：白色和灰色
-    textStyle = TextStyle.White
-    //设置默认动画
-    animStyle = R.style.xxx
-}
-```
 
 **setup2**:简单调用
 
 ```
-ToastBox().show("This is ToastBox")
+ToastBox.showToast("This is ToastBox")
 ```
 
 ### 具体使用
 
-- 弹出系统toast
+**使用setParams()设置自定义参数：**
 
-```
-toast("系统Toast实现",layout = R.layout.toast_lottie_fail,duration = Toast.LENGTH_LONG)
-```
+- 自定义布局，传入view或者layout
+> ToastBox.setParams(layout = R.layout.toast_custom).showToast("自定义View")
 
-- 设置toast时间
 
-```
-ToastBox().show("5000L",duration = 5000)
-```
+- 在不同的位置弹出,设置`location`参数，预定义了三种方式：
+> ToastBox.setParams(location = Location.BOTTOM).showToast("Bottom ToastBox")
+> ToastBox.setParams(location = Location.CENTER).showToast("Center ToastBox")
+> ToastBox.setParams(location = Location.TOP).showToast("TOP ToastBox")
 
-- 在不同的位置弹出
-```
-ToastBox().setLocation(Location.TOP).show("TOP ToastBox")
-ToastBox().setLocation(Location.CENTER).show("Center ToastBox")
-ToastBox().setLocation(Location.BOTTOM).show("Bottom ToastBox")
-```
+- 自定义弹出位置XY坐标
+> ToastBox.setParams(x=100,y=200).showToast("修改XY坐标")
 
-- 设置弹出XY位置
-```
-ToastBox().setTextStyle(TextStyle.GRAY).show("灰色Toast")
-ToastBox().setTextStyle(TextStyle.White).setXY(0,300).show("白色Toast")
-ToastBox().setTextStyle(TextStyle.Black).setXY(0,600).show("黑色Toast")
-```
 
-- 设置动画
-```
-ToastBox().setAnim(R.style.MiuiToast).show("切换弹出动画")
-```
+- 修改透明度:`alpha`
+> ToastBox.setParams(alpha = 0.5f).showToast("alpha toast")
 
-- 设置监听
+
+- 设置toast时间：`duration`
+> ToastBox.setParams(duration = 5000L).showToast("5000ms")
+
+
+- toast消失监听:`ToastClickItf`
 ```
-ToastBox().setListener(object : ToastClickItf{
+ToastBox.setParams(listener = object :ToastClickItf{
       override fun setOnToastDismissed() {
-           Log.d(TAG,"toast dismissed")
+            Log.d(TAG,"toast dismissed")
       }
-}).show("哈啊啊啊啊啊哼哼",3000L)
+}).showToast("事件监听")
 ```
 
-### 详细设置
+- toast风格样式,预定义的三种样式: `ToastTextStyle.Black/White/Gray`
+> ToastBox.setParams(defaultTextStyle = ToastTextStyle.Black).showToast("黑色Toast")
+> ToastBox.setParams(defaultTextStyle = ToastTextStyle.White,x = 0, y = 300).showToast("白色Toast")
+> ToastBox.setParams(defaultTextStyle = ToastTextStyle.GRAY,x = 0, y = 600).showToast("灰色Toast")
+
+- 设置动画,预定义了三种动画：`ToastAnim_OPEN`，`ToastAnim_ALPHA`，`ToastAnim_MIUI`
+> ToastBox.setParams(anim = R.style.ToastAnim_OPEN).showToast("动画切换1")
+> ToastBox.setParams(anim = R.style.ToastAnim_ALPHA, x = 0, y = 300).showToast("动画切换2")
 
 
-方法 | 作用
----|---
-setLocation(Location.CENTER)| 修改弹出位置
-setXY(100,200)|设置XY坐标
-setAlpha(0.5f)| 修改透明度
-setView(R.layout.toast_custom)| 自定义view
-setListener()|设置监听
-setTextStyle(TextStyle.GRAY)|设置通用样式
-setAnim(R.style.MiuiToast)|设置弹出动画
+### setParams()详细参数
 
+参数 | 详情 |  作用
+---|---|---
+duration | 默认 duration:Long = 2500L | 弹出时间 
+location | 参考：Location.BOTTOM、 Location.CENTER、Location.TOP | 修改弹出位置
+x,y | 示例：：setParams(x=100,y=200) | 设置XY坐标
+alpha |  @FloatRange(from = 0.0, to = 1.0),示例：setParams(alpha = 0.5f) | 修改透明度
+view、layout| 示例：setParams(view = XX,layout = R.layout.xx) | 自定义view
+anim | 参考：`R.style.ToastAnim_OPEN`，`R.style.ToastAnim_ALPHA`，`R.style.ToastAnim_MIUI`| 设置动画
+defaultTextStyle | 预定义的三种风格：`ToastTextStyle.Black/White/Gray` 黑色、白色、灰色 | 设置Toast风格
+textTheme |  @StyleRes，示例：setParams(textTheme=R.style.xx) |  自定义字体主题
+backDrawable | @DrawableRes，示例：setParams(backDrawable = R.drawable.xx) | 设置背景样式
+listener | ToastClickItf | 设置toast消失事件监听
 
-如果想要实现更多自定义效果，建议传入自定义布局，自定义布局中以第一个`TextView`显示文本消息
-
-```
-//自定义布局，传入View或者layout
-ToastBox().setView(R.layout.toast_custom).show("Warning",5000L)
-```
-
-或者自定义`ToastStyle`接口:
-
-```
-fun setStyle(style: ToastStyle)
-```
-
-接口信息如下：
-```
-interface ToastStyle {
-
-    /**
-     * 创建视图
-     */
-    fun createView():View
-
-    /**
-     * 位置
-     */
-    var location: Location
-
-    /**
-     * 显示时间
-     */
-    var duration:Long
-
-    /**
-     * 整体透明度
-     */
-    var alpha:Float
-
-    /**
-     * x，y坐标
-     */
-    var x:Int
-    var y:Int
-
-    /**
-     * 背景样式
-     */
-    var backDrawable : Int?
-
-    /**
-     * 字体样式
-     */
-    var textStyle : Int?
-
-    /**
-     * 弹出动画
-     */
-    var animStyle:Int?
-
-
-}
-```
 
 ### 配合Lottie动画库可以做一些好看的toast
 

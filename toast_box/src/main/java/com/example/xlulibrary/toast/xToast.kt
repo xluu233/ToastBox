@@ -93,4 +93,5 @@ interface xToast {
 
     fun clear()
 
+    val TAG:String?
 }

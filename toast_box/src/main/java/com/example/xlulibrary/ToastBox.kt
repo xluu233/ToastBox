@@ -1,14 +1,12 @@
 package com.example.xlulibrary
 
-import android.app.Application
-import android.content.Context
 import android.os.Handler
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.*
-import androidx.startup.Initializer
 import com.example.xlulibrary.ToastLifecycle.application
+import com.example.xlulibrary.ToastLifecycle.getActivity
 import com.example.xlulibrary.strategy.ToastStrategy
 import com.example.xlulibrary.strategy.ToastStrategyImpl
 import com.example.xlulibrary.style.NormalStyle
@@ -23,8 +21,6 @@ import java.util.concurrent.LinkedBlockingQueue
 object ToastBox {
 
     private val TAG = "ToastBoxRegister"
-
-    private var boxStack = LinkedBlockingQueue<xToast>()
 
     private var _mToastStyle : WeakReference<ToastStyle> ?= null
     private val mToastStyle: ToastStyle? get() = _mToastStyle?.get()
@@ -61,7 +57,7 @@ object ToastBox {
     /**
      * 设置toast默认弹出动画
      */
-    var anim :Int = R.style.ToastAnim_1
+    var anim :Int = R.style.ToastAnim_OPEN
 
     /**
      * 设置toast同时最多弹出的数量
@@ -119,6 +115,7 @@ object ToastBox {
         this.textTheme = textTheme
     }
 
+    /*是否设置了自定义参数*/
     @Volatile
     private var hasSetToastStyle: Boolean = false
 
@@ -204,14 +201,13 @@ object ToastBox {
         showToast(content,system)
     }
 
-    fun showToast(content: Any?, system: Boolean = false){
+    fun showToast(content: Any?, system: Boolean = false) = getActivity()?.runOnUiThread{
         val str = content?.toString()
         if (str.isNullOrEmpty()) {
-            return
+            return@runOnUiThread
         }
-        //系统toast
         if (system){
-            //自定义参数
+            //系统toast
             if (hasSetToastStyle){
                 val duration = if (mToastStyle?.duration ?: 2500L >= 2500L) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
                 toast(text = str,duration = duration,view = mToastStyle?.view, location = mToastStyle?.location ?: Location.BOTTOM)
@@ -221,7 +217,7 @@ object ToastBox {
                 toast(text = str,duration = duration)
             }
         }else{
-        //自定义toast
+            //ActivityToast
             if (hasSetToastStyle){
                 mToastStrategy?.show(str)
             }else{
@@ -274,30 +270,6 @@ object ToastBox {
         }
     }
 
-
-    /**
-     * 记录toastBox弹出数量
-     */
-    @Synchronized
-    internal fun register(xToast: xToast?){
-        if (xToast==null) return
-        boxStack.offer(xToast)
-
-        while (boxStack.size > maxToastSize){
-            val toast : xToast ?= boxStack.poll()
-            toast?.cancel()
-        }
-        xLog.d(TAG,"Register    ----  toast_size:${boxStack.size}")
-    }
-
-    @Synchronized
-    internal fun unRegister(xToast:xToast?){
-        xToast?.apply {
-            boxStack.remove(this)
-            clear()
-        }
-        xLog.d(TAG,"unRegister  ----  toast_size:${boxStack.size}")
-    }
 
 
     init {

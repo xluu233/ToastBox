@@ -18,6 +18,8 @@ import com.example.xlulibrary.ToastBox
 import com.example.xlulibrary.ToastClickItf
 import com.example.xlulibrary.ToastLifecycle
 import com.example.xlulibrary.ToastLifecycle.application
+import com.example.xlulibrary.ToastLifecycle.register
+import com.example.xlulibrary.ToastLifecycle.unRegister
 import util.Utils.findImageView
 import util.Utils.findMessageView
 import util.Utils.getLocalGravity
@@ -38,6 +40,7 @@ class ActivityToast : xToast {
     private var mMessageView:TextView ?= null
     private var clickListener: ToastClickItf?= null
 
+    override val TAG: String? = ToastLifecycle.getCurrentTAG()
 
     private val toast by lazy {
         WindowsMangerToast(this)
@@ -148,7 +151,7 @@ class WindowsMangerToast(private val xToast: xToast){
 
     init {
         setParams()
-        ToastBox.register(xToast)
+        register(xToast)
     }
 
     fun show() {
@@ -205,7 +208,7 @@ class WindowsMangerToast(private val xToast: xToast){
         mIsShow = false
         mTimer.cancel()
         mParams = null
-        ToastBox.unRegister(xToast)
+        unRegister(xToast)
     }
 
 

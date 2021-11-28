@@ -17,11 +17,11 @@ class App : Application() {
 
         //init可以省略，也可以配置一些全局默认参数
         ToastBox.init(
-            x = 0,y = 100,
             duration = 3500L,
             alpha = 1.0f,
-            anim = R.style.MiuiToast,
+            anim = R.style.ToastAnim_MIUI,
             location = Location.CENTER,
+            x = 0,y = 100,
         )
 
     }
