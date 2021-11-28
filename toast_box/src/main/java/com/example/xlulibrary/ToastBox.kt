@@ -271,7 +271,6 @@ object ToastBox {
     }
 
 
-
     init {
         initToastStrategy()
     }

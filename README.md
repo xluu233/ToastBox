@@ -55,24 +55,34 @@ ToastBox.showToast("This is ToastBox")
 **使用setParams()设置自定义参数：**
 
 - 自定义布局，传入view或者layout
-> ToastBox.setParams(layout = R.layout.toast_custom).showToast("自定义View")
+```
+ToastBox.setParams(layout = R.layout.toast_custom).showToast("自定义View")
+```
 
 
 - 在不同的位置弹出,设置`location`参数，预定义了三种方式：
-> ToastBox.setParams(location = Location.BOTTOM).showToast("Bottom ToastBox")
-> ToastBox.setParams(location = Location.CENTER).showToast("Center ToastBox")
-> ToastBox.setParams(location = Location.TOP).showToast("TOP ToastBox")
+```
+ToastBox.setParams(location = Location.BOTTOM).showToast("Bottom ToastBox")
+ToastBox.setParams(location = Location.CENTER).showToast("Center ToastBox")
+ToastBox.setParams(location = Location.TOP).showToast("TOP ToastBox")
+```
 
 - 自定义弹出位置XY坐标
-> ToastBox.setParams(x=100,y=200).showToast("修改XY坐标")
+```
+ToastBox.setParams(x=100,y=200).showToast("修改XY坐标")
+```
 
 
 - 修改透明度:`alpha`
-> ToastBox.setParams(alpha = 0.5f).showToast("alpha toast")
+```
+ToastBox.setParams(alpha = 0.5f).showToast("alpha toast")
+```
 
 
 - 设置toast时间：`duration`
-> ToastBox.setParams(duration = 5000L).showToast("5000ms")
+```
+ToastBox.setParams(duration = 5000L).showToast("5000ms")
+```
 
 
 - toast消失监听:`ToastClickItf`
@@ -85,13 +95,17 @@ ToastBox.setParams(listener = object :ToastClickItf{
 ```
 
 - toast风格样式,预定义的三种样式: `ToastTextStyle.Black/White/Gray`
-> ToastBox.setParams(defaultTextStyle = ToastTextStyle.Black).showToast("黑色Toast")
-> ToastBox.setParams(defaultTextStyle = ToastTextStyle.White,x = 0, y = 300).showToast("白色Toast")
-> ToastBox.setParams(defaultTextStyle = ToastTextStyle.GRAY,x = 0, y = 600).showToast("灰色Toast")
+```
+ToastBox.setParams(defaultTextStyle = ToastTextStyle.Black).showToast("黑色Toast")
+ToastBox.setParams(defaultTextStyle = ToastTextStyle.White,x = 0, y = 300).showToast("白色Toast")
+ToastBox.setParams(defaultTextStyle = ToastTextStyle.GRAY,x = 0, y = 600).showToast("灰色Toast")
+```
 
 - 设置动画,预定义了三种动画：`ToastAnim_OPEN`，`ToastAnim_ALPHA`，`ToastAnim_MIUI`
-> ToastBox.setParams(anim = R.style.ToastAnim_OPEN).showToast("动画切换1")
-> ToastBox.setParams(anim = R.style.ToastAnim_ALPHA, x = 0, y = 300).showToast("动画切换2")
+```
+ToastBox.setParams(anim = R.style.ToastAnim_OPEN).showToast("动画切换1")
+ToastBox.setParams(anim = R.style.ToastAnim_ALPHA, x = 0, y = 300).showToast("动画切换2")
+```
 
 
 ### setParams()详细参数
