@@ -1,5 +1,6 @@
 package com.example.xlulibrary
 
+import android.app.Application
 import android.os.Handler
 import android.view.Gravity
 import android.view.View
@@ -89,6 +90,7 @@ object ToastBox {
      * 初始化操作
      */
     fun init(
+        application:Application,
         x:Int = this.x,
         y:Int = this.y,
         duration: Long = this.duration,
@@ -100,6 +102,7 @@ object ToastBox {
         @DrawableRes backDrawable: Int = this.backDrawable,
         @StyleRes textTheme :Int = this.textTheme
     ){
+        ToastLifecycle.init(application)
         this.x = x
         this.y = y
         this.location = location
@@ -267,9 +270,5 @@ object ToastBox {
         }
     }
 
-
-    init {
-        initToastStrategy()
-    }
 
 }
