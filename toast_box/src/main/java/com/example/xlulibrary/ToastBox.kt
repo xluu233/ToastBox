@@ -90,7 +90,6 @@ object ToastBox {
      * 初始化操作
      */
     fun init(
-        application:Application,
         x:Int = this.x,
         y:Int = this.y,
         duration: Long = this.duration,
@@ -102,7 +101,6 @@ object ToastBox {
         @DrawableRes backDrawable: Int = this.backDrawable,
         @StyleRes textTheme :Int = this.textTheme
     ){
-        ToastLifecycle.init(application)
         this.x = x
         this.y = y
         this.location = location
@@ -202,8 +200,15 @@ object ToastBox {
     }
 
     fun showToast(content: Any?, system: Boolean = false) = getActivity()?.runOnUiThread{
-        val str = content?.toString()
-        if (str.isNullOrEmpty()) {
+       if (content == null) return@runOnUiThread
+
+        val str = if (content is Int){
+            application.resources.getString(content)
+        }else{
+            content.toString()
+        }
+
+        if (str.isEmpty()) {
             return@runOnUiThread
         }
         if (system){

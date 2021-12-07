@@ -3,4 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.xlulibrary">
 
+    <application>
+
+        <!--startup-->
+<!--        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="com.example.xlulibrary.ToastLifecycle"
+                android:value="androidx.startup"/>
+        </provider>-->
+
+        <!--android-startup-->
+        <provider
+            android:name="com.rousetime.android_startup.provider.StartupProvider"
+            android:authorities="${applicationId}.android_startup"
+            android:exported="false">
+
+            <meta-data
+                android:name="com.example.xlulibrary.ToastLifecycle"
+                android:value="android.startup" />
+
+        </provider>
+
+    </application>
+
 </manifest>

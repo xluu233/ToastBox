@@ -18,7 +18,6 @@ class App : Application() {
 
         //init可以省略，也可以配置一些全局默认参数
         ToastBox.init(
-            application = this,
             duration = 3500L,
             alpha = 1.0f,
             anim = R.style.ToastAnim_MIUI,

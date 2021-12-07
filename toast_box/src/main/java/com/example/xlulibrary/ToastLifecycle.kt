@@ -4,13 +4,16 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
+import androidx.startup.Initializer
 import com.example.xlulibrary.toast.xToast
 import com.example.xlulibrary.util.xLog
+import com.rousetime.android_startup.AndroidStartup
+import com.rousetime.android_startup.Startup
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.collections.HashMap
 
-internal object ToastLifecycle{
+internal object ToastLifecycle : AndroidStartup<Unit>() {
 
     private val TAG = "ToastLifecycle"
     lateinit var application: Application
@@ -54,10 +57,16 @@ internal object ToastLifecycle{
         }
     }
 
-    fun init(context: Context){
+    override fun callCreateOnMainThread(): Boolean = false
+
+    override fun create(context: Context) {
         application = context as Application
         application.registerActivityLifecycleCallbacks(activityLifecycle)
     }
+
+    override fun dependencies(): List<Class<out Startup<*>>>? = null
+
+    override fun waitOnMainThread(): Boolean = false
 
     fun getActivity():Activity?{
         return currentActivity
