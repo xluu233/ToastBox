@@ -1,6 +1,5 @@
 package com.example.xlulibrary
 
-import android.app.Application
 import android.os.Handler
 import android.view.Gravity
 import android.view.View

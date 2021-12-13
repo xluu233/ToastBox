@@ -3,6 +3,7 @@ package com.example.xlulibrary.toast
 import android.content.Context
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.view.View
@@ -15,8 +16,11 @@ import androidx.annotation.StyleRes
 import androidx.appcompat.content.res.AppCompatResources
 import com.example.xlulibrary.Location
 import com.example.xlulibrary.ToastClickItf
+import com.example.xlulibrary.ToastInit
 import com.example.xlulibrary.ToastLifecycle
 import com.example.xlulibrary.ToastLifecycle.application
+import com.example.xlulibrary.ToastLifecycle.getActivity
+import com.example.xlulibrary.ToastLifecycle.getCurrentTAG
 import com.example.xlulibrary.ToastLifecycle.register
 import com.example.xlulibrary.ToastLifecycle.unRegister
 import com.example.xlulibrary.util.Utils.findImageView
@@ -39,7 +43,7 @@ class ActivityToast : xToast {
     private var mMessageView:TextView ?= null
     private var clickListener: ToastClickItf?= null
 
-    override val TAG: String? = ToastLifecycle.getCurrentTAG()
+    override val TAG: String? = getCurrentTAG()
 
     private val toast by lazy {
         WindowsMangerToast(this)
@@ -145,7 +149,7 @@ class WindowsMangerToast(private val xToast: xToast){
     private val handler = Handler(Looper.getMainLooper())
 
     private val mWdm: WeakReference<WindowManager> by lazy {
-        WeakReference(ToastLifecycle.getActivity()?.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
+        WeakReference(getActivity()?.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
     }
 
     init {

@@ -8,9 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.xlulibrary.Location
-import com.example.xlulibrary.R
-import com.example.xlulibrary.ToastBox
+import com.example.xlulibrary.*
 import com.example.xlulibrary.ToastLifecycle.application
 import com.example.xlulibrary.util.Utils.dp
 import com.example.xlulibrary.util.Utils.getDefaultBackDrawable

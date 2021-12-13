@@ -1,11 +1,12 @@
 package com.example.xlulibrary.util
 
 import android.util.Log
+import com.example.xlulibrary.BuildConfig.DEBUG
 
 internal object xLog {
 
     private var LogName = "ToastBox"
-    private var showLog = false
+    private var showLog = DEBUG
 
     fun init(logName: String, showLog: Boolean) {
         LogName = logName

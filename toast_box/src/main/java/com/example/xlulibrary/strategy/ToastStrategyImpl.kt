@@ -3,6 +3,7 @@ package com.example.xlulibrary.strategy
 import android.view.View
 import com.example.xlulibrary.ToastClickItf
 import com.example.xlulibrary.ToastLifecycle
+import com.example.xlulibrary.ToastLifecycle.getActivity
 import com.example.xlulibrary.toast.ActivityToast
 import com.example.xlulibrary.toast.xToast
 import com.example.xlulibrary.style.ToastStyle
@@ -45,7 +46,7 @@ class ToastStrategyImpl : ToastStrategy{
 
     @Synchronized
     override fun createToast(): xToast? {
-        val activity = ToastLifecycle.getActivity()
+        val activity = getActivity()
         if (activity == null || activity.isDestroyed || activity.isFinishing){
             return null
         }else{

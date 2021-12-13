@@ -7,20 +7,22 @@ import android.os.Bundle
 import androidx.startup.Initializer
 import com.example.xlulibrary.toast.xToast
 import com.example.xlulibrary.util.xLog
-import com.rousetime.android_startup.AndroidStartup
-import com.rousetime.android_startup.Startup
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.collections.HashMap
 
-internal object ToastLifecycle : AndroidStartup<Unit>() {
+internal object ToastLifecycle{
 
     private val TAG = "ToastLifecycle"
+
     lateinit var application: Application
-    private var _currentActivity: WeakReference<Activity> ?= null
+
+    private var _currentActivity: WeakReference<Activity>?= null
     private val currentActivity get() = _currentActivity?.get()
 
-    private val activityLifecycle = object : Application.ActivityLifecycleCallbacks{
+    private val boxMap = HashMap<String,LinkedList<xToast>>()
+
+    val activityLifecycle = object : Application.ActivityLifecycleCallbacks{
         override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
             _currentActivity = WeakReference(activity)
             xLog.e(TAG, "${activity.javaClass.simpleName} --> onActivityCreated")
@@ -57,17 +59,6 @@ internal object ToastLifecycle : AndroidStartup<Unit>() {
         }
     }
 
-    override fun callCreateOnMainThread(): Boolean = false
-
-    override fun create(context: Context) {
-        application = context as Application
-        application.registerActivityLifecycleCallbacks(activityLifecycle)
-    }
-
-    override fun dependencies(): List<Class<out Startup<*>>>? = null
-
-    override fun waitOnMainThread(): Boolean = false
-
     fun getActivity():Activity?{
         return currentActivity
     }
@@ -76,8 +67,6 @@ internal object ToastLifecycle : AndroidStartup<Unit>() {
         return currentActivity?.javaClass?.simpleName
     }
 
-
-    private val boxMap = HashMap<String,LinkedList<xToast>>()
 
     @Synchronized
     internal fun register(xToast: xToast?){
