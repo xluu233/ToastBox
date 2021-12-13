@@ -214,7 +214,7 @@ object ToastBox {
             //系统toast
             if (hasSetToastStyle){
                 val duration = if (mToastStyle?.duration ?: 2500L >= 2500L) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
-                toast(text = str,duration = duration,view = mToastStrategy?.getView(),  location = mToastStyle?.location ?: Location.BOTTOM)
+                toast(text = str,duration = duration,view = mToastStrategy?.getView(), location = mToastStyle?.location ?: Location.BOTTOM)
             }else{
                 //默认参数
                 val duration = if (this.duration > 2500L) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
@@ -232,6 +232,7 @@ object ToastBox {
                 mToastStrategy?.show(str)
             }
         }
+        hasSetToastStyle = false
     }
 
 
