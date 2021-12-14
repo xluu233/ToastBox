@@ -23,7 +23,7 @@ Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 
 	dependencies {
-	    implementation 'com.github.xluu233:ToastBox:0.7.0'
+	    implementation 'com.github.xluu233:ToastBox:0.7.2'
 	}
 	
 
