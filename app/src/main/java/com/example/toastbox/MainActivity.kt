@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
                 //配合lottie使用
                 val intent = Intent(this,LottieActivity::class.java)
                 startActivity(intent)
-                finish()
             }
             R.id.button2 -> {
                 //在不同的位置弹出
