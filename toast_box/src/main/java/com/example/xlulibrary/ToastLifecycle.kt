@@ -2,16 +2,14 @@ package com.example.xlulibrary
 
 import android.app.Activity
 import android.app.Application
-import android.content.Context
 import android.os.Bundle
-import androidx.startup.Initializer
 import com.example.xlulibrary.toast.xToast
 import com.example.xlulibrary.util.xLog
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.collections.HashMap
 
-internal object ToastLifecycle{
+object ToastLifecycle{
 
     private val TAG = "ToastLifecycle"
 
@@ -101,7 +99,7 @@ internal object ToastLifecycle{
     /**
      * 在Activity跳转的时候，删除上一个Activity中的toast
      */
-    fun clearActivityToast(tag:String){
+    fun clearActivityToast(tag:String ?= getCurrentTAG()){
         boxMap[tag]?.forEach {
             xLog.d(TAG, "clearActivityToast: ")
             it.cancel()

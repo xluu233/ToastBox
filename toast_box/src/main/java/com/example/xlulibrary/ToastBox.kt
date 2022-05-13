@@ -199,7 +199,7 @@ object ToastBox {
     }
 
     fun showToast(content: Any?, system: Boolean = false) = getActivity()?.runOnUiThread{
-       if (content == null) return@runOnUiThread
+        if (content == null) return@runOnUiThread
 
         val str = if (content is Int){
             application.resources.getString(content)
